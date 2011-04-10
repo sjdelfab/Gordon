@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry including="**/*.java" kind="src" output="target/test-classes" path="src/test/java"/>
+	<classpathentry excluding="**/*.java" kind="src" output="target/test-classes" path="src/test/resources"/>
+	<classpathentry including="**/*.java" kind="src" path="src/main/java"/>
+	<classpathentry excluding="**/*.java" kind="src" path="src/main/resources"/>
+	<classpathentry kind="var" path="M2_REPO/org/apache/derby/derby/10.7.1.1/derby-10.7.1.1.jar"/>
+	<classpathentry kind="var" path="M2_REPO/org/apache/derby/derbyclient/10.7.1.1/derbyclient-10.7.1.1.jar"/>
+	<classpathentry kind="var" path="M2_REPO/junit/junit/4.8.1/junit-4.8.1.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.launching.macosx.MacOSXType/JVM Contents"/>
+	<classpathentry kind="lib" path="/Users/sjdelfab/.m2/repository/org/eclipse/persistence/eclipselink/2.0.0/eclipselink-2.0.0.jar"/>
+	<classpathentry kind="lib" path="/Users/sjdelfab/.m2/repository/org/eclipse/persistence/javax.persistence/2.0.0/javax.persistence-2.0.0.jar"/>
+	<classpathentry kind="output" path="target/classes"/>
+</classpath>

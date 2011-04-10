@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry including="**/*.java" kind="src" output="target/test-classes" path="src/test/java"/>
+	<classpathentry excluding="**/*.java" kind="src" output="target/test-classes" path="src/test/resources"/>
+	<classpathentry including="**/*.java" kind="src" path="src/main/java"/>
+	<classpathentry including="**/*.java" kind="src" path="target/generated-sources/gwt"/>
+	<classpathentry excluding="**/*.java" kind="src" path="src/main/resources"/>
+	<classpathentry kind="var" path="M2_REPO/com/google/gwt/gwt-servlet/2.2.0/gwt-servlet-2.2.0.jar"/>
+	<classpathentry kind="var" path="M2_REPO/com/google/gwt/gwt-user/2.2.0/gwt-user-2.2.0.jar"/>
+	<classpathentry kind="var" path="M2_REPO/junit/junit/4.8.1/junit-4.8.1.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/gordon-model">
+		<accessrules>
+			<accessrule kind="accessible" pattern="**/*"/>
+		</accessrules>
+	</classpathentry>
+	<classpathentry kind="con" path="com.google.appengine.eclipse.core.GAE_CONTAINER"/>
+	<classpathentry kind="con" path="com.google.gwt.eclipse.core.GWT_CONTAINER"/>
+	<classpathentry kind="lib" path="/Users/sjdelfab/projects/Gordon/gordon-gwt/repository/com/extjs/gxt/gxt-2.2.3-gwt22.jar"/>
+	<classpathentry kind="lib" path="/Users/sjdelfab/projects/Gordon/gordon-domain/target/gordon-domain-1.0.jar"/>
+	<classpathentry kind="lib" path="/Users/sjdelfab/projects/Gordon/gordon-gwt/repository/com/google/gwt/inject/gin-1.5-post-gwt-2.2.jar"/>
+	<classpathentry kind="lib" path="/Users/sjdelfab/projects/Gordon/gordon-gwt/src/main/webapp/WEB-INF/lib/gwt-dispatch-1.1.0.jar"/>
+	<classpathentry kind="lib" path="/Users/sjdelfab/projects/Gordon/gordon-gwt/src/main/webapp/WEB-INF/lib/gwt-log-3.1.0.jar"/>
+	<classpathentry kind="lib" path="/Users/sjdelfab/projects/Gordon/gordon-gwt/src/main/webapp/WEB-INF/lib/gwt-presenter-1.1.1.jar"/>
+	<classpathentry kind="lib" path="/Users/sjdelfab/projects/Gordon/gordon-gwt/src/main/webapp/WEB-INF/lib/guice-snapshot.jar"/>
+	<classpathentry kind="lib" path="/Users/sjdelfab/projects/Gordon/gordon-gwt/repository/com/google/gwt/inject/guice-assistedinject-snapshot.jar"/>
+	<classpathentry kind="lib" path="/Users/sjdelfab/projects/Gordon/gordon-gwt/repository/com/google/gwt/inject/javax.inject.jar"/>
+	<classpathentry kind="lib" path="/Users/sjdelfab/projects/Gordon/gordon-gwt/repository/com/google/gwt/inject/aopalliance.jar"/>
+	<classpathentry kind="lib" path="/Users/sjdelfab/projects/Gordon/gordon-gwt/src/main/webapp/WEB-INF/lib/guice-servlet-2.0.jar"/>
+	<classpathentry kind="lib" path="/Users/sjdelfab/projects/Gordon/gordon-gwt/src/main/webapp/WEB-INF/lib/gwt-visualization.jar"/>
+	<classpathentry kind="output" path="src/main/webapp/WEB-INF/classes"/>
+</classpath>

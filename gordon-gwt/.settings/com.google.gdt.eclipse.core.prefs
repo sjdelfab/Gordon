@@ -1,0 +1,5 @@
+#Thu Apr 07 21:58:46 CST 2011
+eclipse.preferences.version=1
+jarsExcludedFromWebInfLib=/Users/sjdelfab/projects/Gordon/gordon-domain/target/gordon-domain-1.0.jar
+warSrcDir=src/main/webapp
+warSrcDirIsOutput=true

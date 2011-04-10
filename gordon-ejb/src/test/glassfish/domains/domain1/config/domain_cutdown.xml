@@ -1,0 +1,168 @@
+<domain log-root="${com.sun.aas.instanceRoot}/logs"
+	application-root="${com.sun.aas.instanceRoot}/applications" version="10.0">
+	<system-applications />
+	<applications />
+	<resources>
+		<jdbc-resource pool-name="GordonPool" jndi-name="jdbc/Gordon" />
+		<jdbc-connection-pool
+			is-isolation-level-guaranteed="false" name="GordonPool"
+			datasource-classname="org.apache.derby.jdbc.EmbeddedDataSource"
+			res-type="javax.sql.DataSource">
+			<property value="APP" name="Password" />
+			<property value="APP" name="User" />
+			<property name="ConnectionAttributes" value=";create=true" />
+			<property name="DatabaseName" value="gordonDb" />
+
+		</jdbc-connection-pool>
+	</resources>
+	<servers>
+		<server name="server" config-ref="server-config">
+			<resource-ref ref="jdbc/Gordon" />
+		</server>
+	</servers>
+	<nodes>
+		<node name="localhost-domain1" type="CONFIG" node-host="localhost"
+			install-dir="${com.sun.aas.productRoot}" />
+	</nodes>
+	<configs>
+		<config name="server-config">
+			<http-service>
+				<access-log />
+			</http-service>
+			<iiop-service>
+				<orb use-thread-pool-ids="thread-pool-1" />
+
+			</iiop-service>
+			<admin-service auth-realm-name="admin-realm" type="das-and-server"
+				system-jmx-connector-name="system">
+
+			</admin-service>
+			<connector-service shutdown-timeout-in-seconds="30">
+			</connector-service>
+			<web-container>
+				<session-config>
+					<session-manager>
+						<manager-properties />
+						<store-properties />
+					</session-manager>
+					<session-properties />
+				</session-config>
+			</web-container>
+			<ejb-container steady-pool-size="0" max-pool-size="32"
+				session-store="${com.sun.aas.instanceRoot}/session-store"
+				pool-resize-quantity="8">
+				<ejb-timer-service />
+			</ejb-container>
+			<mdb-container steady-pool-size="0" max-pool-size="32"
+				pool-resize-quantity="8">
+			</mdb-container>
+			<jms-service type="EMBEDDED" default-jms-host="default_JMS_host">
+
+			</jms-service>
+			<security-service>
+				<jacc-provider
+					policy-configuration-factory-provider="com.sun.enterprise.security.provider.PolicyConfigurationFactoryImpl"
+					policy-provider="com.sun.enterprise.security.provider.PolicyWrapper"
+					name="default">
+					<property value="${com.sun.aas.instanceRoot}/generated/policy"
+						name="repository" />
+				</jacc-provider>
+				<jacc-provider
+					policy-configuration-factory-provider="com.sun.enterprise.security.jacc.provider.SimplePolicyConfigurationFactory"
+					policy-provider="com.sun.enterprise.security.jacc.provider.SimplePolicyProvider"
+					name="simple" />
+				<audit-module classname="com.sun.enterprise.security.Audit"
+					name="default">
+					<property value="false" name="auditOn" />
+				</audit-module>
+
+				<property value="SHA-256" name="default-digest-algorithm" />
+			</security-service>
+			<transaction-service tx-log-dir="${com.sun.aas.instanceRoot}/logs">
+			</transaction-service>
+			<java-config classpath-suffix="" system-classpath=""
+				debug-options="-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=9009">
+				<jvm-options>-XX:MaxPermSize=192m</jvm-options>
+				<jvm-options>-client</jvm-options>
+				<jvm-options>-Djavax.management.builder.initial=com.sun.enterprise.v3.admin.AppServerMBeanServerBuilder
+				</jvm-options>
+				<jvm-options>-XX:+UnlockDiagnosticVMOptions</jvm-options>
+				<jvm-options>-Djava.endorsed.dirs=${com.sun.aas.installRoot}/modules/endorsed${path.separator}${com.sun.aas.installRoot}/lib/endorsed
+				</jvm-options>
+				<jvm-options>-Djava.security.policy=${com.sun.aas.instanceRoot}/config/server.policy
+				</jvm-options>
+				<jvm-options>-Djava.security.auth.login.config=${com.sun.aas.instanceRoot}/config/login.conf
+				</jvm-options>
+				<jvm-options>-Dcom.sun.enterprise.security.httpsOutboundKeyAlias=s1as
+				</jvm-options>
+				<jvm-options>-Xmx512m</jvm-options>
+				<jvm-options>-Djavax.net.ssl.keyStore=${com.sun.aas.instanceRoot}/config/keystore.jks
+				</jvm-options>
+				<jvm-options>-Djavax.net.ssl.trustStore=${com.sun.aas.instanceRoot}/config/cacerts.jks
+				</jvm-options>
+				<jvm-options>-Djava.ext.dirs=${com.sun.aas.javaRoot}/lib/ext${path.separator}${com.sun.aas.javaRoot}/jre/lib/ext${path.separator}${com.sun.aas.instanceRoot}/lib/ext
+				</jvm-options>
+				<jvm-options>-Djdbc.drivers=org.apache.derby.jdbc.ClientDriver
+				</jvm-options>
+				<jvm-options>-DANTLR_USE_DIRECT_CLASS_LOADING=true</jvm-options>
+				<jvm-options>-Dcom.sun.enterprise.config.config_environment_factory_class=com.sun.enterprise.config.serverbeans.AppserverConfigEnvironmentFactory
+				</jvm-options>
+				<!-- Configure post startup bundle list here. This is a comma separated 
+					list of bundle sybolic names. The remote shell bundle has been disabled in 
+					fcs build for DAS as well. Because of the late minute bug (15967), we have 
+					decided to turn off fileinstall in all configurations by default. Anyone 
+					using fileinstall is requested to add org.apache.felix.fileinstall to the 
+					list below. -->
+				<jvm-options>-Dorg.glassfish.additionalOSGiBundlesToStart=org.apache.felix.shell,org.apache.felix.gogo.runtime,org.apache.felix.gogo.shell,org.apache.felix.gogo.command
+				</jvm-options>
+				<!-- Configuration of various third-party OSGi bundles like Felix Remote 
+					Shell, FileInstall, etc. -->
+				<!-- Port on which remote shell listens for connections. -->
+				<jvm-options>-Dosgi.shell.telnet.port=6666</jvm-options>
+				<!-- How many concurrent users can connect to this remote shell -->
+				<jvm-options>-Dosgi.shell.telnet.maxconn=1</jvm-options>
+				<!-- From which hosts users can connect -->
+				<jvm-options>-Dosgi.shell.telnet.ip=127.0.0.1</jvm-options>
+				<!-- Gogo shell configuration -->
+				<jvm-options>-Dgosh.args=--nointeractive</jvm-options>
+				<!-- Directory being watched by fileinstall. -->
+				<jvm-options>-Dfelix.fileinstall.dir=${com.sun.aas.installRoot}/modules/autostart/
+				</jvm-options>
+				<!-- Time period fileinstaller thread in ms. -->
+				<jvm-options>-Dfelix.fileinstall.poll=5000</jvm-options>
+				<!-- log level: 1 for error, 2 for warning, 3 for info and 4 for debug. -->
+				<jvm-options>-Dfelix.fileinstall.log.level=2</jvm-options>
+				<!-- should new bundles be started or installed only? true => start, 
+					false => only install -->
+				<jvm-options>-Dfelix.fileinstall.bundles.new.start=true
+				</jvm-options>
+				<!-- should watched bundles be started transiently or persistently -->
+				<jvm-options>-Dfelix.fileinstall.bundles.startTransient=true
+				</jvm-options>
+				<!-- Should changes to configuration be saved in corresponding cfg file? 
+					false: no, true: yes If we don't set false, everytime server starts from 
+					clean osgi cache, the file gets rewritten. -->
+				<jvm-options>-Dfelix.fileinstall.disableConfigSave=false
+				</jvm-options>
+				<!-- End of OSGi bundle configurations -->
+				<jvm-options>-XX:NewRatio=2</jvm-options>
+			</java-config>
+			<network-config>
+				<protocols>
+				</protocols>
+				<network-listeners>
+
+				</network-listeners>
+				<transports>
+					<transport name="tcp"></transport>
+				</transports>
+			</network-config>
+			<thread-pools>
+
+				<thread-pool name="thread-pool-1" max-thread-pool-size="200" />
+			</thread-pools>
+		</config>
+
+	</configs>
+	<property name="administrative.domain.name" value="domain1" />
+</domain>
