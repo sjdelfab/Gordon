@@ -1,0 +1,41 @@
+Setting up in Eclipse.
+
+Import project (File > Import..), then select General > Existing Projects into Workspace
+Then select the gordon-domain folder and hit OK
+
+Then import project gordon-ejb.
+You may need to change the JDK version
+
+EJB unit tests:
+Experienced quite a few problems trying to get these running within Eclipse and through Maven using the embedded Glassfish container.
+
+The starting point were these pages:
+http://ctpjava.blogspot.com/2009/10/unit-testing-ejbs-and-jpa-with.html
+http://blogs.sun.com/alexismp/entry/testing_ejb_3_1_s
+http://www.blackbit.be/2010/02/17/jpa-unit-testing-with-the-glassfish-3-embedded-ejb-container/
+
+I followed what was suggested by the first one. Also, using an in memory database is preferable. 
+
+The other problem I experienced is that embedded Glassfish would fail to start and out of memory error was thrown. Firstly, I was getting this exception:
+
+SEVERE: Exception while visiting com/ibm/icu/impl/data/LocaleElements_zh__PINYIN.class of size 84805 Glassfish
+
+That's bizarre, I said. So I grep'ed the glassfish directory for LocaleElements_zh__PINYIN and couldn't find anything and then my own directory. Eventually found the library in he Maven repository. The problem was that I had defined a variable (M2_REPO, which I am now scrapping) which pointed to the Maven 2 repository folder (~/.m2/repository). This was defined in gordon-model project which gordon-ejb inherits. So Glassfish was obviously trawling this directory and parsing all the jars. So removing it solved the problem.
+
+VM arguments: -Xmx256m
+Working dir: Path to gordon-ejb
+Classpath entries:
+gordon-ejb/src/test/resources (Advanced... > Select Add Folders)
+The following external jars:
+glassfish-embedded-static-shell.jar (located in the Glassfish dir)
+derbyclient-10.7.1.1.jar (located repository folder)
+
+The test takes a while to run (~40 secs)
+
+Need to create plugin for GXT
+
+mvn install:install-file -Dfile=gxt-2.2.3-gwt22.jar -DgroupId=com.extjs -DartifactId=gxt -Dversion=2.2.3 -DrepositoryLayout=default -Dpackaging=jar
+mvn install:install-file -Dfile=gwt-visualization.jar -DgroupId=com.google.gwt.google-apis -DartifactId=gwt-visualization -Dversion=1.1.1 -DrepositoryLayout=default -Dpackaging=jar
+mvn install:install-file -Dfile=gwt-log-3.1.0.jar -DgroupId=com.google.code.gwt-log -DartifactId=gwt-log -Dversion=3.1.0 -DrepositoryLayout=default -Dpackaging=jar
+ mvn install:install-file -Dfile=guice-servlet-2.0.jar -DgroupId=com.google.code.guice -DartifactId=guice-servlet -Dversion=2.0 -DrepositoryLayout=default -Dpackaging=jar
+

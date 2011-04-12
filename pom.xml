@@ -37,12 +37,11 @@
     </dependencies>
 
     <repositories>
-<!--          <repository>
-            <id>maven-repository.dev.java.net</id>
-            <name>Java.net Repository for Maven 1</name>
-            <url>http://download.java.net/maven/1</url>
-            <layout>legacy</layout>
-        </repository>-->
+       <repository>
+            <id>repo2.maven.org</id>
+            <name>Repo 2</name>
+            <url>http://repo2.maven.org/maven2/</url>
+        </repository>
         <repository>
             <id>maven2-repository.dev.java.net</id>
             <name>Java.net Repository for Maven 2</name>
@@ -67,13 +66,7 @@
             <name>Eclipse maven repository http://eclipse.ialto.org/rt/eclipselink/maven.repo/</name>
             <url>http://mirror.csclub.uwaterloo.ca/eclipse/rt/eclipselink/maven.repo/</url>
         </repository>
-<!--  
-        <repository>
-            <id>Apache Repo</id>
-            <name>Apache repository for Derby</name>
-            <url>http://people.apache.org/repo/m1-ibiblio-rsync-repository</url>
-            <layout>legacy</layout>
-        </repository>-->
+
     </repositories>
 
     <pluginRepositories>
@@ -93,6 +86,7 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <inherited>true</inherited>
+                <version>2.3.2</version>
                 <configuration>
                     <source>1.6</source>
                     <target>1.6</target>

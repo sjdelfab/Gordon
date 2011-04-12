@@ -106,14 +106,13 @@
 				</executions>
 			</plugin>
 			<plugin>
-	<groupId>org.apache.maven.plugins</groupId>
-	<artifactId>maven-surefire-plugin</artifactId>
-	<configuration>
-		<argLine>-Xms512m -Xmx512m</argLine>
-	</configuration>
-</plugin>
-
-
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.7.2</version>
+				<configuration>
+					<argLine>-Xms512m -Xmx512m</argLine>
+				</configuration>
+			</plugin>
 		</plugins>
 		<finalName>gordon-ejb</finalName>
 	</build>
