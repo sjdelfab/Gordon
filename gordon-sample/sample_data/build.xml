@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Gordon Sample DB" basedir="." default="createH2DB">
+	<description>Build sample database</description>
+
+	<property name="csv.input.dir" value="csv"/>
+	<property name="catalog.file" value="ASXListedCompanies.csv"/>
+
+	<target name="createH2DB">
+		<property name="target.dir" value="db"/>
+		<property name="db.name" value="${target.dir}/gordondb"/>
+		<property name="userName" value="sa"/>
+		<property name="password" value=""/>
+		<property name="jdbcUrl" value="jdbc:h2:${db.name}"/>
+		<property name="jdbcDriverClassName" value="org.h2.Driver"/>
+
+		<delete dir="db"/>
+		<mkdir dir="db"/>
+		<delete dir="../target/classes/META-INF"/>
+	    <mkdir dir="../target/classes/META-INF"/>
+		<copy file="persistence.xml" todir="../target/classes/META-INF"/>
+		<sql driver="${jdbcDriverClassName}" classpath="../lib/h2-1.3.154.jar"
+   	             url="${jdbcUrl}" userid="${userName}" password="${password}" onerror="continue"
+   	             src="../database/h2/gordon_dml.sql" delimiter="/" autocommit="true"/>
+		<sql driver="${jdbcDriverClassName}" classpath="../lib/h2-1.3.154.jar"
+		   	             url="${jdbcUrl};SCHEMA=GORDON" userid="GORDON" password="abc" onerror="continue"
+		   	             src="../database/h2/gordon_dml_seq.sql" delimiter="/" autocommit="true"/>
+		<path id="cp">
+			<path path="../target/classes/"/>
+			<path path="../../gordon-domain/target/classes/"/>
+			<fileset dir="../lib/" includes="*.jar"/>
+			<fileset dir="../../gordon-domain/repository/org/eclipse/persistence/eclipselink/2.0.0/" includes="*.jar"/>
+			<fileset dir="../../gordon-domain/repository/org/eclipse/persistence/javax.persistence/2.0.0/" includes="*.jar"/>
+		</path>
+		<java classpathref="cp" classname="org.sjd.gordon.BuildDatabase" fork="true" jvmversion="1.6">
+			<arg value="ASX200ListedCompanies.csv"/>
+			<arg value="csv"/>
+		</java>
+	</target>
+
+</project>
