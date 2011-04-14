@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<artifactId>gordon</artifactId>
+		<groupId>org.sjd.gordon</groupId>
+		<version>1.0</version>
+	</parent>
+	<groupId>org.sjd.gordon</groupId>
+	<artifactId>gordon-guicejpa</artifactId>
+	<version>1.0</version>
+	<dependencies>
+		<dependency>
+			<groupId>org.sjd.gordon</groupId>
+			<artifactId>gordon-domain</artifactId>
+			<version>1.0</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.sjd.gordon</groupId>
+			<artifactId>gordon-gwtcore</artifactId>
+			<version>1.0</version>
+			<scope>provided</scope>
+		</dependency>		
+		<dependency>
+			<groupId>org.sonatype.sisu.inject</groupId>
+			<artifactId>guice-persist</artifactId>
+			<version>3.0.0</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.eclipse.persistence</groupId>
+			<artifactId>javax.persistence</artifactId>
+			<version>${javax.persistence-version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.persistence</groupId>
+			<artifactId>eclipselink</artifactId>
+			<version>${eclipselink-version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>net.customware.gwt.dispatch</groupId>
+			<artifactId>gwt-dispatch</artifactId>
+			<version>1.1.0</version>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+</project>
