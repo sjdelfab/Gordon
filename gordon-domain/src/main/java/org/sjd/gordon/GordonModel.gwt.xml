@@ -1,5 +1,0 @@
-<module rename-to="org.sjd.gordon.GordonModel">
-    <source path="model"/>
-    <source path="dao"/>
-    <source path="dao/csv"/>
-</module>

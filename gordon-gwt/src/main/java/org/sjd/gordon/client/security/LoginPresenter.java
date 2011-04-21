@@ -2,7 +2,6 @@ package org.sjd.gordon.client.security;
 
 import net.customware.gwt.dispatch.client.DispatchAsync;
 import net.customware.gwt.presenter.client.EventBus;
-import net.customware.gwt.presenter.client.widget.WidgetDisplay;
 import net.customware.gwt.presenter.client.widget.WidgetPresenter;
 
 import org.sjd.gordon.shared.security.Login;
@@ -10,18 +9,10 @@ import org.sjd.gordon.shared.security.Login;
 import com.allen_sauer.gwt.log.client.Log;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.event.dom.client.HasClickHandlers;
-import com.google.gwt.user.client.ui.HasValue;
 import com.google.inject.Inject;
 
 public class LoginPresenter extends WidgetPresenter<LoginView> {
 
-	public interface LoginDisplay extends WidgetDisplay {
-		public HasValue<String> getUserName();
-		public HasValue<String> getPassword();
-		public HasClickHandlers getLogin();
-	}
-	
 	private final DispatchAsync dispatcher;
 	
 	@Inject
@@ -38,6 +29,11 @@ public class LoginPresenter extends WidgetPresenter<LoginView> {
 			@Override
 			public void loggedIn(Boolean success) {
 				eventBus.fireEvent(new LoginSucessEvent());
+			}
+
+			@Override
+			public void setDisplayName(String displayName) { 
+				eventBus.fireEvent(new ChangeUserNameEvent(displayName));
 			}
 		});
 	}

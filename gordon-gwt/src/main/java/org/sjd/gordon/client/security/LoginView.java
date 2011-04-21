@@ -2,7 +2,6 @@ package org.sjd.gordon.client.security;
 
 import org.sjd.gordon.client.gxt.Button;
 import org.sjd.gordon.client.gxt.TextField;
-import org.sjd.gordon.client.security.LoginPresenter.LoginDisplay;
 
 import com.extjs.gxt.ui.client.Style.HorizontalAlignment;
 import com.extjs.gxt.ui.client.event.ButtonEvent;

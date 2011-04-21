@@ -19,6 +19,7 @@
         <class>org.sjd.gordon.model.UnitaryPropertyDGM</class>
         <class>org.sjd.gordon.model.UnitaryPropertyDefinition</class>
         <class>org.sjd.gordon.model.UnitaryPropertyValue</class>
+        <class>org.sjd.gordon.model.User</class>
         <properties>
             <property name="eclipselink.target-database" value="DERBY"/>
             <property name="eclipselink.ddl-generation" value="drop-and-create-tables"/>

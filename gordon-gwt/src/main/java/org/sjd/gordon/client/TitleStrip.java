@@ -1,5 +1,8 @@
 package org.sjd.gordon.client;
 
+import org.sjd.gordon.client.security.ChangeUserNameEvent;
+import org.sjd.gordon.client.security.ChangeUserNameEventHandler;
+
 import com.extjs.gxt.ui.client.util.Margins;
 import com.extjs.gxt.ui.client.util.Padding;
 import com.extjs.gxt.ui.client.widget.Html;
@@ -14,8 +17,10 @@ import com.extjs.gxt.ui.client.widget.menu.MenuBarItem;
 import com.extjs.gxt.ui.client.widget.menu.MenuItem;
 import com.google.gwt.user.client.Element;
 
-public class TitleStrip extends LayoutContainer {
+public class TitleStrip extends LayoutContainer implements ChangeUserNameEventHandler {
 
+	private Text displayName;
+	
 	@Override  
 	protected void onRender(Element parent, int index) {  
 	    super.onRender(parent, index);
@@ -30,6 +35,13 @@ public class TitleStrip extends LayoutContainer {
         flex.setFlex(1);  
         add(new Text(), flex);
 	    
+        displayName = new Text();
+        displayName.setStyleAttribute("background", "#330099");
+        displayName.setStyleAttribute("color", "white");
+        displayName.setStyleAttribute("font-size", "12px");
+        displayName.setStyleAttribute("font-family", "arial");
+        add(displayName, new HBoxLayoutData(new Margins(9))); 
+        
         Menu sessionMenu = new Menu();
 		MenuItem logoutMenuItem = new MenuItem("Logout");
 		sessionMenu.add(logoutMenuItem);
@@ -53,6 +65,12 @@ public class TitleStrip extends LayoutContainer {
 		MenuBarItem setupMenuBarItem = new MenuBarItem("Setup", setupMenu);
 		bar.add(setupMenuBarItem);
 		bar.add(new MenuBarItem("Session", sessionMenu));
-		add(bar, new HBoxLayoutData(new Margins(2)));  
+		add(bar, new HBoxLayoutData(new Margins(3)));  
+	}
+
+	@Override
+	public void changedName(ChangeUserNameEvent event) {
+		displayName.setText(event.getNewName());
+		layout(true);
 	}
 }

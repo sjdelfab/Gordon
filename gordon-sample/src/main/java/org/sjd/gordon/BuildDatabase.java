@@ -19,6 +19,7 @@ import org.sjd.gordon.dao.csv.CSVSecurityRegistryDAO;
 import org.sjd.gordon.model.Exchange;
 import org.sjd.gordon.model.StockDayTradeRecord;
 import org.sjd.gordon.model.StockEntity;
+import org.sjd.gordon.model.User;
 
 public class BuildDatabase {
 
@@ -43,9 +44,34 @@ public class BuildDatabase {
 	}
 	
     private static void build() throws Exception {
+    	createUsers();
     	loadTradeHistory(buildRegistry(addExchange()));
 	}
 
+    private static void createUsers() throws Exception {
+    	User user = new User();
+    	user.setFirstName("Simon");
+    	user.setLastName("Doe");
+    	user.setUsername("sdoe");
+    	user.setPassword("NoSecrets");
+    	
+    	EntityTransaction tx = em.getTransaction(); 
+    	tx.begin(); 
+        em.persist(user);
+        tx.commit(); 
+        
+        user = new User();
+    	user.setFirstName("NOTORIOUS");
+    	user.setLastName("S.T.E.W");
+    	user.setUsername("nstew");
+    	user.setPassword("LuvYouBaby69");
+    	
+    	tx = em.getTransaction(); 
+    	tx.begin(); 
+        em.persist(user);
+        tx.commit(); 
+    }
+    
 	private static Exchange addExchange() throws Exception {
         Exchange exchange = new Exchange();
         exchange.setActive(true);

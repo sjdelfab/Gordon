@@ -6,6 +6,7 @@ import net.customware.gwt.presenter.client.EventBus;
 
 import org.sjd.gordon.client.navigation.NavigationPresenter;
 import org.sjd.gordon.client.security.LoginPresenter;
+import org.sjd.gordon.client.viewer.StockPresenter;
 
 import com.google.gwt.inject.client.GinModules;
 import com.google.gwt.inject.client.Ginjector;
@@ -16,4 +17,6 @@ public interface GordonGinjector extends Ginjector {
 	LoginPresenter getLoginPresenter();
 	NavigationPresenter getNavigationPresenter();
 	EventBus getEventBus();
+	MainPresenter getMainPresenter();
+	StockPresenter getStockPresenter();
 }

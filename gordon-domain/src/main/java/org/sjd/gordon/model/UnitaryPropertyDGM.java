@@ -10,13 +10,14 @@ import javax.persistence.Table;
 public class UnitaryPropertyDGM extends DisplayGroupMember {
 
 	@ManyToOne
-	@JoinColumn(name="TYPE_ID",nullable = false, referencedColumnName="ID")
-	private UnitaryPropertyDefinition dataType;
+	@JoinColumn(name="DEFINITION_ID",nullable = false, referencedColumnName="ID")
+	private UnitaryPropertyDefinition propertyDefinition;
 	
-	public UnitaryPropertyDefinition getDataType() {
-		return dataType;
+	public UnitaryPropertyDefinition getPropertyDefinition() {
+		return propertyDefinition;
 	}
-	public void setDataType(UnitaryPropertyDefinition dataType) {
-		this.dataType = dataType;
+	
+	public void setPropertyDefinition(UnitaryPropertyDefinition propertyDefinition) {
+		this.propertyDefinition = propertyDefinition;
 	}
 }

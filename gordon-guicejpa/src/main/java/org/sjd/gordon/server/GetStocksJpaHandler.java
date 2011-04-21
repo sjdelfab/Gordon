@@ -22,10 +22,10 @@ public class GetStocksJpaHandler implements ActionHandler<GetStocks,GotStocks> {
 	
 	@Override
 	public GotStocks execute(GetStocks getStocks, ExecutionContext context) throws DispatchException {
-		String getStockByExchange = "SELECT s FROM StockEntity s";
+		String getStockByExchange = "SELECT s FROM StockEntity s WHERE s.exchange.id = :id";
     	TypedQuery<StockEntity> query = em.createQuery(getStockByExchange, StockEntity.class);
+    	query.setParameter("id", getStocks.getExchangeId());
     	List<StockEntity> stocks = query.getResultList();
-    	System.out.println("Stocks Number: " + stocks.size());
 		return new GotStocks(new ArrayList<StockEntity>(stocks));
 	}
 	

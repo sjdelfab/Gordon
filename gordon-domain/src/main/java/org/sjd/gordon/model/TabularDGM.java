@@ -15,7 +15,7 @@ public class TabularDGM extends DisplayGroupMember {
 	@ManyToOne
 	@JoinColumn(name="DATASET_ID",nullable = false, referencedColumnName="ID")
 	private TabularDatasetDefinition datasetType;
-	@Column(nullable = false)
+	@Column(nullable = false,name="visualisation_type")
 	@Enumerated(EnumType.STRING) 
 	private DatasetVisualisationType visualisationType;
 	

@@ -5,14 +5,12 @@
 	<classpathentry including="**/*.java" kind="src" path="src/main/java"/>
 	<classpathentry including="**/*.java" kind="src" path="target/generated-sources/gwt"/>
 	<classpathentry excluding="**/*.java" kind="src" path="src/main/resources"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/gordon-model">
-		<accessrules>
-			<accessrule kind="accessible" pattern="**/*"/>
-		</accessrules>
-	</classpathentry>
-	<classpathentry kind="con" path="com.google.appengine.eclipse.core.GAE_CONTAINER"/>
-	<classpathentry kind="con" path="com.google.gwt.eclipse.core.GWT_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.launching.macosx.MacOSXType/JVM Contents"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/GWT Local Library"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/gordon-model"/>
+	<classpathentry kind="con" path="com.google.appengine.eclipse.core.GAE_CONTAINER"/>
+	<classpathentry kind="con" path="com.google.gwt.eclipse.core.GWT_CONTAINER"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/gordon-guicejpa"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/gordon-gwtcore"/>
 	<classpathentry kind="output" path="src/main/webapp/WEB-INF/classes"/>
 </classpath>

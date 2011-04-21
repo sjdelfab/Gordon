@@ -8,15 +8,17 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Version;
 
 @MappedSuperclass 
 @Inheritance(strategy = InheritanceType.JOINED)
+@SequenceGenerator(schema="GORDON",name = "stockIdSeqGenerator", sequenceName  = "SEQ_SECURITY_ENTITY",initialValue=1, allocationSize=1)
 public class SecurityEntity implements Serializable {
 
 	private static final long serialVersionUID = 5651612325834821120L;
 
-	@Id @GeneratedValue
+	@Id @GeneratedValue(generator="stockIdSeqGenerator")
 	private Long id;
 	@Version 
     private Integer version;

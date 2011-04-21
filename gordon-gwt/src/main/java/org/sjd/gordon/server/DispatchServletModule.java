@@ -11,6 +11,9 @@ public class DispatchServletModule extends ServletModule {
 		// NOTE: the servlet context will probably need changing
 		super.configureServlets();
 		serve("/Gordon/dispatch").with(GuiceStandardDispatchServlet.class);
+//		install(new JpaPersistModule("gordon"));  // like we saw earlier.
+//	    filter("/*").through(PersistFilter.class);
+		
 	}
 
 }

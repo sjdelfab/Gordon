@@ -59,7 +59,7 @@ public class DisplayModelEJBTest extends AbstractEJBTest {
     	displayGroup.setName("Group 1");
     	
     	UnitaryPropertyDGM unitaryDgm = new UnitaryPropertyDGM();
-    	unitaryDgm.setDataType(group1UnitaryDefinition);
+    	unitaryDgm.setPropertyDefinition(group1UnitaryDefinition);
     	unitaryDgm.setOrder(Integer.valueOf(1));
     	displayGroup.addMember(unitaryDgm);
     	

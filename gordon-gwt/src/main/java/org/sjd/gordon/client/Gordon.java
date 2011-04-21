@@ -2,9 +2,13 @@ package org.sjd.gordon.client;
 
 
 import org.sjd.gordon.client.navigation.NavigationPresenter;
+import org.sjd.gordon.client.navigation.ShowStockEvent;
+import org.sjd.gordon.client.navigation.ShowStockEventHandler;
+import org.sjd.gordon.client.security.ChangeUserNameEvent;
 import org.sjd.gordon.client.security.LoginEventHandler;
 import org.sjd.gordon.client.security.LoginPresenter;
 import org.sjd.gordon.client.security.LoginSucessEvent;
+import org.sjd.gordon.client.viewer.StockDisplay;
 
 import com.extjs.gxt.ui.client.Registry;
 import com.extjs.gxt.ui.client.Style.LayoutRegion;
@@ -23,9 +27,11 @@ import com.google.gwt.user.client.ui.RootPanel;
 public class Gordon implements EntryPoint {
 
 	public static final String STOCKS_STORE = "stocksStore";
+	public static final String EXCHANGE_STORE = "exchangeStore";
 	
 	private Viewport viewport;
 	private LoginPresenter loginPresenter;
+	private MainPresenter mainPresenter;
 
 	private final GordonGinjector injector = GWT.create(GordonGinjector.class);
 	
@@ -42,7 +48,16 @@ public class Gordon implements EntryPoint {
 				login();
 			}
 		});
-		
+		mainPresenter = injector.getMainPresenter();
+		injector.getEventBus().addHandler(ShowStockEvent.TYPE, new ShowStockEventHandler() {
+			
+			@Override
+			public void show(ShowStockEvent event) {
+				StockDisplay stockDisplay = injector.getStockPresenter().getDisplay();
+				stockDisplay.setStock(event.getStock());
+				mainPresenter.getDisplay().addStock(stockDisplay,event.getStock());
+			}
+		});
 		viewport = new Viewport();
 		final BorderLayout borderLayout = new BorderLayout();
 		viewport.setLayout(borderLayout);
@@ -52,10 +67,11 @@ public class Gordon implements EntryPoint {
 		RootPanel.get().add(viewport);
 		
 		Registry.register(STOCKS_STORE,  new ListStore<BeanModel>());
+		Registry.register(EXCHANGE_STORE,  new ListStore<BeanModel>());
 	}
 
 	private void login() {
-		addMenuBar();
+		addTitleStrip();
 		setNavigationPanel();
 		setMainPanel();
 		viewport.remove(loginPresenter.getDisplay().asWidget());
@@ -65,8 +81,7 @@ public class Gordon implements EntryPoint {
 	private void setMainPanel() {
 		BorderLayoutData centerData = new BorderLayoutData(LayoutRegion.CENTER);
 		centerData.setCollapsible(false);
-		ResultsPanel mainPanel = new ResultsPanel();
-		viewport.add(new GraphPanel(), centerData);
+		viewport.add(mainPresenter.getDisplay().asWidget(), centerData);
 	}
 	
 	private void setNavigationPanel() {
@@ -74,17 +89,18 @@ public class Gordon implements EntryPoint {
 		westData.setCollapsible(true);
 		westData.setSplit(true);
 		NavigationPresenter navigationPresenter = injector.getNavigationPresenter();
-		viewport.add(navigationPresenter.getDisplay(), westData);
+		viewport.add(navigationPresenter.getDisplay().asWidget(), westData);
 		viewport.layout();
 	}
 	
-	private void addMenuBar() {
+	private void addTitleStrip() {
 		BorderLayoutData northData = new BorderLayoutData(LayoutRegion.NORTH, 33);
 		northData.setMargins(new Margins());
 		northData.setCollapsible(false);
 		northData.setSplit(false);
-		
-		viewport.add(new TitleStrip(),northData);
+		TitleStrip titleStrip = new TitleStrip();
+		injector.getEventBus().addHandler(ChangeUserNameEvent.TYPE,titleStrip);
+		viewport.add(titleStrip,northData);
 	}
 
 }

@@ -19,11 +19,12 @@
         <class>org.sjd.gordon.model.UnitaryPropertyDGM</class>
         <class>org.sjd.gordon.model.UnitaryPropertyDefinition</class>
         <class>org.sjd.gordon.model.UnitaryPropertyValue</class>
+        <class>org.sjd.gordon.model.User</class>
         <properties>
             <property name="eclipselink.target-database" value="org.eclipse.persistence.platform.database.H2Platform"/>
             <property name="eclipselink.logging.level" value="FINE"/>
             <property name="javax.persistence.jdbc.driver" value="org.h2.Driver"/>
-            <property name="javax.persistence.jdbc.url" value="jdbc:h2:./db/gordondb;SCHEMA=GORDON"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:h2:/Users/sjdelfab/projects/Gordon/gordon-sample/sample_data/db/gordondb;SCHEMA=GORDON"/>
             <property name="javax.persistence.jdbc.user" value="GORDON"/>
             <property name="javax.persistence.jdbc.password" value="abc"/>
         </properties>

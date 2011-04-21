@@ -6,17 +6,19 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
 @Entity
-@Table(name = "exchange")
+@Table(name = "EXCHANGE")
+@SequenceGenerator(schema="GORDON",name = "exchangeIdSeqGenerator", sequenceName  = "SEQ_EXCHANGE",initialValue=1, allocationSize=1)
 public class Exchange implements Serializable {
     
 	private static final long serialVersionUID = -9181164934674054648L;
 
-	@Id @GeneratedValue
-    private int id;
+	@Id @GeneratedValue(generator="exchangeIdSeqGenerator")
+    private Integer id;
 	@Version 
     private Integer version;
 	@Column(nullable = false,name="active")
@@ -60,5 +62,8 @@ public class Exchange implements Serializable {
 		return id;
 	}
     
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
 }

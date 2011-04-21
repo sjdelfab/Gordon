@@ -44,7 +44,7 @@ public class DisplayGroupTest extends AbstractJpaTest {
     	displayGroup.setName("Group 1");
     	
     	UnitaryPropertyDGM unitaryDgm = new UnitaryPropertyDGM();
-    	unitaryDgm.setDataType(unitaryType);
+    	unitaryDgm.setPropertyDefinition(unitaryType);
     	unitaryDgm.setOrder(Integer.valueOf(1));
     	displayGroup.addMember(unitaryDgm);
     	

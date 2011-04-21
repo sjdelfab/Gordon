@@ -9,21 +9,26 @@
 
 package org.sjd.gordon.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "stock_day_trade")
-public class StockDayTradeRecord {
+@SequenceGenerator(schema="GORDON",name = "dayTradeIdSeqGenerator", sequenceName  = "SEQ_STOCK_DAY_TRADE",initialValue=1, allocationSize=1)
+public class StockDayTradeRecord implements Serializable {
     
-	@Id @GeneratedValue
+	private static final long serialVersionUID = -2137239251321161474L;
+	
+	@Id @GeneratedValue(generator="dayTradeIdSeqGenerator")
     private int id;
 	@Column(nullable = false,name="stock_id")
 	private long stockId;

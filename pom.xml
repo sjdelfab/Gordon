@@ -12,6 +12,9 @@
         <module>gordon-domain</module>
         <module>gordon-ejb</module>
         <module>gordon-gwt</module>
+        <module>gordon-sample</module>
+        <module>gordon-guicejpa</module>
+    <module>gordon-gwtcore</module>
   </modules>
 
     <properties>

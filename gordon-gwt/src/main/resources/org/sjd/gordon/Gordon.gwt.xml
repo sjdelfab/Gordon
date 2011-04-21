@@ -17,7 +17,8 @@
   <!-- <inherits name='com.google.gwt.user.theme.dark.Dark'/>     -->
 
   <!-- Other module inherits                                      -->
-  <inherits name="org.sjd.gordon.GordonModel" />>
+  <inherits name="org.sjd.gordon.GordonModel" />
+  <inherits name="org.sjd.gordon.GordonGwtCore" />
   <!-- Specify the app entry point class.                         -->
   <entry-point class='org.sjd.gordon.client.Gordon'/>
 
@@ -36,7 +37,6 @@
   <source path='client/security'/>
   <source path='client/navigation'/>
   <source path='client/gxt'/>
+  <source path='client/viewer'/>
   <source path='shared'/>
-  <source path='shared/security'/>
-  <source path='shared/navigation'/>
 </module>
