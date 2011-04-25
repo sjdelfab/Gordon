@@ -2,10 +2,10 @@ package org.sjd.gordon.client.navigation;
 
 import java.util.ArrayList;
 
-import org.sjd.gordon.model.Exchange;
-import org.sjd.gordon.model.StockEntity;
-
 import net.customware.gwt.presenter.client.widget.WidgetDisplay;
+
+import org.sjd.gordon.model.Exchange;
+import org.sjd.gordon.shared.navigation.StockName;
 
 import com.extjs.gxt.ui.client.data.BeanModel;
 import com.google.gwt.event.dom.client.HasClickHandlers;
@@ -16,7 +16,7 @@ public interface NavigationDisplay extends WidgetDisplay {
 	public HasValue<BeanModel> getExchange();
 	public HasClickHandlers getExchangeHandler();
 	public HasClickHandlers getViewHandler();
-	public void setStocks(ArrayList<StockEntity> stocks);
+	public void setStocks(ArrayList<StockName> stocks);
 	public void setExchanges(ArrayList<Exchange> exchanges);
 
 }

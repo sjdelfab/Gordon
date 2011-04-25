@@ -11,7 +11,7 @@ import org.sjd.gordon.model.Exchange;
 @Stateless
 public class ExchangeEJB {
 
-	@PersistenceContext(unitName = "gordon") 
+	@PersistenceContext
     private EntityManager em; 
  
     public Exchange findExchangeById(Integer id) { 

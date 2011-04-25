@@ -1,6 +1,6 @@
 package org.sjd.gordon.client.viewer;
 
-import org.sjd.gordon.model.StockEntity;
+import org.sjd.gordon.shared.viewer.StockDetails;
 
 import com.extjs.gxt.ui.client.Style.LayoutRegion;
 import com.extjs.gxt.ui.client.widget.LayoutContainer;
@@ -52,14 +52,14 @@ public class GeneralInformationView extends LayoutContainer implements GeneralIn
 	  }
 
 	@Override
-	public void setStock(StockEntity stock) {
-		nameTextField.setValue(stock.getName());
-		codeTextField.setValue(stock.getCode());
-		if (stock.getListDate() != null) {
-		   listDateTextField.setValue(dateFormatter.format(stock.getListDate()));
+	public void setStock(StockDetails stockDetails) {
+		nameTextField.setValue(stockDetails.getName());
+		codeTextField.setValue(stockDetails.getCode());
+		if (stockDetails.getListDate() != null) {
+		   listDateTextField.setValue(dateFormatter.format(stockDetails.getListDate()));
 		}
-		if (stock.getLastTradeDate() != null) {
-		   lastTradeTextField.setValue(dateFormatter.format(stock.getLastTradeDate()));
+		if (stockDetails.getLastTradeDate() != null) {
+		   lastTradeTextField.setValue(dateFormatter.format(stockDetails.getLastTradeDate()));
 		}
 	}
 	

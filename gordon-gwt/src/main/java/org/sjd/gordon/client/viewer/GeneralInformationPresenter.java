@@ -1,9 +1,9 @@
 package org.sjd.gordon.client.viewer;
 
-import org.sjd.gordon.model.StockEntity;
-
 import net.customware.gwt.presenter.client.EventBus;
 import net.customware.gwt.presenter.client.widget.WidgetPresenter;
+
+import org.sjd.gordon.shared.viewer.StockDetails;
 
 import com.google.inject.Inject;
 
@@ -26,8 +26,8 @@ public class GeneralInformationPresenter extends WidgetPresenter<GeneralInformat
 	@Override
 	protected void onRevealDisplay() { }
 
-	public void setStock(StockEntity stock) {
-		getDisplay().setStock(stock);
+	public void setStock(StockDetails stockDetails) {
+		getDisplay().setStock(stockDetails);
 	}
 
 }

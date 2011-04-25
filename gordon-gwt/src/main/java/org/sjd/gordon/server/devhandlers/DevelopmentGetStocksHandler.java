@@ -6,9 +6,9 @@ import net.customware.gwt.dispatch.server.ActionHandler;
 import net.customware.gwt.dispatch.server.ExecutionContext;
 import net.customware.gwt.dispatch.shared.DispatchException;
 
-import org.sjd.gordon.model.StockEntity;
 import org.sjd.gordon.shared.navigation.GetStocks;
 import org.sjd.gordon.shared.navigation.GotStocks;
+import org.sjd.gordon.shared.navigation.StockName;
 
 public class DevelopmentGetStocksHandler implements ActionHandler<GetStocks,GotStocks> {
 
@@ -17,13 +17,13 @@ public class DevelopmentGetStocksHandler implements ActionHandler<GetStocks,GotS
 		return new GotStocks(create());
 	}
 	
-	private ArrayList<StockEntity> create() {
-		ArrayList<StockEntity> list = new ArrayList<StockEntity>();
-		StockEntity stock = new StockEntity();
+	private ArrayList<StockName> create() {
+		ArrayList<StockName> list = new ArrayList<StockName>();
+		StockName stock = new StockName();
 		stock.setCode("ABC");
 		stock.setName("ABC Ltd");
 		list.add(stock);
-		stock = new StockEntity();
+		stock = new StockName();
 		stock.setCode("BHP");
 		stock.setName("BHP Ltd");
 		list.add(stock);

@@ -1,7 +1,7 @@
 package org.sjd.gordon.client;
 
 import org.sjd.gordon.client.viewer.StockDisplay;
-import org.sjd.gordon.model.StockEntity;
+import org.sjd.gordon.shared.viewer.StockDetails;
 
 import com.extjs.gxt.ui.client.Style.LayoutRegion;
 import com.extjs.gxt.ui.client.widget.LayoutContainer;
@@ -28,9 +28,9 @@ public class MainView extends LayoutContainer implements MainDisplay {
 	    add(tabbedPanel,centerData);  
 	  }  
 	  
-	  public void addStock(StockDisplay stockDisplay, StockEntity stockEntity) {  
+	  public void addStock(StockDisplay stockDisplay, StockDetails stockDetails) {  
 	    TabItem item = new TabItem();  
-	    item.setText(stockEntity.getCode());  
+	    item.setText(stockDetails.getCode());  
 	    item.addStyleName("pad-text");
 	    item.setClosable(true);
 	    item.add(stockDisplay.asWidget());

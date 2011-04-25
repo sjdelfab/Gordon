@@ -10,7 +10,7 @@
 		<property name="db.name" value="${target.dir}/gordondb"/>
 		<property name="userName" value="sa"/>
 		<property name="password" value=""/>
-		<property name="jdbcUrl" value="jdbc:h2:${db.name}"/>
+		<property name="jdbcUrl" value="jdbc:h2:tcp://localhost/~/gordondb"/>
 		<property name="jdbcDriverClassName" value="org.h2.Driver"/>
 
 		<delete dir="db"/>

@@ -54,8 +54,8 @@ public class Gordon implements EntryPoint {
 			@Override
 			public void show(ShowStockEvent event) {
 				StockDisplay stockDisplay = injector.getStockPresenter().getDisplay();
-				stockDisplay.setStock(event.getStock());
-				mainPresenter.getDisplay().addStock(stockDisplay,event.getStock());
+				stockDisplay.setStock(event.getStockDetails());
+				mainPresenter.getDisplay().addStock(stockDisplay,event.getStockDetails());
 			}
 		});
 		viewport = new Viewport();

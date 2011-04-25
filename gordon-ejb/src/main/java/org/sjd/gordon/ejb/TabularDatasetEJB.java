@@ -18,7 +18,7 @@ import org.sjd.gordon.model.TabularDatasetRow;
 @Stateless
 public class TabularDatasetEJB {
 
-	@PersistenceContext(unitName = "gordon") 
+	@PersistenceContext
     private EntityManager em;
 	
 	public TabularDatasetDefinition addDefinition(TabularDatasetDefinition definition) {

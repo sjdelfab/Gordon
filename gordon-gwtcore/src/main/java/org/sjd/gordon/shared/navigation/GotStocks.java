@@ -5,23 +5,21 @@ import java.util.ArrayList;
 
 import net.customware.gwt.dispatch.shared.Result;
 
-import org.sjd.gordon.model.StockEntity;
-
 public class GotStocks implements Serializable, Result {
 
 	private static final long serialVersionUID = 5892077069958705597L;
 	
-	private ArrayList<StockEntity> stocks;
+	private ArrayList<StockName> stocks;
 	
 	public GotStocks() {
-		this(new ArrayList<StockEntity>(0));
+		this(new ArrayList<StockName>(0));
 	}
 	
-	public GotStocks(ArrayList<StockEntity> stocks) {
+	public GotStocks(ArrayList<StockName> stocks) {
 		this.stocks = stocks;
 	}
 	
-	public ArrayList<StockEntity> getStocks() {
+	public ArrayList<StockName> getStocks() {
 		return stocks;
 	}
 

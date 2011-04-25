@@ -6,12 +6,14 @@ import net.customware.gwt.dispatch.client.DispatchAsync;
 import net.customware.gwt.presenter.client.EventBus;
 import net.customware.gwt.presenter.client.widget.WidgetPresenter;
 
+import org.sjd.gordon.client.viewer.LoadStockDetailsCallback;
 import org.sjd.gordon.model.Exchange;
-import org.sjd.gordon.model.StockEntity;
 import org.sjd.gordon.shared.navigation.GetExchanges;
 import org.sjd.gordon.shared.navigation.GetStocks;
+import org.sjd.gordon.shared.navigation.StockName;
+import org.sjd.gordon.shared.viewer.GetStockDetails;
+import org.sjd.gordon.shared.viewer.StockDetails;
 
-import com.allen_sauer.gwt.log.client.Log;
 import com.extjs.gxt.ui.client.data.BeanModel;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -36,22 +38,20 @@ public class NavigationPresenter extends WidgetPresenter<NavigationDisplay> {
 		getDisplay().getViewHandler().addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent arg0) {
-				StockEntity stock = (StockEntity)getDisplay().getStock().getValue().getBean();
+				StockName stock = (StockName)getDisplay().getStock().getValue().getBean();
 				if (stock != null) {
-				    eventBus.fireEvent(new ShowStockEvent(stock));
+					showStock(stock);
 				}
 			}
 		});
 		getDisplay().getExchange().addValueChangeHandler(new ValueChangeHandler<BeanModel>() {
 			@Override
 			public void onValueChange(ValueChangeEvent<BeanModel> event) {
-				Log.info("Value changed");
 				if (event.getValue() != null) {
-					Log.info("Getting stocks");
 					GetStocks getStocks = new GetStocks((Integer)event.getValue().get("id"));
 					dispatcher.execute(getStocks, new LoadStocksCallback() {
 						@Override
-						public void loaded(ArrayList<StockEntity> stocks) {
+						public void loaded(ArrayList<StockName> stocks) {
 							getDisplay().setStocks(stocks);
 						}
 					});
@@ -68,7 +68,16 @@ public class NavigationPresenter extends WidgetPresenter<NavigationDisplay> {
 				getDisplay().setExchanges(exchanges);
 			}
 		});
-		
+	}
+	
+	private void showStock(StockName stockName) {
+		GetStockDetails getExchanges = new GetStockDetails(stockName.getId());
+		dispatcher.execute(getExchanges, new LoadStockDetailsCallback() {
+			@Override
+			public void loaded(StockDetails stockDetails) {
+				eventBus.fireEvent(new ShowStockEvent(stockDetails));
+			}
+		});
 	}
 
 	@Override

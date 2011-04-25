@@ -14,7 +14,7 @@ import org.sjd.gordon.model.UnitaryPropertyValue;
 @Stateless
 public class UnitaryPropertiesEJB {
 
-	@PersistenceContext(unitName = "gordon") 
+	@PersistenceContext 
     private EntityManager em; 
 	
 	public UnitaryPropertyDefinition addDefinition(UnitaryPropertyDefinition definition) {

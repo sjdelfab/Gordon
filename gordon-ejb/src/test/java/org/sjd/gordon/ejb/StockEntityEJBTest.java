@@ -58,11 +58,11 @@ public class StockEntityEJBTest extends AbstractEJBTest {
     	stock.setName("ANZ Ltd");
     	stockEntityEjb.createStock(stock);
     	
-    	List<StockEntity> stocks = stockEntityEjb.getStocks(exchange);
+    	List<StockEntity> stocks = stockEntityEjb.getStocks(exchange.getId());
     	assertEquals("Must have 2 stocks",2,stocks.size());
     	
     	stockEntityEjb.deleteStock(bhpStock);
-    	stocks = stockEntityEjb.getStocks(exchange);
+    	stocks = stockEntityEjb.getStocks(exchange.getId());
     	assertEquals("Must have 1 stocks",1,stocks.size());
     	
     	StockDayTradeRecord dayTrade = new StockDayTradeRecord();
@@ -76,11 +76,11 @@ public class StockEntityEJBTest extends AbstractEJBTest {
     	
     	dayTrade = stockEntityEjb.addDayTrade(dayTrade);
     	assertNotNull("ID should not be null", dayTrade.getId());
-    	List<StockDayTradeRecord> dayTrades = stockEntityEjb.getDayTradeData(stock);
+    	List<StockDayTradeRecord> dayTrades = stockEntityEjb.getDayTradeData(stock.getId());
     	assertEquals("Must have 1 day trade",1,dayTrades.size());
     	
     	stockEntityEjb.deleteAllDayTrades(stock);
-    	dayTrades = stockEntityEjb.getDayTradeData(stock);
+    	dayTrades = stockEntityEjb.getDayTradeData(stock.getId());
     	assertEquals("Must have 0 day trade",0,dayTrades.size());
     }
 }

@@ -5,6 +5,7 @@ import net.customware.gwt.dispatch.server.guice.ActionHandlerModule;
 import org.sjd.gordon.shared.navigation.GetExchanges;
 import org.sjd.gordon.shared.navigation.GetStocks;
 import org.sjd.gordon.shared.security.Login;
+import org.sjd.gordon.shared.viewer.GetStockDetails;
 import org.sjd.gordon.shared.viewer.GetTradeHistory;
 
 import com.google.inject.Singleton;
@@ -18,6 +19,7 @@ public class GuiceJpaServerModule extends ActionHandlerModule {
 		bindHandler(GetStocks.class, GetStocksJpaHandler.class);
 		bindHandler(GetExchanges.class, GetExchangesJpaHandler.class);
 		bindHandler(GetTradeHistory.class, GetTradeHistoryJpaHandler.class);
+		bindHandler(GetStockDetails.class, GetStockDetailsJpaHandler.class);
 	}
 
 }

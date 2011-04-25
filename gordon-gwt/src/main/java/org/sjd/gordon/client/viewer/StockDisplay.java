@@ -1,11 +1,11 @@
 package org.sjd.gordon.client.viewer;
 
-import org.sjd.gordon.model.StockEntity;
-
 import net.customware.gwt.presenter.client.widget.WidgetDisplay;
+
+import org.sjd.gordon.shared.viewer.StockDetails;
 
 public interface StockDisplay extends WidgetDisplay {
 	
-	public void setStock(StockEntity stock);
+	public void setStock(StockDetails stockDetails);
 
 }

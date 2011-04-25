@@ -11,7 +11,7 @@ import org.sjd.gordon.model.Tab;
 @Stateless
 public class DisplayModelEJB {
 
-	@PersistenceContext(unitName = "gordon") 
+	@PersistenceContext 
     private EntityManager em;
 	
 	public List<Tab> getTabs() {

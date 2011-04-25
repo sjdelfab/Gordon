@@ -1,5 +1,6 @@
 package org.sjd.gordon.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -12,7 +13,7 @@ import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "stock")
-public class StockEntity extends SecurityEntity {
+public class StockEntity extends SecurityEntity implements Serializable {
 
 	private static final long serialVersionUID = -1729116164665674381L;
 
@@ -25,6 +26,8 @@ public class StockEntity extends SecurityEntity {
 	@Column(nullable = false,name="last_trade_date")
 	@Temporal(TemporalType.DATE)
 	private Date lastTradeDate;
+	
+	public StockEntity() {}
 	
 	public Exchange getExchange() {
 		return exchange;

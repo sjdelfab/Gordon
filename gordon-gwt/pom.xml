@@ -39,7 +39,13 @@
 			<groupId>org.sjd.gordon</groupId>
 			<artifactId>gordon-guicejpa</artifactId>
 			<version>1.0</version>
-		</dependency>				
+		</dependency>
+		<dependency>
+			<groupId>org.sjd.gordon</groupId>
+			<artifactId>gordon-ejb</artifactId>
+			<version>1.0</version>
+			<scope>provided</scope>
+		</dependency>						
 		<dependency>
 			<groupId>com.google.gwt</groupId>
 			<artifactId>gwt-servlet</artifactId>
@@ -181,6 +187,7 @@
 								<copy file="../gordon-domain/target/gordon-domain-1.0.jar" todir="src/main/webapp/WEB-INF/lib"/>
 								<copy file="../gordon-domain/target/gordon-domain-1.0-sources.jar" todir="src/main/webapp/WEB-INF/lib"/>
 								<copy file="../gordon-guicejpa/target/gordon-guicejpa-1.0.jar" todir="src/main/webapp/WEB-INF/lib"/>
+								<copy file="../gordon-ejb/target/gordon-ejb.jar" todir="src/main/webapp/WEB-INF/lib"/>
 								<delete dir="src/main/webapp/WEB-INF/classes/org"/>
 								<delete dir="src/main/webapp/Gordon"/>
 								<delete dir="src/main/webapp/WEB-INF/deploy"/>
@@ -216,7 +223,7 @@
 								<copy file="../gordon-sample/lib/h2-1.3.154.jar" todir="target/gordon-gwt-1.0/WEB-INF/lib/"/>
 								<copy file="../gordon-domain/repository/org/eclipse/persistence/eclipselink/2.0.0/eclipselink-2.0.0.jar" todir="target/gordon-gwt-1.0/WEB-INF/lib/"/>
 								<mkdir dir="target/gordon-gwt-1.0/WEB-INF/classes/META-INF"/>
-								<copy file="../gordon-sample/sample_data/persistence.xml" todir="target/gordon-gwt-1.0/WEB-INF/classes/META-INF/"/>
+								<copy file="deploy/persistence.xml" todir="target/gordon-gwt-1.0/WEB-INF/classes/META-INF/"/>-->
 							</tasks>
 						</configuration>
 						<goals>

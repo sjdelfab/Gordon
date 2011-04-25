@@ -8,12 +8,8 @@ public class DispatchServletModule extends ServletModule {
 	
 	@Override
 	protected void configureServlets() {
-		// NOTE: the servlet context will probably need changing
 		super.configureServlets();
 		serve("/Gordon/dispatch").with(GuiceStandardDispatchServlet.class);
-//		install(new JpaPersistModule("gordon"));  // like we saw earlier.
-//	    filter("/*").through(PersistFilter.class);
-		
 	}
 
 }

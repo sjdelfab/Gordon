@@ -7,7 +7,7 @@ import org.sjd.gordon.client.Gordon;
 import org.sjd.gordon.client.gxt.Button;
 import org.sjd.gordon.client.gxt.ComboBox;
 import org.sjd.gordon.model.Exchange;
-import org.sjd.gordon.model.StockEntity;
+import org.sjd.gordon.shared.navigation.StockName;
 
 import com.extjs.gxt.ui.client.Registry;
 import com.extjs.gxt.ui.client.data.BeanModel;
@@ -118,8 +118,8 @@ public class NavigationView extends ContentPanel implements NavigationDisplay {
 		add(navigationPanel, vBoxData);
 	}
 	
-	public void setStocks(ArrayList<StockEntity> stocks) {
-		BeanModelFactory beanModelFactory = BeanModelLookup.get().getFactory(StockEntity.class);
+	public void setStocks(ArrayList<StockName> stocks) {
+		BeanModelFactory beanModelFactory = BeanModelLookup.get().getFactory(StockName.class);
 		List<BeanModel> stockModelList = beanModelFactory.createModel(stocks);
 		stockStore.add(stockModelList);
 	}

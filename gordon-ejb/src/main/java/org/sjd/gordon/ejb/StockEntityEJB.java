@@ -8,14 +8,13 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
-import org.sjd.gordon.model.Exchange;
 import org.sjd.gordon.model.StockDayTradeRecord;
 import org.sjd.gordon.model.StockEntity;
 
 @Stateless
 public class StockEntityEJB {
 
-	@PersistenceContext(unitName = "gordon") 
+	@PersistenceContext 
     private EntityManager em; 
  
     public StockEntity findStockById(Long id) { 
@@ -38,17 +37,17 @@ public class StockEntityEJB {
     	em.remove(em.merge(stock));
     }
     
-    public List<StockEntity> getStocks(Exchange exchange) {
+    public List<StockEntity> getStocks(Integer exchangeId) {
     	String getStockByExchange = "SELECT s FROM StockEntity s WHERE s.exchange.id = :id";
     	TypedQuery<StockEntity> query = em.createQuery(getStockByExchange, StockEntity.class);
-    	query.setParameter("id", exchange.getId());
+    	query.setParameter("id", exchangeId);
     	return query.getResultList();
     }
 
-    public List<StockDayTradeRecord> getDayTradeData(StockEntity stock) {
+    public List<StockDayTradeRecord> getDayTradeData(Long stockId) {
     	String getDayTradeData = "SELECT t FROM StockDayTradeRecord t WHERE t.stockId = :stockId";
     	TypedQuery<StockDayTradeRecord> query = em.createQuery(getDayTradeData, StockDayTradeRecord.class);
-    	query.setParameter("stockId", stock.getId());
+    	query.setParameter("stockId", stockId);
     	return query.getResultList();
     }
     
