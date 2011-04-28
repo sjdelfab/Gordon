@@ -7,19 +7,21 @@ import org.sjd.gordon.model.StockDayTradeRecord;
 import com.allen_sauer.gwt.log.client.Log;
 import com.extjs.gxt.ui.client.widget.LayoutContainer;
 import com.extjs.gxt.ui.client.widget.layout.FlowLayout;
-import com.google.gwt.user.client.Element;
+import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.visualization.client.AbstractDataTable.ColumnType;
 import com.google.gwt.visualization.client.DataTable;
 import com.google.gwt.visualization.client.VisualizationUtils;
 import com.google.gwt.visualization.client.visualizations.AnnotatedTimeLine;
 import com.google.gwt.visualization.client.visualizations.AnnotatedTimeLine.Options;
+import com.gwtplatform.mvp.client.ViewImpl;
 
-public class TradeHistoryView extends LayoutContainer implements TradeHistoryDisplay {
+public class TradeHistoryViewImpl extends ViewImpl implements TradeHistoryPresenter.TradeHistoryView {
 	
-	@Override
-	protected void onRender(Element parent, int index) {
-		super.onRender(parent, index);
-		setLayout(new FlowLayout(10)); 		
+	private LayoutContainer container;
+	
+	public TradeHistoryViewImpl() {
+		container = new LayoutContainer();
+		container.setLayout(new FlowLayout(10)); 		
 	}
 
 	@Override
@@ -44,13 +46,17 @@ public class TradeHistoryView extends LayoutContainer implements TradeHistoryDis
 			    Log.info("Create chart.");
 			    AnnotatedTimeLine chart = new AnnotatedTimeLine(data, options, "1000px", "600px");
 			    Log.info("Made chart");
-			    add(chart);
-			    doLayout(true);
+			    container.add(chart);
+			    container.layout(true);
 			    Log.info("Added chart.");
 			}
 			
 		};
-		
 		VisualizationUtils.loadVisualizationApi(onLoadCallback, AnnotatedTimeLine.PACKAGE);
+	}
+
+	@Override
+	public Widget asWidget() {
+		return container;
 	}
 }

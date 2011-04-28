@@ -3,21 +3,20 @@ package org.sjd.gordon.server.devhandlers;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
-import net.customware.gwt.dispatch.server.ActionHandler;
-import net.customware.gwt.dispatch.server.ExecutionContext;
-import net.customware.gwt.dispatch.shared.ActionException;
-import net.customware.gwt.dispatch.shared.DispatchException;
-
 import org.sjd.gordon.model.StockDayTradeRecord;
 import org.sjd.gordon.shared.viewer.GetTradeHistory;
 import org.sjd.gordon.shared.viewer.GotTradeHistory;
+
+import com.gwtplatform.dispatch.server.ExecutionContext;
+import com.gwtplatform.dispatch.server.actionhandler.ActionHandler;
+import com.gwtplatform.dispatch.shared.ActionException;
 
 public class DevelopmentGetTradeHistoryHandler implements ActionHandler<GetTradeHistory, GotTradeHistory> {
 
 	private SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yy");
 
 	@Override
-	public GotTradeHistory execute(GetTradeHistory arg0, ExecutionContext arg1) throws DispatchException {
+	public GotTradeHistory execute(GetTradeHistory arg0, ExecutionContext arg1) throws ActionException {
 		ArrayList<StockDayTradeRecord> history = new ArrayList<StockDayTradeRecord>();
 		StockDayTradeRecord record = new StockDayTradeRecord();
 		try {
@@ -57,7 +56,7 @@ public class DevelopmentGetTradeHistoryHandler implements ActionHandler<GetTrade
 	}
 
 	@Override
-	public void rollback(GetTradeHistory arg0, GotTradeHistory arg1, ExecutionContext arg2) throws DispatchException {
+	public void undo(GetTradeHistory action, GotTradeHistory result, ExecutionContext arg2) throws ActionException {
 	}
 
 }

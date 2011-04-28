@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 import org.sjd.gordon.model.StockDayTradeRecord;
 
-import net.customware.gwt.dispatch.shared.Result;
+import com.gwtplatform.dispatch.shared.Result;
 
 public class GotTradeHistory implements Serializable, Result {
 	

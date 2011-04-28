@@ -1,33 +1,43 @@
 package org.sjd.gordon.client.viewer;
 
-import net.customware.gwt.presenter.client.EventBus;
-import net.customware.gwt.presenter.client.widget.WidgetPresenter;
-
 import org.sjd.gordon.shared.viewer.StockDetails;
 
+import com.google.gwt.event.shared.EventBus;
 import com.google.inject.Inject;
+import com.gwtplatform.mvp.client.Presenter;
+import com.gwtplatform.mvp.client.View;
+import com.gwtplatform.mvp.client.annotations.ProxyStandard;
+import com.gwtplatform.mvp.client.proxy.Proxy;
+import com.gwtplatform.mvp.client.proxy.RevealRootContentEvent;
 
-public class GeneralInformationPresenter extends WidgetPresenter<GeneralInformationDisplay> {
+public class GeneralInformationPresenter extends Presenter<GeneralInformationPresenter.GeneralInformationView,
+          												   GeneralInformationPresenter.GeneralInformationProxy> {
+	
+	@ProxyStandard
+	public interface GeneralInformationProxy extends Proxy<GeneralInformationPresenter> { }
+
+	public interface GeneralInformationView extends View { 
+		public void setStock(StockDetails stockDetails);
+	}
 	
 	@Inject
-	public GeneralInformationPresenter(final GeneralInformationDisplay display, final EventBus eventBus) {
-		super(display,eventBus);
-		bind();
+	public GeneralInformationPresenter(EventBus eventBus, GeneralInformationView view, GeneralInformationProxy proxy) {
+		super(eventBus,view,proxy);
 	}	
 	
 	@Override
-	protected void onBind() {
-		
-	}
+	protected void onBind() { }
 
 	@Override
 	protected void onUnbind() { }
 
-	@Override
-	protected void onRevealDisplay() { }
-
 	public void setStock(StockDetails stockDetails) {
-		getDisplay().setStock(stockDetails);
+		getView().setStock(stockDetails);
+	}
+
+	@Override
+	protected void revealInParent() {
+		RevealRootContentEvent.fire(this, this);
 	}
 
 }

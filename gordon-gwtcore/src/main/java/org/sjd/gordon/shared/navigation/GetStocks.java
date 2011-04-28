@@ -2,9 +2,9 @@ package org.sjd.gordon.shared.navigation;
 
 import java.io.Serializable;
 
-import net.customware.gwt.dispatch.shared.Action;
+import com.gwtplatform.dispatch.shared.UnsecuredActionImpl;
 
-public class GetStocks implements Serializable, Action<GotStocks> {
+public class GetStocks extends UnsecuredActionImpl<GotStocks> implements Serializable {
 
 	private static final long serialVersionUID = 4956388101107782497L;
 	
@@ -19,4 +19,5 @@ public class GetStocks implements Serializable, Action<GotStocks> {
 	public Integer getExchangeId() {
 		return exchangeId;
 	}
+
 }

@@ -2,9 +2,9 @@ package org.sjd.gordon.shared.viewer;
 
 import java.io.Serializable;
 
-import net.customware.gwt.dispatch.shared.Action;
+import com.gwtplatform.dispatch.shared.UnsecuredActionImpl;
 
-public class GetTradeHistory implements Serializable, Action<GotTradeHistory> {
+public class GetTradeHistory extends UnsecuredActionImpl<GotTradeHistory> implements Serializable {
 	
 	private static final long serialVersionUID = 9131966215398339304L;
 	

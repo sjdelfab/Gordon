@@ -18,6 +18,8 @@
 	<properties>
 		<endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<gwtp.version>0.5.1</gwtp.version>
+		<gwtp.project.groupId>com.gwtplatform</gwtp.project.groupId>
 	</properties>
 
 	<dependencies>
@@ -72,13 +74,13 @@
 		    <artifactId>guice-jndi</artifactId>
 		    <version>3.0</version>
 		    <scope>provided</scope>
-		</dependency>				
+		</dependency>
 		<dependency>
-			<groupId>net.customware.gwt.dispatch</groupId>
-			<artifactId>gwt-dispatch</artifactId>
-			<version>1.1.0</version>
+			<groupId>${gwtp.project.groupId}</groupId>
+			<artifactId>gwtp-all</artifactId>
+			<version>${gwtp.version}</version>
 			<scope>provided</scope>
-		</dependency>		
+		</dependency>
 	</dependencies>
 
 	<build>

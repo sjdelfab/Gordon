@@ -11,6 +11,12 @@
 	<groupId>org.sjd.gordon</groupId>
 	<artifactId>gordon-guicejpa</artifactId>
 	<version>1.0</version>
+	
+	<properties>
+		<gwtp.version>0.5.1</gwtp.version>
+		<gwtp.project.groupId>com.gwtplatform</gwtp.project.groupId>
+	</properties>	
+	
 	<dependencies>
 		<dependency>
 			<groupId>org.sjd.gordon</groupId>
@@ -44,9 +50,9 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>net.customware.gwt.dispatch</groupId>
-			<artifactId>gwt-dispatch</artifactId>
-			<version>1.1.0</version>
+			<groupId>${gwtp.project.groupId}</groupId>
+			<artifactId>gwtp-all</artifactId>
+			<version>${gwtp.version}</version>
 			<scope>provided</scope>
 		</dependency>
 	</dependencies>

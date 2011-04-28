@@ -5,8 +5,8 @@
   <inherits name='com.extjs.gxt.ui.GXT'/>
   
   <inherits name="com.google.gwt.inject.Inject" />
-  <inherits name='net.customware.gwt.dispatch.Dispatch' />
-  <inherits name='net.customware.gwt.presenter.Presenter' />
+  <inherits name='com.gwtplatform.dispatch.Dispatch' />
+  <inherits name='com.gwtplatform.mvp.Mvp' /> 
   <inherits name='com.google.gwt.visualization.Visualization'/>
   
   <!-- Inherit the default GWT style sheet.  You can change       -->
@@ -38,5 +38,10 @@
   <source path='client/navigation'/>
   <source path='client/gxt'/>
   <source path='client/viewer'/>
+  <source path='client/main'/>
   <source path='shared'/>
+  
+  <define-configuration-property name="gin.ginjector" is-multi-valued="false" />
+  <set-configuration-property name="gin.ginjector" 
+      value="org.sjd.gordon.client.GordonGinjector" />  
 </module>

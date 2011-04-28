@@ -1,6 +1,7 @@
 package org.sjd.gordon.server;
 
 import org.sjd.gordon.ejb.dispatch.EJBServerModule;
+import org.sjd.gordon.server.devhandlers.DevelopmentModule;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
@@ -11,7 +12,7 @@ public class GordonGuiceServletConfig extends GuiceServletContextListener {
 
 	public static enum Mode { DEV,  GUICE_JPA, EJB };
 	
-	private Mode mode = Mode.EJB;
+	private Mode mode = Mode.DEV;
 	
 	@Override
 	protected Injector getInjector() {

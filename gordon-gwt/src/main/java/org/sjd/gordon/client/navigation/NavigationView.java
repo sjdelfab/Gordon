@@ -25,10 +25,11 @@ import com.extjs.gxt.ui.client.widget.layout.VBoxLayout.VBoxLayoutAlign;
 import com.extjs.gxt.ui.client.widget.layout.VBoxLayoutData;
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
-import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.ui.HasValue;
+import com.google.gwt.user.client.ui.Widget;
+import com.gwtplatform.mvp.client.ViewImpl;
 
-public class NavigationView extends ContentPanel implements NavigationDisplay {
+public class NavigationView extends ViewImpl implements NavigationPresenter.NavigationPanelView {
 
 	private Button viewButton = new Button("View");
 	private ComboBox<BeanModel> exchangeComboBox = new ComboBox<BeanModel>();
@@ -37,16 +38,17 @@ public class NavigationView extends ContentPanel implements NavigationDisplay {
 	private ListStore<BeanModel> stockStore;
 	private ListStore<BeanModel> exchangeStore;
 	
-	@Override
-	protected void onRender(Element parent, int index) {
-		super.onRender(parent, index);
-		
-		setHeading("Navigation");
+	private ContentPanel panel;
+	
+	public NavigationView() {
+		panel = new ContentPanel();
+
+		panel.setHeading("Navigation");
 		
 		VBoxLayout mainLayout = new VBoxLayout();  
         mainLayout.setPadding(new Padding(0));  
         mainLayout.setVBoxLayoutAlign(VBoxLayoutAlign.STRETCH);  
-        setLayout(mainLayout);
+        panel.setLayout(mainLayout);
         
 		ContentPanel navigationPanel = new ContentPanel();
 		navigationPanel.setCollapsible(false);
@@ -115,7 +117,7 @@ public class NavigationView extends ContentPanel implements NavigationDisplay {
 		
 		vBoxData = new VBoxLayoutData(0, 0, 0, 0);  
 	    vBoxData.setFlex(1);
-		add(navigationPanel, vBoxData);
+		panel.add(navigationPanel, vBoxData);
 	}
 	
 	public void setStocks(ArrayList<StockName> stocks) {
@@ -148,5 +150,10 @@ public class NavigationView extends ContentPanel implements NavigationDisplay {
 	@Override
 	public HasClickHandlers getExchangeHandler() {
 		return exchangeComboBox;
+	}
+
+	@Override
+	public Widget asWidget() {
+		return panel;
 	}
 }

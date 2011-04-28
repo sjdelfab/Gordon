@@ -5,17 +5,15 @@ import java.util.ArrayList;
 import javax.naming.Context;
 import javax.naming.NamingException;
 
-import net.customware.gwt.dispatch.server.ActionHandler;
-import net.customware.gwt.dispatch.server.ExecutionContext;
-import net.customware.gwt.dispatch.shared.ActionException;
-import net.customware.gwt.dispatch.shared.DispatchException;
-
 import org.sjd.gordon.ejb.ExchangeEJB;
 import org.sjd.gordon.model.Exchange;
 import org.sjd.gordon.shared.navigation.GetExchanges;
 import org.sjd.gordon.shared.navigation.GotExchanges;
 
 import com.google.inject.Inject;
+import com.gwtplatform.dispatch.server.ExecutionContext;
+import com.gwtplatform.dispatch.server.actionhandler.ActionHandler;
+import com.gwtplatform.dispatch.shared.ActionException;
 
 public class GetExchangesEJBHandler implements ActionHandler<GetExchanges,GotExchanges> {
 
@@ -23,7 +21,7 @@ public class GetExchangesEJBHandler implements ActionHandler<GetExchanges,GotExc
 	private Context ctx;
 	
 	@Override
-	public GotExchanges execute(GetExchanges getExchanges, ExecutionContext context) throws DispatchException {
+	public GotExchanges execute(GetExchanges getExchanges, ExecutionContext context) throws ActionException {
 		ExchangeEJB exchangeEjb = null;
 		try {
 			exchangeEjb = (ExchangeEJB) ctx.lookup("java:global/gordon-gwt-1.0/ExchangeEJB!org.sjd.gordon.ejb.ExchangeEJB");
@@ -42,7 +40,7 @@ public class GetExchangesEJBHandler implements ActionHandler<GetExchanges,GotExc
 	}
 
 	@Override
-	public void rollback(GetExchanges getExchanges, GotExchanges gotExchanges, ExecutionContext arg2) throws DispatchException {
+	public void undo(GetExchanges action, GotExchanges result, ExecutionContext arg2) throws ActionException {
 		// Nothing
 	}
 

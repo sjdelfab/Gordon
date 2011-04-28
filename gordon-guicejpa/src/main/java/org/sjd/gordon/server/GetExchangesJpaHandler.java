@@ -6,22 +6,21 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
-import net.customware.gwt.dispatch.server.ActionHandler;
-import net.customware.gwt.dispatch.server.ExecutionContext;
-import net.customware.gwt.dispatch.shared.DispatchException;
-
 import org.sjd.gordon.model.Exchange;
 import org.sjd.gordon.shared.navigation.GetExchanges;
 import org.sjd.gordon.shared.navigation.GotExchanges;
 
 import com.google.inject.Inject;
+import com.gwtplatform.dispatch.server.ExecutionContext;
+import com.gwtplatform.dispatch.server.actionhandler.ActionHandler;
+import com.gwtplatform.dispatch.shared.ActionException;
 
 public class GetExchangesJpaHandler implements ActionHandler<GetExchanges,GotExchanges> {
 
 	@Inject EntityManager em;
 	
 	@Override
-	public GotExchanges execute(GetExchanges getExchanges, ExecutionContext context) throws DispatchException {
+	public GotExchanges execute(GetExchanges getExchanges, ExecutionContext context) throws ActionException {
 		String getAllExchanges = "SELECT e FROM Exchange e";
     	TypedQuery<Exchange> query = em.createQuery(getAllExchanges, Exchange.class);
     	List<Exchange> exchanges = query.getResultList();
@@ -34,7 +33,7 @@ public class GetExchangesJpaHandler implements ActionHandler<GetExchanges,GotExc
 	}
 
 	@Override
-	public void rollback(GetExchanges getExchanges, GotExchanges gotExchanges, ExecutionContext arg2) throws DispatchException {
+	public void undo(GetExchanges action, GotExchanges result, ExecutionContext context) throws ActionException {
 		// Nothing
 	}
 

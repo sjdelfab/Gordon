@@ -5,17 +5,15 @@ import java.util.ArrayList;
 import javax.naming.Context;
 import javax.naming.NamingException;
 
-import net.customware.gwt.dispatch.server.ActionHandler;
-import net.customware.gwt.dispatch.server.ExecutionContext;
-import net.customware.gwt.dispatch.shared.ActionException;
-import net.customware.gwt.dispatch.shared.DispatchException;
-
 import org.sjd.gordon.ejb.StockEntityEJB;
 import org.sjd.gordon.model.StockDayTradeRecord;
 import org.sjd.gordon.shared.viewer.GetTradeHistory;
 import org.sjd.gordon.shared.viewer.GotTradeHistory;
 
 import com.google.inject.Inject;
+import com.gwtplatform.dispatch.server.ExecutionContext;
+import com.gwtplatform.dispatch.server.actionhandler.ActionHandler;
+import com.gwtplatform.dispatch.shared.ActionException;
 
 public class GetTradeHistoryEJBHandler implements ActionHandler<GetTradeHistory, GotTradeHistory> {
 
@@ -23,7 +21,7 @@ public class GetTradeHistoryEJBHandler implements ActionHandler<GetTradeHistory,
 	private Context ctx;
 	
 	@Override
-	public GotTradeHistory execute(GetTradeHistory arg0, ExecutionContext arg1) throws DispatchException {
+	public GotTradeHistory execute(GetTradeHistory arg0, ExecutionContext arg1) throws ActionException {
 		StockEntityEJB stockEjb = null;
 		try {
 			stockEjb = (StockEntityEJB) ctx.lookup("java:global/gordon-gwt-1.0/StockEntityEJB!org.sjd.gordon.ejb.StockEntityEJB");
@@ -42,7 +40,7 @@ public class GetTradeHistoryEJBHandler implements ActionHandler<GetTradeHistory,
 	}
 
 	@Override
-	public void rollback(GetTradeHistory arg0, GotTradeHistory arg1, ExecutionContext arg2) throws DispatchException {
+	public void undo(GetTradeHistory action, GotTradeHistory result, ExecutionContext arg2) throws ActionException {
 	}
 
 }

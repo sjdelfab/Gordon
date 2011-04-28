@@ -2,7 +2,7 @@ package org.sjd.gordon.shared.viewer;
 
 import java.io.Serializable;
 
-import net.customware.gwt.dispatch.shared.Result;
+import com.gwtplatform.dispatch.shared.Result;
 
 public class GotStockDetails implements Serializable, Result {
 

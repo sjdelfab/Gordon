@@ -3,9 +3,9 @@ package org.sjd.gordon.shared.navigation;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import net.customware.gwt.dispatch.shared.Result;
-
 import org.sjd.gordon.model.Exchange;
+
+import com.gwtplatform.dispatch.shared.Result;
 
 public class GotExchanges implements Serializable, Result {
 

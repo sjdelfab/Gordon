@@ -6,11 +6,6 @@ import java.util.List;
 import javax.naming.Context;
 import javax.naming.NamingException;
 
-import net.customware.gwt.dispatch.server.ActionHandler;
-import net.customware.gwt.dispatch.server.ExecutionContext;
-import net.customware.gwt.dispatch.shared.ActionException;
-import net.customware.gwt.dispatch.shared.DispatchException;
-
 import org.sjd.gordon.ejb.StockEntityEJB;
 import org.sjd.gordon.model.StockEntity;
 import org.sjd.gordon.shared.navigation.GetStocks;
@@ -18,6 +13,9 @@ import org.sjd.gordon.shared.navigation.GotStocks;
 import org.sjd.gordon.shared.navigation.StockName;
 
 import com.google.inject.Inject;
+import com.gwtplatform.dispatch.server.ExecutionContext;
+import com.gwtplatform.dispatch.server.actionhandler.ActionHandler;
+import com.gwtplatform.dispatch.shared.ActionException;
 
 public class GetStocksEJBHandler implements ActionHandler<GetStocks,GotStocks> {
 
@@ -25,7 +23,7 @@ public class GetStocksEJBHandler implements ActionHandler<GetStocks,GotStocks> {
 	private Context ctx;
 	
 	@Override
-	public GotStocks execute(GetStocks getStocks, ExecutionContext context) throws DispatchException {
+	public GotStocks execute(GetStocks getStocks, ExecutionContext context) throws ActionException {
 		StockEntityEJB stockEjb = null;
 		try {
 			stockEjb = (StockEntityEJB) ctx.lookup("java:global/gordon-gwt-1.0/StockEntityEJB!org.sjd.gordon.ejb.StockEntityEJB");
@@ -49,7 +47,7 @@ public class GetStocksEJBHandler implements ActionHandler<GetStocks,GotStocks> {
 	}
 
 	@Override
-	public void rollback(GetStocks arg0, GotStocks arg1, ExecutionContext arg2) throws DispatchException {
+	public void undo(GetStocks arg0, GotStocks arg1, ExecutionContext arg2) throws ActionException {
 		// Nothing
 	}
 

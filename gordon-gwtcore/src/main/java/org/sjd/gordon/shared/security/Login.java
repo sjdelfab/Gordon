@@ -2,9 +2,9 @@ package org.sjd.gordon.shared.security;
 
 import java.io.Serializable;
 
-import net.customware.gwt.dispatch.shared.Action;
+import com.gwtplatform.dispatch.shared.UnsecuredActionImpl;
 
-public class Login implements Serializable, Action<LoginResponse> {
+public class Login extends UnsecuredActionImpl<LoginResponse> implements Serializable {
 	
 	private static final long serialVersionUID = -7891652588102783960L;
 

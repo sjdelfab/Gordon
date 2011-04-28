@@ -1,0 +1,117 @@
+<!doctype html>
+
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+
+<style type="text/css">
+#navbar{
+height:29px;
+line-height:29px;
+}
+
+/*------ Reset CSS Properties ------ */
+#navbar ul, #navbar li,
+#navbar form,
+#navbar button {
+border:0; margin:0;padding:0; list-style:none;
+}
+
+#navbar li a{
+margin:0 6px;
+text-decoration:none;
+color:#000000;
+font-weight:bold;
+border-bottom:dotted 1px #000000;
+}
+
+/*------ Layer with Register and Login Section ------ */
+#login_menu{
+background:#aaaaaa;
+border:solid 1px #666666;
+width:340px;
+padding:10px;
+color:#FFFFFF;
+position:fixed;
+font-weight:bold;
+font-size:12px;
+line-height:18px;
+}
+#login_menu li{
+padding-bottom:6px;
+text-align:right;
+}
+#new-user-col{
+padding-right:10px;
+border-right:1px #DEDEDE solid;
+height:120px;
+width:100px;
+float:left;
+line-height:12px;
+}
+#signup-user-col{
+padding-left:20px;
+height:120px;
+width:200px;
+float:left;
+line-height:12px;
+text-align:right;
+}
+#login_menu label{font-size:12px; font-weight:normal; font-family:Arial }
+#login_menu input{font-size:12px; color:#333333; margin-left:10px;}
+
+/*------ Button ------ */
+#login_menu button{
+line-height:24px;
+float:right;
+color:#FFFFFF;
+font-size:11px;
+font-weight:bold;
+text-align:center;
+cursor:pointer;
+}
+
+.green-button{
+
+display:block;
+color:#FFFFFF;
+font-size:11px;
+text-decoration:none;
+width:81px;
+height:26px;
+line-height:24px;
+text-align:center;
+}
+
+/*------ Spacer ------ */
+.spacer{clear:both; height:1px;}
+</style>
+<title>Login</title>
+
+</head>
+
+<!--                                           -->
+<!-- The body can have arbitrary html, or      -->
+<!-- you can leave the body empty if you want  -->
+<!-- to create a completely dynamic UI.        -->
+<!--                                           -->
+<body>
+	<div id="navbar">
+		<div id="login_menu">
+			<div id="signup-user-col">
+				<br />
+				<form action="j_security_check" method="POST">
+					<ul>
+						<li><label for="email">Username:</label> <input type="text" id="email" size="18" name="j_username"/></li>
+						<li><label for="psw">Password:</label> <input type="password" id="psw" size="18" name="j_password"/></li>
+					</ul>
+					<button type="submit" class="green-button">Login</button>
+				</form>
+			</div>
+
+			<div class="spacer"></div>
+
+		</div>
+	</div>
+</body>
+</html>

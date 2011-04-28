@@ -1,17 +1,27 @@
 package org.sjd.gordon.client.viewer;
 
-import net.customware.gwt.dispatch.client.DispatchAsync;
-import net.customware.gwt.presenter.client.EventBus;
-import net.customware.gwt.presenter.client.widget.WidgetPresenter;
+import org.sjd.gordon.shared.viewer.StockDetails;
 
+import com.google.gwt.event.shared.EventBus;
 import com.google.inject.Inject;
+import com.gwtplatform.mvp.client.Presenter;
+import com.gwtplatform.mvp.client.View;
+import com.gwtplatform.mvp.client.annotations.ProxyStandard;
+import com.gwtplatform.mvp.client.proxy.Proxy;
+import com.gwtplatform.mvp.client.proxy.RevealRootContentEvent;
 
-public class StockPresenter extends WidgetPresenter<StockDisplay> {
+public class StockPresenter extends Presenter<StockPresenter.StockPanelView,StockPresenter.StockPanelProxy> {
 
+	@ProxyStandard
+	public interface StockPanelProxy extends Proxy<StockPresenter> { }
+
+	public interface StockPanelView extends View { 
+		public void setStock(StockDetails stockDetails);
+	}
+	
 	@Inject
-	public StockPresenter(final StockDisplay display, final EventBus eventBus, final DispatchAsync dispatcher) {
-		super(display,eventBus);
-		bind();
+	public StockPresenter(EventBus eventBus, StockPanelView view, StockPanelProxy proxy) {
+		super(eventBus,view,proxy);
 	}
 	
 	@Override
@@ -21,6 +31,8 @@ public class StockPresenter extends WidgetPresenter<StockDisplay> {
 	protected void onUnbind() { }
 
 	@Override
-	protected void onRevealDisplay() { }
+	protected void revealInParent() {
+		RevealRootContentEvent.fire(this, this);
+	}
 
 }

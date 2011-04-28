@@ -2,18 +2,18 @@ package org.sjd.gordon.server.devhandlers;
 
 import java.util.ArrayList;
 
-import net.customware.gwt.dispatch.server.ActionHandler;
-import net.customware.gwt.dispatch.server.ExecutionContext;
-import net.customware.gwt.dispatch.shared.DispatchException;
-
 import org.sjd.gordon.model.Exchange;
 import org.sjd.gordon.shared.navigation.GetExchanges;
 import org.sjd.gordon.shared.navigation.GotExchanges;
 
+import com.gwtplatform.dispatch.server.ExecutionContext;
+import com.gwtplatform.dispatch.server.actionhandler.ActionHandler;
+import com.gwtplatform.dispatch.shared.ActionException;
+
 public class DevelopmentGetExchangesHandler implements ActionHandler<GetExchanges,GotExchanges> {
 
 	@Override
-	public GotExchanges execute(GetExchanges getExchanges, ExecutionContext context) throws DispatchException {
+	public GotExchanges execute(GetExchanges getExchanges, ExecutionContext context) throws ActionException {
 		return new GotExchanges(create());
 	}
 	
@@ -33,7 +33,7 @@ public class DevelopmentGetExchangesHandler implements ActionHandler<GetExchange
 	}
 
 	@Override
-	public void rollback(GetExchanges getExchanges, GotExchanges gotExchanges, ExecutionContext arg2) throws DispatchException {
+	public void undo(GetExchanges action, GotExchanges result, ExecutionContext context) throws ActionException {
 		// Nothing
 	}
 

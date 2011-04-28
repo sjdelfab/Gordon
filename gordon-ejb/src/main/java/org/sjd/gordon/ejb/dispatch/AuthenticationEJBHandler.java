@@ -3,17 +3,15 @@ package org.sjd.gordon.ejb.dispatch;
 import javax.naming.Context;
 import javax.naming.NamingException;
 
-import net.customware.gwt.dispatch.server.ActionHandler;
-import net.customware.gwt.dispatch.server.ExecutionContext;
-import net.customware.gwt.dispatch.shared.ActionException;
-import net.customware.gwt.dispatch.shared.DispatchException;
-
 import org.sjd.gordon.ejb.UserEJB;
 import org.sjd.gordon.model.User;
 import org.sjd.gordon.shared.security.Login;
 import org.sjd.gordon.shared.security.LoginResponse;
 
 import com.google.inject.Inject;
+import com.gwtplatform.dispatch.server.ExecutionContext;
+import com.gwtplatform.dispatch.server.actionhandler.ActionHandler;
+import com.gwtplatform.dispatch.shared.ActionException;
 
 public class AuthenticationEJBHandler implements ActionHandler<Login, LoginResponse> {
 
@@ -21,7 +19,7 @@ public class AuthenticationEJBHandler implements ActionHandler<Login, LoginRespo
 	private Context ctx;
 
 	@Override
-	public LoginResponse execute(Login login, ExecutionContext context) throws DispatchException {
+	public LoginResponse execute(Login login, ExecutionContext context) throws ActionException {
 		UserEJB userEjb = null;
 		try {
 			userEjb = (UserEJB) ctx.lookup("java:global/gordon-gwt-1.0/UserEJB!org.sjd.gordon.ejb.UserEJB");
@@ -51,8 +49,6 @@ public class AuthenticationEJBHandler implements ActionHandler<Login, LoginRespo
 	}
 
 	@Override
-	public void rollback(Login arg0, LoginResponse arg1, ExecutionContext arg2) throws DispatchException {
-
-	}
+	public void undo(Login action, LoginResponse result, ExecutionContext arg2) throws ActionException { }
 
 }

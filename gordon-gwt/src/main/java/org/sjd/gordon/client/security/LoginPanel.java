@@ -4,36 +4,46 @@ import org.sjd.gordon.client.gxt.Button;
 import org.sjd.gordon.client.gxt.TextField;
 
 import com.extjs.gxt.ui.client.Style.HorizontalAlignment;
+import com.extjs.gxt.ui.client.Style.LayoutRegion;
 import com.extjs.gxt.ui.client.event.ButtonEvent;
 import com.extjs.gxt.ui.client.event.SelectionListener;
 import com.extjs.gxt.ui.client.widget.LayoutContainer;
+import com.extjs.gxt.ui.client.widget.Viewport;
 import com.extjs.gxt.ui.client.widget.form.FormButtonBinding;
 import com.extjs.gxt.ui.client.widget.form.FormPanel;
+import com.extjs.gxt.ui.client.widget.layout.BorderLayout;
+import com.extjs.gxt.ui.client.widget.layout.BorderLayoutData;
 import com.extjs.gxt.ui.client.widget.layout.CenterLayout;
 import com.extjs.gxt.ui.client.widget.layout.FormData;
 import com.google.gwt.event.dom.client.HasClickHandlers;
-import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.ui.HasValue;
+import com.google.gwt.user.client.ui.Widget;
+import com.gwtplatform.mvp.client.ViewImpl;
 
-public class LoginView extends LayoutContainer implements LoginDisplay {
+public class LoginPanel extends ViewImpl implements LoginPresenter.LoginPanelView {
 
 	private FormData formData;
 	private TextField<String> userNameField;
 	private TextField<String> passwordField;
 	private Button loginButton;
 	private FormPanel loginPanel;
-
-	public LoginView() {
-		createLoginForm();
-	}
 	
-	@Override
-	protected void onRender(Element parent, int index) {
-		super.onRender(parent, index);
-		setLayout(new CenterLayout());
-		setBorders(true);
+	private LayoutContainer container;
+	private Viewport viewport;
+
+	public LoginPanel() {
+		container = new LayoutContainer();
+		container.setLayout(new CenterLayout());
+		container.setBorders(true);
 		formData = new FormData("-20");
-		add(loginPanel);
+		container.add(createLoginForm());
+		
+		viewport = new Viewport();
+		final BorderLayout borderLayout = new BorderLayout();
+		viewport.setLayout(borderLayout);
+		BorderLayoutData centerData = new BorderLayoutData(LayoutRegion.CENTER);
+		viewport.add(container, centerData);
+		viewport.setStyleAttribute("backgroundColor", "#FFFFFF");
 	}
 
 	private FormPanel createLoginForm() {
@@ -88,6 +98,11 @@ public class LoginView extends LayoutContainer implements LoginDisplay {
 	@Override
 	public HasClickHandlers getLogin() {
 		return loginButton;
+	}
+
+	@Override
+	public Widget asWidget() {
+		return viewport;
 	}
 	
 }

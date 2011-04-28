@@ -14,6 +14,11 @@ public class StockName implements Serializable {
 	
 	public StockName() {}
 	
+	// For dev mode usage only
+	public StockName(Long id) {
+		this.id = id;
+	}
+	
 	public Long getId() {
 		return id;
 	}
