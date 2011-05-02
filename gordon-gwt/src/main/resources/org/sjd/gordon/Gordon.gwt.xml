@@ -39,6 +39,7 @@
   <source path='client/gxt'/>
   <source path='client/viewer'/>
   <source path='client/main'/>
+  <source path='client/registry'/>
   <source path='shared'/>
   
   <define-configuration-property name="gin.ginjector" is-multi-valued="false" />

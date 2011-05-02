@@ -2,4 +2,5 @@
 	<source path='shared/security' />
 	<source path='shared/navigation' />
 	<source path='shared/viewer' />
+	<source path='shared/registry' />
 </module>

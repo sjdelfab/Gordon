@@ -12,6 +12,10 @@ public class Button extends com.extjs.gxt.ui.client.widget.button.Button impleme
 		super(text);
 	}
 	
+	public Button() {
+		super();
+	}
+	
 	@Override
 	public HandlerRegistration addClickHandler(ClickHandler handler) {
 		return addHandler(handler, ClickEvent.getType());

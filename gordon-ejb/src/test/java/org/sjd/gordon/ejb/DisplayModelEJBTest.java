@@ -7,6 +7,9 @@ import java.util.List;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.sjd.gordon.ejb.setup.DisplayModelEJB;
+import org.sjd.gordon.ejb.setup.TabularDatasetEJB;
+import org.sjd.gordon.ejb.setup.UnitaryPropertiesEJB;
 import org.sjd.gordon.model.ColumnDefinition;
 import org.sjd.gordon.model.DataType;
 import org.sjd.gordon.model.DatasetVisualisationType;

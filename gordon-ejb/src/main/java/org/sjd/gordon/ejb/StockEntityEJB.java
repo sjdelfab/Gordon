@@ -12,7 +12,7 @@ import org.sjd.gordon.model.StockDayTradeRecord;
 import org.sjd.gordon.model.StockEntity;
 
 @Stateless
-public class StockEntityEJB {
+public class StockEntityEJB implements StockEntityService {
 
 	@PersistenceContext 
     private EntityManager em; 

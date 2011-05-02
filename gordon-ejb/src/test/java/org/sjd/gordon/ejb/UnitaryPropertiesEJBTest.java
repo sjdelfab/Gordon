@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.sjd.gordon.ejb.setup.UnitaryPropertiesEJB;
 import org.sjd.gordon.model.DataType;
 import org.sjd.gordon.model.Exchange;
 import org.sjd.gordon.model.StockEntity;
@@ -22,7 +23,7 @@ public class UnitaryPropertiesEJBTest extends AbstractEJBTest {
 		@BeforeClass 
 		public static void createExchangeAndStock() throws Exception {
 			initContainer();
-			ExchangeEJB exchangeEJB = (ExchangeEJB) ctx.lookup("java:global/classes/ExchangeEJB"); 
+			ExchangeService exchangeEJB = (ExchangeService) ctx.lookup("java:global/classes/ExchangeEJB!org.sjd.gordon.ejb.ExchangeService"); 
 	   	 
 	    	exchange = new Exchange();
 	    	exchange.setActive(true);
@@ -37,7 +38,7 @@ public class UnitaryPropertiesEJBTest extends AbstractEJBTest {
 	    	stock.setListDate(new Date());
 	    	stock.setName("BHP Ltd");
 	    	
-	    	StockEntityEJB stockEntityEjb = (StockEntityEJB) ctx.lookup("java:global/classes/StockEntityEJB");
+	    	StockEntityService stockEntityEjb = (StockEntityService) ctx.lookup("java:global/classes/StockEntityEJB!org.sjd.gordon.ejb.StockEntityService");
 	    	stock = stockEntityEjb.createStock(stock);
 		}
 		

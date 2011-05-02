@@ -12,7 +12,7 @@ public class GordonGuiceServletConfig extends GuiceServletContextListener {
 
 	public static enum Mode { DEV,  GUICE_JPA, EJB };
 	
-	private Mode mode = Mode.DEV;
+	private Mode mode = Mode.EJB;
 	
 	@Override
 	protected Injector getInjector() {

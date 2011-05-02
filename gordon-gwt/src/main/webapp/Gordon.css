@@ -45,3 +45,15 @@
 	background: #330099;
 	float: right;
 }
+
+.add { 
+  background: url(resources/images/gordon/add.png) no-repeat center; 
+}
+
+.remove { 
+  background: url(resources/images/gordon/remove.png) no-repeat center; 
+}
+
+.update { 
+  background: url(resources/images/gordon/update.png) no-repeat center; 
+}

@@ -1,6 +1,12 @@
 package org.sjd.gordon.client.main;
 
+import java.util.ArrayList;
+
+import org.sjd.gordon.client.navigation.LoadExchangesCallback;
+import org.sjd.gordon.client.registry.ShowRegistryEvent;
 import org.sjd.gordon.client.security.LogoutCallback;
+import org.sjd.gordon.model.Exchange;
+import org.sjd.gordon.shared.navigation.GetExchanges;
 import org.sjd.gordon.shared.security.Logout;
 
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -23,14 +29,18 @@ public class TitleStripPresenter extends Presenter<TitleStripPresenter.TitleStri
 
 	public interface TitleStripView extends View { 
 		public HasClickHandlers getLogout();
+		public HasClickHandlers addExchange(Exchange exchange);
 	}
 
+	private final DispatchAsync dispatcher;
+	
 	@Inject
 	public TitleStripPresenter(EventBus eventBus, TitleStripView view, TitleStripProxy proxy, final DispatchAsync dispatcher) {
 		super(eventBus, view, proxy);
+		this.dispatcher = dispatcher;
 		view.getLogout().addClickHandler(new ClickHandler() {
 			@Override
-			public void onClick(ClickEvent arg0) {
+			public void onClick(ClickEvent event) {
 				dispatcher.execute(new Logout(), new LogoutCallback() {
 					@Override
 					public void logout() {
@@ -45,4 +55,27 @@ public class TitleStripPresenter extends Presenter<TitleStripPresenter.TitleStri
 	protected void revealInParent() {
 		RevealRootContentEvent.fire(this, this);
 	}
+	
+	@Override
+	protected void onBind() {
+		load();
+	}
+	
+	private void load() {
+		GetExchanges getExchanges = new GetExchanges();
+		dispatcher.execute(getExchanges, new LoadExchangesCallback() {
+			@Override
+			public void loaded(ArrayList<Exchange> exchanges) {
+				for(final Exchange exchange: exchanges) {
+				   getView().addExchange(exchange).addClickHandler(new ClickHandler() {
+						@Override
+						public void onClick(ClickEvent event) {
+							getEventBus().fireEvent(new ShowRegistryEvent(exchange));
+						}
+					});
+				}
+			}
+		});
+	}
+	
 }

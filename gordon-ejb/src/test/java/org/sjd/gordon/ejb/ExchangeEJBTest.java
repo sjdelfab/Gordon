@@ -18,7 +18,7 @@ public class ExchangeEJBTest extends AbstractEJBTest {
 	
     @Test 
     public void should_create_an_exchange() throws Exception { 
-    	ExchangeEJB exchangeEJB = (ExchangeEJB) ctx.lookup("java:global/classes/ExchangeEJB"); 
+    	ExchangeService exchangeEJB = (ExchangeService) ctx.lookup("java:global/classes/ExchangeEJB!org.sjd.gordon.ejb.ExchangeService"); 
  
     	Exchange exchange = new Exchange();
     	exchange.setActive(true);

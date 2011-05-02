@@ -4,6 +4,7 @@ package org.sjd.gordon.client;
 import org.sjd.gordon.client.main.MainPagePresenter;
 import org.sjd.gordon.client.main.TitleStripPresenter;
 import org.sjd.gordon.client.navigation.NavigationPresenter;
+import org.sjd.gordon.client.registry.RegistryPresenter;
 import org.sjd.gordon.client.viewer.GeneralInformationPresenter;
 import org.sjd.gordon.client.viewer.StockPresenter;
 import org.sjd.gordon.client.viewer.TabbedPanelPresenter;
@@ -31,5 +32,5 @@ public interface GordonGinjector extends Ginjector {
 	Provider<TradeHistoryPresenter> getTradeHistoryPresenter();
 	Provider<GeneralInformationPresenter> getGeneralInformationPresenter();
 	Provider<TitleStripPresenter> getTitleStripPresenter();
-	
+	Provider<RegistryPresenter> getRegistryPresenter();
 }

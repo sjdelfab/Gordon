@@ -19,7 +19,7 @@ public class StockEntityEJBTest extends AbstractEJBTest {
 	@BeforeClass 
 	public static void createExchange() throws Exception {
 		initContainer();
-		ExchangeEJB exchangeEJB = (ExchangeEJB) ctx.lookup("java:global/classes/ExchangeEJB"); 
+		ExchangeService exchangeEJB = (ExchangeService) ctx.lookup("java:global/classes/ExchangeEJB!org.sjd.gordon.ejb.ExchangeService"); 
    	 
     	exchange = new Exchange();
     	exchange.setActive(true);
@@ -37,7 +37,7 @@ public class StockEntityEJBTest extends AbstractEJBTest {
     	stock.setListDate(new Date());
     	stock.setName("BHP Ltd");
     	
-    	StockEntityEJB stockEntityEjb = (StockEntityEJB) ctx.lookup("java:global/classes/StockEntityEJB");
+    	StockEntityService stockEntityEjb = (StockEntityService) ctx.lookup("java:global/classes/StockEntityEJB!org.sjd.gordon.ejb.StockEntityService");
     	stock = stockEntityEjb.createStock(stock);
     	assertNotNull("ID should not be null", stock.getId());
     	

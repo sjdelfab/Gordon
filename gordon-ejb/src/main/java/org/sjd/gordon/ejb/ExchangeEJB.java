@@ -9,7 +9,7 @@ import javax.persistence.PersistenceContext;
 import org.sjd.gordon.model.Exchange;
 
 @Stateless
-public class ExchangeEJB {
+public class ExchangeEJB implements ExchangeService {
 
 	@PersistenceContext
     private EntityManager em; 
