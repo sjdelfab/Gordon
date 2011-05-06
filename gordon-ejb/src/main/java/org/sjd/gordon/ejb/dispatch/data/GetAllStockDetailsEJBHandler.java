@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.sjd.gordon.ejb.StockEntityService;
+import org.sjd.gordon.ejb.setup.GicsService;
+import org.sjd.gordon.model.GicsSector;
+import org.sjd.gordon.model.StockDayTradeRecord;
 import org.sjd.gordon.model.StockEntity;
 import org.sjd.gordon.shared.registry.GetAllStockDetails;
 import org.sjd.gordon.shared.registry.GotAllStockDetails;
@@ -18,13 +21,31 @@ public class GetAllStockDetailsEJBHandler implements ActionHandler<GetAllStockDe
 
 	@Inject
 	private StockEntityService stockEjb;
-	
+	@Inject
+	private GicsService gicsService;
+
 	@Override
 	public GotAllStockDetails execute(GetAllStockDetails getDetails, ExecutionContext context) throws ActionException {
 		List<StockEntity> stocks = stockEjb.getStocks(getDetails.getExchangeId());
 		ArrayList<StockDetails> details = new ArrayList<StockDetails>(stocks.size());
-		for(StockEntity entity: stocks) {
-			details.add(StockDetails.fromEntity(entity));
+		for (StockEntity entity : stocks) {
+			StockDayTradeRecord firstDayTrade = stockEjb.getFirstTradeDay(entity.getId());
+			StockDetails stockDetails = StockDetails.fromEntity(entity);
+			if (entity.getGicsIndustryGroup() != null) {
+				Integer industryGrpId = entity.getGicsIndustryGroup().getId();
+				GicsSector sector = gicsService.findSectorByIndustryGroupId(industryGrpId);
+				stockDetails.setPrimarySectorName(sector.getName());
+				stockDetails.setPrimarySectorId(sector.getId());
+			}
+			if (firstDayTrade != null) {
+				stockDetails.setListDate(firstDayTrade.getDate());
+			}
+			StockDayTradeRecord lastTradeDate = stockEjb.getLastTradeDay(entity.getId());
+			if (lastTradeDate != null) {
+				stockDetails.setLastTradeDate(lastTradeDate.getDate());
+				stockDetails.setCurrentPrice(lastTradeDate.getClosePrice());
+			}
+			details.add(stockDetails);
 		}
 		return new GotAllStockDetails(details);
 	}
@@ -35,6 +56,8 @@ public class GetAllStockDetailsEJBHandler implements ActionHandler<GetAllStockDe
 	}
 
 	@Override
-	public void undo(GetAllStockDetails action, GotAllStockDetails result, ExecutionContext context) throws ActionException { }
+	public void undo(GetAllStockDetails action, GotAllStockDetails result, ExecutionContext context)
+			throws ActionException {
+	}
 
 }

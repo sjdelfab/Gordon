@@ -2,6 +2,7 @@ package org.sjd.gordon.ejb.dispatch.setup;
 
 import org.sjd.gordon.ejb.StockEntityService;
 import org.sjd.gordon.model.StockEntity;
+import org.sjd.gordon.shared.exceptions.EntityNotFoundException;
 import org.sjd.gordon.shared.registry.DeleteRegistryEntry;
 import org.sjd.gordon.shared.registry.DeleteRegistryEntryResponse;
 
@@ -12,16 +13,20 @@ import com.gwtplatform.dispatch.shared.ActionException;
 
 public class DeleteRegistryEntryEJBHandler implements ActionHandler<DeleteRegistryEntry,DeleteRegistryEntryResponse> {
 
+	private StockEntityService stockEntityService;
+	
 	@Inject
-	private StockEntityService stockEjb;
+	public DeleteRegistryEntryEJBHandler(StockEntityService stockEjb) {
+		this.stockEntityService = stockEjb;
+	}
 
 	@Override
 	public DeleteRegistryEntryResponse execute(DeleteRegistryEntry deleteEntry, ExecutionContext context) throws ActionException {
-		StockEntity stockEntity = stockEjb.findStockById(deleteEntry.getStockId());
+		StockEntity stockEntity = stockEntityService.findStockById(deleteEntry.getStockId());
 		if (stockEntity == null) {
-			// TODO Handle non-existent entity case
+			throw new EntityNotFoundException();
 		}
-		stockEjb.deleteStock(stockEntity);
+		stockEntityService.deleteStock(stockEntity);
 		return new DeleteRegistryEntryResponse();
 	}
 

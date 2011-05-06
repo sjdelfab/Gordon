@@ -27,13 +27,13 @@ public class DisplayModelEJBTest extends AbstractEJBTest {
 	
 	@BeforeClass 
 	public static void doBeforeAllTests() throws Exception {
-		initContainer();
+		truncateDatabase();
 		group1UnitaryDefinition = new UnitaryPropertyDefinition();
 		group1UnitaryDefinition.setDescription("Property description");
     	group1UnitaryDefinition.setName("Prop Name");
     	group1UnitaryDefinition.setType(DataType.STRING);
     	
-    	UnitaryPropertiesEJB unitaryPropertyEJB = (UnitaryPropertiesEJB) ctx.lookup("java:global/classes/UnitaryPropertiesEJB");
+    	UnitaryPropertiesEJB unitaryPropertyEJB = (UnitaryPropertiesEJB) AllEjbTests.ctx.lookup("java:global/classes/UnitaryPropertiesEJB");
     	group1UnitaryDefinition = unitaryPropertyEJB.addDefinition(group1UnitaryDefinition);
     	
     	dataSetDefinition = new TabularDatasetDefinition();
@@ -46,7 +46,7 @@ public class DisplayModelEJBTest extends AbstractEJBTest {
     	columnDefinition.setColumnOrder(Integer.valueOf(0));
     	dataSetDefinition.addColumnDefinition(columnDefinition);
     	
-    	TabularDatasetEJB tabularDatasetEJB = (TabularDatasetEJB) ctx.lookup("java:global/classes/TabularDatasetEJB");
+    	TabularDatasetEJB tabularDatasetEJB = (TabularDatasetEJB) AllEjbTests.ctx.lookup("java:global/classes/TabularDatasetEJB");
     	dataSetDefinition = tabularDatasetEJB.addDefinition(dataSetDefinition);
 	}
 	
@@ -68,7 +68,7 @@ public class DisplayModelEJBTest extends AbstractEJBTest {
     	
     	tab.addGroup(displayGroup);
 
-    	DisplayModelEJB displayModelEJB = (DisplayModelEJB) ctx.lookup("java:global/classes/DisplayModelEJB");
+    	DisplayModelEJB displayModelEJB = (DisplayModelEJB) AllEjbTests.ctx.lookup("java:global/classes/DisplayModelEJB");
     	tab = displayModelEJB.createTab(tab);
     	assertNotNull("ID should not be null", tab.getId());
     	assertEquals("Must have 1 unitary member in group.",1,tab.getGroups().get(0).getUnitaryMembers().size());

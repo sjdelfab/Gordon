@@ -5,6 +5,7 @@
 
 package org.sjd.gordon.dao.csv;
 
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.StringTokenizer;
@@ -28,16 +29,16 @@ public class CsvUtil {
         String date = tmp.substring(6) + "/" + tmp.substring(4, 6) + "/" + tmp.substring(0, 4) + " GMT";
         // grab the open price
         tmp = (st.nextToken()).trim();
-        double open = Double.parseDouble(tmp);
+        BigDecimal open = new BigDecimal(tmp);
         // grab the high price
         tmp = (st.nextToken()).trim();
-        double high = Double.parseDouble(tmp);
+        BigDecimal high = new BigDecimal(tmp);
         // grab the low price
         tmp = (st.nextToken()).trim();
-        double low = Double.parseDouble(tmp);
+        BigDecimal low = new BigDecimal(tmp);
         // grab the close price
         tmp = (st.nextToken()).trim();
-        double close = Double.parseDouble(tmp);
+        BigDecimal close = new BigDecimal(tmp);
         // grab the volume
         tmp = (st.nextToken()).trim();
         double volf = Double.parseDouble(tmp);
@@ -53,6 +54,8 @@ public class CsvUtil {
         return sdt;
     }
     
+    private static final BigDecimal ONE_HUNDRED = new BigDecimal(100);
+    
     public static StockDayTradeRecord parseYahooRow(String line, int securityId) throws ParseException {
         StringTokenizer st = new StringTokenizer(line, ",");
         // grab the trade date field in YYYY-MM-dd form
@@ -60,16 +63,17 @@ public class CsvUtil {
         String date = tmp + " GMT";
         // grab the open price
         tmp = (st.nextToken()).trim();
-        double open = Double.parseDouble(tmp)*100.0d;
+        
+        BigDecimal open = new BigDecimal(tmp).multiply(ONE_HUNDRED);
         // grab the high price
         tmp = (st.nextToken()).trim();
-        double high = Double.parseDouble(tmp)*100.0d;
+        BigDecimal high = new BigDecimal(tmp).multiply(ONE_HUNDRED);
         // grab the low price
         tmp = (st.nextToken()).trim();
-        double low = Double.parseDouble(tmp)*100.0d;
+        BigDecimal low = new BigDecimal(tmp).multiply(ONE_HUNDRED);
         // grab the close price
         tmp = (st.nextToken()).trim();
-        double close = Double.parseDouble(tmp)*100.0d;
+        BigDecimal close = new BigDecimal(tmp).multiply(ONE_HUNDRED);
         // grab the volume
         tmp = (st.nextToken()).trim();
         double volf = Double.parseDouble(tmp);

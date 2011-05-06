@@ -16,15 +16,19 @@ import org.sjd.gordon.ejb.dispatch.data.GetStocksEJBHandler;
 import org.sjd.gordon.ejb.dispatch.data.GetTradeHistoryEJBHandler;
 import org.sjd.gordon.ejb.dispatch.setup.DeleteRegistryEntryEJBHandler;
 import org.sjd.gordon.ejb.dispatch.setup.EditRegistryEntryEJBHandler;
+import org.sjd.gordon.ejb.dispatch.setup.GetGicsNamesEJBHandler;
 import org.sjd.gordon.ejb.security.AuthenticationEJBHandler;
 import org.sjd.gordon.ejb.security.UserEJB;
 import org.sjd.gordon.ejb.security.UserService;
+import org.sjd.gordon.ejb.setup.GicsEJB;
+import org.sjd.gordon.ejb.setup.GicsService;
 import org.sjd.gordon.server.LogoutHandler;
 import org.sjd.gordon.shared.navigation.GetExchanges;
 import org.sjd.gordon.shared.navigation.GetStocks;
 import org.sjd.gordon.shared.registry.DeleteRegistryEntry;
 import org.sjd.gordon.shared.registry.EditRegistryEntry;
 import org.sjd.gordon.shared.registry.GetAllStockDetails;
+import org.sjd.gordon.shared.registry.GetGicsSectors;
 import org.sjd.gordon.shared.security.Login;
 import org.sjd.gordon.shared.security.Logout;
 import org.sjd.gordon.shared.viewer.GetStockDetails;
@@ -41,6 +45,7 @@ public class EJBServerModule extends HandlerModule {
 		bind(ExchangeService.class).toProvider(fromJndi(ExchangeService.class, getEjbJndiName(ExchangeService.class,ExchangeEJB.class)));
 		bind(StockEntityService.class).toProvider(fromJndi(StockEntityService.class, getEjbJndiName(StockEntityService.class,StockEntityEJB.class)));
 		bind(UserService.class).toProvider(fromJndi(UserService.class, getEjbJndiName(UserService.class, UserEJB.class)));
+		bind(GicsService.class).toProvider(fromJndi(GicsService.class, getEjbJndiName(GicsService.class, GicsEJB.class)));
 		bindHandler(Login.class, AuthenticationEJBHandler.class);
 		bindHandler(GetStocks.class, GetStocksEJBHandler.class);
 		bindHandler(GetExchanges.class, GetExchangesEJBHandler.class);
@@ -49,7 +54,8 @@ public class EJBServerModule extends HandlerModule {
 		bindHandler(Logout.class, LogoutHandler.class);
 		bindHandler(GetAllStockDetails.class, GetAllStockDetailsEJBHandler.class);
 		bindHandler(DeleteRegistryEntry.class, DeleteRegistryEntryEJBHandler.class);
-		bindHandler(EditRegistryEntry.class, EditRegistryEntryEJBHandler.class);		
+		bindHandler(EditRegistryEntry.class, EditRegistryEntryEJBHandler.class);
+		bindHandler(GetGicsSectors.class, GetGicsNamesEJBHandler.class);
 	}
 
 	public static String PREFIX = "gordon-gwt-1.0";

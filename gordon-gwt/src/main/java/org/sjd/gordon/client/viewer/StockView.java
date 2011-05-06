@@ -15,7 +15,7 @@ import com.gwtplatform.mvp.client.ViewImpl;
 public class StockView extends ViewImpl implements StockPresenter.StockPanelView {
 
 	private TabPanel tabbedPanel;
-	private GeneralInformationPresenter generalInformalPresenter;
+	private StockProfilePresenter generalInformalPresenter;
 	private TradeHistoryPresenter tradeHistoryPresenter;
 	private StockDetails stockDetails;
 	@Inject
@@ -26,7 +26,7 @@ public class StockView extends ViewImpl implements StockPresenter.StockPanelView
 	private int height;
 	
 	@Inject
-	public StockView(GeneralInformationPresenter generalInformalPresenter, final TradeHistoryPresenter tradeHistoryPresenter) {
+	public StockView(StockProfilePresenter generalInformalPresenter, final TradeHistoryPresenter tradeHistoryPresenter) {
 		this.generalInformalPresenter = generalInformalPresenter;
 		this.tradeHistoryPresenter = tradeHistoryPresenter;
 
@@ -34,7 +34,7 @@ public class StockView extends ViewImpl implements StockPresenter.StockPanelView
 		tabbedPanel.setTabScroll(true);
 		tabbedPanel.setCloseContextMenu(false);
 
-		TabItem generalTabItem = new TabItem("General");
+		TabItem generalTabItem = new TabItem("Profile");
 		generalTabItem.add(generalInformalPresenter.getView().asWidget());
 		tabbedPanel.add(generalTabItem);
 

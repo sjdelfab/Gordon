@@ -21,6 +21,8 @@
         <class>org.sjd.gordon.model.UnitaryPropertyDefinition</class>
         <class>org.sjd.gordon.model.UnitaryPropertyValue</class>
         <class>org.sjd.gordon.model.User</class>
+        <class>org.sjd.gordon.model.GicsSector</class>
+        <class>org.sjd.gordon.model.GicsIndustryGroup</class>        
         <properties>
             <property name="eclipselink.target-database" value="org.eclipse.persistence.platform.database.H2Platform"/>
             <property name="eclipselink.logging.level" value="INFO"/>

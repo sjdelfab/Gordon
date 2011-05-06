@@ -18,4 +18,6 @@ public interface StockEntityService {
     public List<StockDayTradeRecord> getDayTradeData(Long stockId);
     public StockDayTradeRecord addDayTrade(StockDayTradeRecord trade);
     public void deleteAllDayTrades(StockEntity stock);
+    public StockDayTradeRecord getFirstTradeDay(Long stockId);
+    public StockDayTradeRecord getLastTradeDay(Long stockId);
 }

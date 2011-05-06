@@ -1,5 +1,6 @@
 package org.sjd.gordon.server.devhandlers;
 
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
@@ -20,27 +21,27 @@ public class GetTradeHistoryDevHandler implements ActionHandler<GetTradeHistory,
 		ArrayList<StockDayTradeRecord> history = new ArrayList<StockDayTradeRecord>();
 		StockDayTradeRecord record = new StockDayTradeRecord();
 		try {
-			record.setClosePrice(10.0);
+			record.setClosePrice(new BigDecimal("10.0"));
 			record.setDate(dateFormat.parse("01/6/2010"));
 			record.setVolume(10000);
 			history.add(record);
 			record = new StockDayTradeRecord();
-			record.setClosePrice(11.0);
+			record.setClosePrice(new BigDecimal("11.0"));
 			record.setDate(dateFormat.parse("02/6/2010"));
 			record.setVolume(20000);
 			history.add(record);
 			record = new StockDayTradeRecord();
-			record.setClosePrice(12.0);
+			record.setClosePrice(new BigDecimal("12.0"));
 			record.setDate(dateFormat.parse("03/6/2010"));
 			record.setVolume(30000);
 			history.add(record);
 			record = new StockDayTradeRecord();
-			record.setClosePrice(13.0);
+			record.setClosePrice(new BigDecimal("13.0"));
 			record.setDate(dateFormat.parse("04/6/2010"));
 			record.setVolume(40000);
 			history.add(record);
 			record = new StockDayTradeRecord();
-			record.setClosePrice(14.0);
+			record.setClosePrice(new BigDecimal("14.0"));
 			record.setDate(dateFormat.parse("05/6/2010"));
 			record.setVolume(50000);
 			history.add(record);

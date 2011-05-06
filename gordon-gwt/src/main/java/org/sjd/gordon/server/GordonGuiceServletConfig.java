@@ -10,7 +10,7 @@ import com.google.inject.servlet.GuiceServletContextListener;
 
 public class GordonGuiceServletConfig extends GuiceServletContextListener {
 
-	public static enum Mode { DEV,  GUICE_JPA, EJB };
+	public static enum Mode { DEV, GUICE_JPA, EJB };
 	
 	private Mode mode = Mode.EJB;
 	

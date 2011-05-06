@@ -47,7 +47,7 @@ public class TradeHistoryViewImpl extends ViewImpl implements TradeHistoryPresen
 			    for(int i=0; i < tradeHistory.size(); i++) {
 			    	StockDayTradeRecord rec = tradeHistory.get(i);
 			    	data.setValue(i, 0, rec.getDate());
-			    	data.setValue(i, 1, rec.getClosePrice());
+			    	data.setValue(i, 1, rec.getClosePrice().doubleValue());
 			    }
 			    int graphWidth = width-314;
 			    int graphHeight = height-136;

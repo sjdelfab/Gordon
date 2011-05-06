@@ -2,6 +2,7 @@ package org.sjd.gordon.client.registry;
 
 import org.sjd.gordon.client.AbstractCallback;
 import org.sjd.gordon.shared.registry.EditRegistryEntryResponse;
+import org.sjd.gordon.shared.viewer.StockDetails;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
@@ -9,9 +10,9 @@ public abstract class EditEntryCallback extends AbstractCallback implements Asyn
 
 	@Override
 	public void onSuccess(EditRegistryEntryResponse response) {
-		commited(response.getStockId());
+		commited(response.getStock());
 	}
 
-	public abstract void commited(Long stockId);
+	public abstract void commited(StockDetails stock);
 
 }

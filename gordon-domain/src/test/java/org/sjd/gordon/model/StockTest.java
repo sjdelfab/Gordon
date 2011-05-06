@@ -3,6 +3,7 @@ package org.sjd.gordon.model;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -39,11 +40,11 @@ public class StockTest extends AbstractJpaTest {
         assertNotNull("ID should not be null", stock.getId()); 
  
         StockDayTradeRecord tradeRecord = new StockDayTradeRecord();
-        tradeRecord.setClosePrice(10.0d);
+        tradeRecord.setClosePrice(new BigDecimal("10.0"));
         tradeRecord.setDate(new Date());
-        tradeRecord.setHighPrice(11.0d);
-        tradeRecord.setLowPrice(9.0d);
-        tradeRecord.setOpenPrice(9.0d);
+        tradeRecord.setHighPrice(new BigDecimal("11.0"));
+        tradeRecord.setLowPrice(new BigDecimal("9.0"));
+        tradeRecord.setOpenPrice(new BigDecimal("9.0"));
         tradeRecord.setStockId(stock.getId());
         tradeRecord.setVolume(123l);
         

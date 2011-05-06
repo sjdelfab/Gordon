@@ -20,10 +20,12 @@
         <class>org.sjd.gordon.model.UnitaryPropertyDefinition</class>
         <class>org.sjd.gordon.model.UnitaryPropertyValue</class>
         <class>org.sjd.gordon.model.User</class>
+        <class>org.sjd.gordon.model.GicsSector</class>
+        <class>org.sjd.gordon.model.GicsIndustryGroup</class>
         <properties>
             <property name="eclipselink.target-database" value="DERBY"/>
             <property name="eclipselink.ddl-generation" value="drop-and-create-tables"/>
-            <property name="eclipselink.logging.level" value="FINE"/>
+            <property name="eclipselink.logging.level" value="INFO"/>
             <property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.EmbeddedDriver"/>
             <property name="javax.persistence.jdbc.url" value="jdbc:derby:memory:gordonModel;create=true"/>
             <property name="javax.persistence.jdbc.user" value="APP"/>

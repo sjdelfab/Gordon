@@ -24,6 +24,12 @@
 
 	<dependencies>
 		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit-version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
 			<groupId>org.sjd.gordon</groupId>
 			<artifactId>gordon-domain</artifactId>
 			<version>1.0</version>
@@ -39,7 +45,7 @@
 			<artifactId>gwt-dispatch</artifactId>
 			<version>1.1.0</version>
 			<scope>provided</scope>
-		</dependency>					
+		</dependency>
 		<dependency>
 			<groupId>org.glassfish</groupId>
 			<artifactId>javax.ejb</artifactId>
@@ -70,16 +76,58 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-		    <groupId>com.google.inject.extensions</groupId>
-		    <artifactId>guice-jndi</artifactId>
-		    <version>3.0</version>
-		    <scope>provided</scope>
+			<groupId>com.google.inject.extensions</groupId>
+			<artifactId>guice-jndi</artifactId>
+			<version>3.0</version>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>${gwtp.project.groupId}</groupId>
 			<artifactId>gwtp-all</artifactId>
 			<version>${gwtp.version}</version>
 			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.persistence</groupId>
+			<artifactId>eclipselink</artifactId>
+			<version>${eclipselink-version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.google.gwt</groupId>
+			<artifactId>gwt-user</artifactId>
+			<version>2.2.0</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.google.gwt</groupId>
+			<artifactId>gwt-servlet</artifactId>
+			<version>2.2.0</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.google.code.guice</groupId>
+			<artifactId>guice-servlet</artifactId>
+			<version>2.0</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.jmock</groupId>
+			<artifactId>jmock-junit4</artifactId>
+			<version>2.5.1</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.dbunit</groupId>
+			<artifactId>dbunit</artifactId>
+			<version>2.4.4</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>commons-collections</groupId>
+			<artifactId>commons-collections</artifactId>
+			<version>3.2</version>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 
@@ -135,7 +183,11 @@
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>2.7.2</version>
 				<configuration>
-					<argLine>-Xms512m -Xmx512m</argLine>
+					<argLine>-Xms512m -Xmx1024m</argLine>
+					<includes>
+						<include>org/sjd/gordon/ejb/AllEjbTests.java</include>
+						<include>org/sjd/gordon/ejb/dispatch/**/*.java</include>
+					</includes>
 				</configuration>
 			</plugin>
 		</plugins>

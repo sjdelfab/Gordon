@@ -8,8 +8,8 @@ import org.sjd.gordon.client.navigation.NavigationPresenter;
 import org.sjd.gordon.client.navigation.NavigationView;
 import org.sjd.gordon.client.registry.RegistryPresenter;
 import org.sjd.gordon.client.registry.RegistryViewImpl;
-import org.sjd.gordon.client.viewer.GeneralInformationPresenter;
-import org.sjd.gordon.client.viewer.GeneralInformationViewImpl;
+import org.sjd.gordon.client.viewer.StockProfilePresenter;
+import org.sjd.gordon.client.viewer.StockProfileViewImpl;
 import org.sjd.gordon.client.viewer.StockPresenter;
 import org.sjd.gordon.client.viewer.StockView;
 import org.sjd.gordon.client.viewer.TabbedPanelPresenter;
@@ -50,8 +50,8 @@ public class GordonClientModule extends AbstractPresenterModule {
 		bindPresenter(TabbedPanelPresenter.class, TabbedPanelPresenter.TabbedPanelView.class, TabbedPanelViewImpl.class, 
 				      TabbedPanelPresenter.TabbedPanelProxy.class);
 		bindPresenterWidget(StockPresenter.class, StockPresenter.StockPanelView.class, StockView.class);
-		bindPresenterWidget(GeneralInformationPresenter.class, GeneralInformationPresenter.GeneralInformationView.class, 
-				GeneralInformationViewImpl.class);
+		bindPresenterWidget(StockProfilePresenter.class, StockProfilePresenter.StockProfileView.class, 
+				StockProfileViewImpl.class);
 		bindPresenterWidget(TradeHistoryPresenter.class, TradeHistoryPresenter.TradeHistoryView.class, TradeHistoryViewImpl.class);
 		
 		bindPresenter(TitleStripPresenter.class, TitleStripPresenter.TitleStripView.class, TitleStrip.class, 

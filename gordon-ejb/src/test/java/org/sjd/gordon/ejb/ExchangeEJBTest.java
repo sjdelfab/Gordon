@@ -5,20 +5,15 @@ import static org.junit.Assert.assertNotNull;
 
 import java.util.List;
 
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.sjd.gordon.model.Exchange;
 
 public class ExchangeEJBTest extends AbstractEJBTest {
    
-	@BeforeClass 
-	public static void initialise() throws Exception {
-		initContainer();
-	}
-	
     @Test 
-    public void should_create_an_exchange() throws Exception { 
-    	ExchangeService exchangeEJB = (ExchangeService) ctx.lookup("java:global/classes/ExchangeEJB!org.sjd.gordon.ejb.ExchangeService"); 
+    public void should_create_an_exchange() throws Exception {
+    	truncateDatabase();
+    	ExchangeService exchangeEJB = (ExchangeService) AllEjbTests.ctx.lookup("java:global/classes/ExchangeEJB!org.sjd.gordon.ejb.ExchangeService"); 
  
     	Exchange exchange = new Exchange();
     	exchange.setActive(true);

@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import java.math.BigDecimal;
-import java.util.Date;
 import java.util.List;
 
 import org.junit.BeforeClass;
@@ -25,8 +24,8 @@ public class TabularDatasetEJBTest extends AbstractEJBTest {
 		
 		@BeforeClass 
 		public static void createExchangeAndStock() throws Exception {
-			initContainer();
-			ExchangeService exchangeEJB = (ExchangeService) ctx.lookup("java:global/classes/ExchangeEJB!org.sjd.gordon.ejb.ExchangeService"); 
+			truncateDatabase();
+			ExchangeService exchangeEJB = (ExchangeService) AllEjbTests.ctx.lookup("java:global/classes/ExchangeEJB!org.sjd.gordon.ejb.ExchangeService"); 
 	   	 
 	    	exchange = new Exchange();
 	    	exchange.setActive(true);
@@ -37,11 +36,9 @@ public class TabularDatasetEJBTest extends AbstractEJBTest {
 	        stock = new StockEntity();
 	    	stock.setCode("BHP");
 	    	stock.setExchange(exchange);
-	    	stock.setLastTradeDate(new Date());
-	    	stock.setListDate(new Date());
 	    	stock.setName("BHP Ltd");
 	    	
-	    	StockEntityService stockEntityEjb = (StockEntityService) ctx.lookup("java:global/classes/StockEntityEJB!org.sjd.gordon.ejb.StockEntityService");
+	    	StockEntityService stockEntityEjb = (StockEntityService) AllEjbTests.ctx.lookup("java:global/classes/StockEntityEJB!org.sjd.gordon.ejb.StockEntityService");
 	    	stock = stockEntityEjb.createStock(stock);
 		}
 		
@@ -57,7 +54,7 @@ public class TabularDatasetEJBTest extends AbstractEJBTest {
 	    	columnDefinition.setType(DataType.STRING);
 	    	definition.addColumnDefinition(columnDefinition);
 	    	
-	    	TabularDatasetEJB tabularDatasetEJB = (TabularDatasetEJB) ctx.lookup("java:global/classes/TabularDatasetEJB");
+	    	TabularDatasetEJB tabularDatasetEJB = (TabularDatasetEJB) AllEjbTests.ctx.lookup("java:global/classes/TabularDatasetEJB");
 	    	definition = tabularDatasetEJB.addDefinition(definition);
 	    	assertNotNull("ID should not be null", definition.getId());
 	    	

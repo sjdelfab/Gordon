@@ -10,18 +10,18 @@ import com.gwtplatform.mvp.client.annotations.ProxyStandard;
 import com.gwtplatform.mvp.client.proxy.Proxy;
 import com.gwtplatform.mvp.client.proxy.RevealRootContentEvent;
 
-public class GeneralInformationPresenter extends Presenter<GeneralInformationPresenter.GeneralInformationView,
-          												   GeneralInformationPresenter.GeneralInformationProxy> {
+public class StockProfilePresenter extends Presenter<StockProfilePresenter.StockProfileView,
+          												   StockProfilePresenter.StockProfileProxy> {
 	
 	@ProxyStandard
-	public interface GeneralInformationProxy extends Proxy<GeneralInformationPresenter> { }
+	public interface StockProfileProxy extends Proxy<StockProfilePresenter> { }
 
-	public interface GeneralInformationView extends View { 
+	public interface StockProfileView extends View { 
 		public void setStock(StockDetails stockDetails);
 	}
 	
 	@Inject
-	public GeneralInformationPresenter(EventBus eventBus, GeneralInformationView view, GeneralInformationProxy proxy) {
+	public StockProfilePresenter(EventBus eventBus, StockProfileView view, StockProfileProxy proxy) {
 		super(eventBus,view,proxy);
 	}	
 	

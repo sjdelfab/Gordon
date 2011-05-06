@@ -6,6 +6,7 @@ import org.sjd.gordon.shared.navigation.GetStocks;
 import org.sjd.gordon.shared.registry.DeleteRegistryEntry;
 import org.sjd.gordon.shared.registry.EditRegistryEntry;
 import org.sjd.gordon.shared.registry.GetAllStockDetails;
+import org.sjd.gordon.shared.registry.GetGicsSectors;
 import org.sjd.gordon.shared.security.Login;
 import org.sjd.gordon.shared.security.Logout;
 import org.sjd.gordon.shared.viewer.GetStockDetails;
@@ -26,6 +27,7 @@ public class DevelopmentModule extends HandlerModule {
 		bindHandler(GetAllStockDetails.class, GetAllStockDetailsDevHandler.class);
 		bindHandler(DeleteRegistryEntry.class, DeleteRegistryEntryDevHandler.class);
 		bindHandler(EditRegistryEntry.class, EditRegistryEntryDevHandler.class);
+		bindHandler(GetGicsSectors.class, GetGicsNamesDevHandler.class);
 	}
 
 }

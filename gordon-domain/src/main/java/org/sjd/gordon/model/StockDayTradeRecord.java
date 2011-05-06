@@ -10,6 +10,7 @@
 package org.sjd.gordon.model;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -36,13 +37,13 @@ public class StockDayTradeRecord implements Serializable {
 	@Temporal(TemporalType.DATE)
     private Date date;
 	@Column(nullable = false,name="open_price")
-    private double openPrice;
+    private BigDecimal openPrice;
 	@Column(nullable = false,name="high_price")
-    private double highPrice;
+    private BigDecimal highPrice;
 	@Column(nullable = false,name="low_price")
-    private double lowPrice;
+    private BigDecimal lowPrice;
 	@Column(nullable = false,name="close_price")
-    private double closePrice;
+    private BigDecimal closePrice;
 	@Column(nullable = false,name="volume")
     private long volume;
    
@@ -56,35 +57,35 @@ public class StockDayTradeRecord implements Serializable {
 		this.date = date;
 	}
 
-	public double getOpenPrice() {
+	public BigDecimal getOpenPrice() {
 		return openPrice;
 	}
 
-	public void setOpenPrice(double openPrice) {
+	public void setOpenPrice(BigDecimal openPrice) {
 		this.openPrice = openPrice;
 	}
 
-	public double getHighPrice() {
+	public BigDecimal getHighPrice() {
 		return highPrice;
 	}
 
-	public void setHighPrice(double highPrice) {
+	public void setHighPrice(BigDecimal highPrice) {
 		this.highPrice = highPrice;
 	}
 
-	public double getLowPrice() {
+	public BigDecimal getLowPrice() {
 		return lowPrice;
 	}
 
-	public void setLowPrice(double lowPrice) {
+	public void setLowPrice(BigDecimal lowPrice) {
 		this.lowPrice = lowPrice;
 	}
 
-	public double getClosePrice() {
+	public BigDecimal getClosePrice() {
 		return closePrice;
 	}
 
-	public void setClosePrice(double closePrice) {
+	public void setClosePrice(BigDecimal closePrice) {
 		this.closePrice = closePrice;
 	}
 

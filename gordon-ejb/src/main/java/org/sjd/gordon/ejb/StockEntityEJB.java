@@ -17,7 +17,7 @@ public class StockEntityEJB implements StockEntityService {
 	@PersistenceContext 
     private EntityManager em; 
  
-    public StockEntity findStockById(Long id) { 
+    public StockEntity findStockById(Long id) {
         return em.find(StockEntity.class, id); 
     } 
  
@@ -62,4 +62,32 @@ public class StockEntityEJB implements StockEntityService {
     	query.setParameter("stockId", stock.getId());
     	query.executeUpdate();
     }
+
+	@Override
+	public StockDayTradeRecord getFirstTradeDay(Long stockId) {
+		String getFirstTradeDay = "SELECT t FROM StockDayTradeRecord t WHERE t.id = " +
+				"(SELECT MIN(s.id) FROM StockDayTradeRecord s WHERE s.stockId = :stockId)";
+    	TypedQuery<StockDayTradeRecord> query = em.createQuery(getFirstTradeDay, StockDayTradeRecord.class);
+    	query.setParameter("stockId", stockId);
+    	List<StockDayTradeRecord> result = query.getResultList();
+    	if (result.isEmpty()) {
+		    return null;
+    	} else {
+    		return result.get(0);
+    	}
+	}
+
+	@Override
+	public StockDayTradeRecord getLastTradeDay(Long stockId) {
+		String getFirstTradeDay = "SELECT t FROM StockDayTradeRecord t WHERE t.id = "
+				+ "(SELECT MAX(s.id) FROM StockDayTradeRecord s WHERE s.stockId = :stockId)";
+		TypedQuery<StockDayTradeRecord> query = em.createQuery(getFirstTradeDay, StockDayTradeRecord.class);
+		query.setParameter("stockId", stockId);
+		List<StockDayTradeRecord> result = query.getResultList();
+		if (result.isEmpty()) {
+			return null;
+		} else {
+			return result.get(0);
+		}
+	}
 }

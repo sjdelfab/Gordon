@@ -2,7 +2,6 @@ package org.sjd.gordon.model;
 
 import java.net.URL;
 import java.sql.SQLException;
-import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
@@ -52,8 +51,6 @@ public abstract class AbstractJpaTest {
     	StockEntity stock = new StockEntity();
     	stock.setCode("BHP");
     	stock.setExchange(exchange);
-    	stock.setLastTradeDate(new Date());
-    	stock.setListDate(new Date());
     	stock.setName("BHP Ltd");
     	return stock;
     }

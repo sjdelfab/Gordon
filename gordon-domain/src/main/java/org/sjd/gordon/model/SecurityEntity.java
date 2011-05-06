@@ -26,6 +26,8 @@ public class SecurityEntity implements Serializable {
 	private String name;
 	@Column(nullable = false)
 	private String code;
+	@Column(nullable = false)
+	private boolean active;
 	
 	public Integer getVersion() {
 		return version;
@@ -49,6 +51,22 @@ public class SecurityEntity implements Serializable {
 
 	public void setCode(String code) {
 		this.code = code;
-	}	
+	}
+	
+	public void setVersion(Integer version) {
+		this.version = version;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
+	
+	public boolean isActive() {
+		return active;
+	}
 	
 }

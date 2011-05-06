@@ -1,15 +1,11 @@
 package org.sjd.gordon.model;
 
 import java.io.Serializable;
-import java.util.Date;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "stock")
@@ -20,12 +16,9 @@ public class StockEntity extends SecurityEntity implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="EXCHANGE_ID",nullable = false, referencedColumnName="ID")
 	private Exchange exchange;
-	@Column(nullable = false,name="list_date")
-	@Temporal(TemporalType.DATE)
-	private Date listDate;
-	@Column(nullable = false,name="last_trade_date")
-	@Temporal(TemporalType.DATE)
-	private Date lastTradeDate;
+	@ManyToOne
+	@JoinColumn(name="INDUSTRY_GRP_ID",nullable = true, referencedColumnName="ID")
+	private GicsIndustryGroup gicsIndustryGroup;
 	
 	public StockEntity() {}
 	
@@ -37,21 +30,12 @@ public class StockEntity extends SecurityEntity implements Serializable {
 		this.exchange = exchange;
 	}
 	
-	public Date getListDate() {
-		return listDate;
+	public GicsIndustryGroup getGicsIndustryGroup() {
+		return gicsIndustryGroup;
 	}
 	
-	public void setListDate(Date listDate) {
-		this.listDate = listDate;
+	public void setGicsIndustryGroup(GicsIndustryGroup industryGroup) {
+		this.gicsIndustryGroup = industryGroup;
 	}
-	
-	public Date getLastTradeDate() {
-		return lastTradeDate;
-	}
-	
-	public void setLastTradeDate(Date lastTradeDate) {
-		this.lastTradeDate = lastTradeDate;
-	}
-	
-	
+
 }

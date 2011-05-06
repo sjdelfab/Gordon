@@ -6,7 +6,10 @@
 
 <style type="text/css">
 #navbar{
-height:29px;
+height:25%;
+margin-left:auto;
+margin-right:auto;
+width:25%;
 line-height:29px;
 }
 
@@ -17,22 +20,14 @@ line-height:29px;
 border:0; margin:0;padding:0; list-style:none;
 }
 
-#navbar li a{
-margin:0 6px;
-text-decoration:none;
-color:#000000;
-font-weight:bold;
-border-bottom:dotted 1px #000000;
-}
-
-/*------ Layer with Register and Login Section ------ */
+/*------ Login Section ------ */
 #login_menu{
 background:#aaaaaa;
 border:solid 1px #666666;
-width:340px;
+width:200px;
 padding:10px;
 color:#FFFFFF;
-position:fixed;
+position:absolute; top:40%; height:10em; margin-top:-5em;
 font-weight:bold;
 font-size:12px;
 line-height:18px;
@@ -41,25 +36,10 @@ line-height:18px;
 padding-bottom:6px;
 text-align:right;
 }
-#new-user-col{
-padding-right:10px;
-border-right:1px #DEDEDE solid;
-height:120px;
-width:100px;
-float:left;
-line-height:12px;
-}
-#signup-user-col{
-padding-left:20px;
-height:120px;
-width:200px;
-float:left;
-line-height:12px;
-text-align:right;
-}
+
 #login_menu label{font-size:12px; font-weight:normal; font-family:Arial }
 #login_menu input{font-size:12px; color:#333333; margin-left:10px;}
-
+.button_div{margin-right:2px;}
 /*------ Button ------ */
 #login_menu button{
 line-height:24px;
@@ -71,7 +51,7 @@ text-align:center;
 cursor:pointer;
 }
 
-.green-button{
+.login-button{
 
 display:block;
 color:#FFFFFF;
@@ -90,11 +70,6 @@ text-align:center;
 
 </head>
 
-<!--                                           -->
-<!-- The body can have arbitrary html, or      -->
-<!-- you can leave the body empty if you want  -->
-<!-- to create a completely dynamic UI.        -->
-<!--                                           -->
 <body>
 	<div id="navbar">
 		<div id="login_menu">
@@ -105,7 +80,7 @@ text-align:center;
 						<li><label for="email">Username:</label> <input type="text" id="email" size="18" name="j_username"/></li>
 						<li><label for="psw">Password:</label> <input type="password" id="psw" size="18" name="j_password"/></li>
 					</ul>
-					<button type="submit" class="green-button">Login</button>
+					<div class="button_div"><button type="submit" class="login-button">Login</button></div>
 				</form>
 			</div>
 

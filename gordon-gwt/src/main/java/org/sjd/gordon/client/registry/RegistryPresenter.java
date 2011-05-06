@@ -6,6 +6,8 @@ import org.sjd.gordon.model.Exchange;
 import org.sjd.gordon.shared.registry.DeleteRegistryEntry;
 import org.sjd.gordon.shared.registry.EditRegistryEntry;
 import org.sjd.gordon.shared.registry.GetAllStockDetails;
+import org.sjd.gordon.shared.registry.GetGicsSectors;
+import org.sjd.gordon.shared.registry.GicsSectorName;
 import org.sjd.gordon.shared.viewer.StockDetails;
 
 import com.extjs.gxt.ui.client.event.Listener;
@@ -30,6 +32,7 @@ public class RegistryPresenter extends Presenter<RegistryPresenter.RegistryPanel
 
 	public interface RegistryPanelView extends View {
 		public void setStocks(ArrayList<StockDetails> stocks);
+		public void setGicsSectors(ArrayList<GicsSectorName> sectors);
 		public StockDetails getSelectedItem();
 		public void remove(StockDetails stock);
 		public HasClickHandlers getDeleteHandler();
@@ -43,7 +46,7 @@ public class RegistryPresenter extends Presenter<RegistryPresenter.RegistryPanel
 	}
 	
 	interface EditDialogCallback {
-		void commit(String code, String name);
+		void commit(StockDetails details);
 	}
 	
 	private final DispatchAsync dispatcher;
@@ -66,6 +69,12 @@ public class RegistryPresenter extends Presenter<RegistryPresenter.RegistryPanel
 				getView().setStocks(stocks);
 			}
 		});
+		dispatcher.execute(new GetGicsSectors(), new LoadGicsSectorNamesCallback() {
+			@Override
+			public void loaded(ArrayList<GicsSectorName> sectors) {
+				getView().setGicsSectors(sectors);
+			}
+		});
 	}	
 	
 	@Override
@@ -82,10 +91,7 @@ public class RegistryPresenter extends Presenter<RegistryPresenter.RegistryPanel
 			public void onClick(ClickEvent arg0) {
 				getView().showEditDialog(new EditDialogCallback() {
 					@Override
-					public void commit(String code, String name) {
-						StockDetails details = new StockDetails();
-						details.setCode(code);
-						details.setName(name);
+					public void commit(StockDetails details) {
 						editEntry(details);
 					}
 				});
@@ -96,12 +102,12 @@ public class RegistryPresenter extends Presenter<RegistryPresenter.RegistryPanel
 			public void onClick(ClickEvent arg0) {
 				final StockDetails selected = getView().getSelectedItem();
 				if (selected != null) {
-					getView().showEditDialog(selected, new EditDialogCallback() {
+					getView().showEditDialog(new StockDetails(selected), new EditDialogCallback() {
 						@Override
-						public void commit(String code, String name) {
-							selected.setCode(code);
-							selected.setName(name);
-							updateEntry(selected);
+						public void commit(StockDetails details) {
+							StockDetails stock = new StockDetails(selected);
+							stock.mergeTo(details);
+							updateEntry(stock);
 						}
 					});
 				}
@@ -128,20 +134,18 @@ public class RegistryPresenter extends Presenter<RegistryPresenter.RegistryPanel
 		EditRegistryEntry action = new EditRegistryEntry(details, exchange.getId(), EditRegistryEntry.EditType.ADD);
 		dispatcher.execute(action, new EditEntryCallback() {
 			@Override
-			public void commited(Long stockId) {
-				details.setId(stockId);
-				getView().add(details);
+			public void commited(StockDetails stock) {
+				getView().add(stock);
 			}
 		});
 	}
 	
-	private void updateEntry(final StockDetails details) {
+	private void updateEntry(StockDetails details) {
 		EditRegistryEntry action = new EditRegistryEntry(details, exchange.getId(), EditRegistryEntry.EditType.UPDATE);
 		dispatcher.execute(action, new EditEntryCallback() {
 			@Override
-			public void commited(Long stockId) {
-				details.setId(stockId);
-				getView().update(details);
+			public void commited(StockDetails stock) {
+				getView().update(stock);
 			}
 		});
 	}

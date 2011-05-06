@@ -3,4 +3,5 @@
 	<source path='shared/navigation' />
 	<source path='shared/viewer' />
 	<source path='shared/registry' />
+	<source path='shared/exceptions' />
 </module>

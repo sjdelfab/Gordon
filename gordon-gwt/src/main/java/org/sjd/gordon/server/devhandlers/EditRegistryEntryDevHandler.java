@@ -23,7 +23,7 @@ public class EditRegistryEntryDevHandler implements ActionHandler<EditRegistryEn
 			StockDetails currentStock = Data.detailsMap.get(newStockDetails.getId());
 			currentStock.mergeTo(newStockDetails);
 		}
-		return new EditRegistryEntryResponse(newStockDetails.getId());
+		return new EditRegistryEntryResponse(newStockDetails);
 	}
 
 	@Override

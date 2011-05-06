@@ -19,7 +19,13 @@ import org.sjd.gordon.model.StockEntity;
 
 public class CSVSecurityRegistryDAO implements SecurityRegistryDAO {
     
+	// Code > Name
     private HashMap<String,String> stocks = null;
+    // Stock Code > Sector name 
+    private HashMap<String,String> gicsSectors = new HashMap<String,String>();
+    // Stock Code > Industry group 
+    private HashMap<String,String> gicsIndustryGrps = new HashMap<String,String>();
+    
     private List<StockEntity> sortedByName, sortedByCode;
     private String masterListFile;
     private Exchange exchange;
@@ -61,6 +67,14 @@ public class CSVSecurityRegistryDAO implements SecurityRegistryDAO {
         return stocks.get(code) != null;
     }
     
+    public String getSector(String code) {
+    	return gicsSectors.get(code);
+    }
+
+    public String getIndustryGroup(String code) {
+    	return gicsIndustryGrps.get(code);
+    }
+
     protected Map<String,String> getStocks() throws IOException {
         if (stocks == null) {
             stocks = new HashMap<String,String>();
@@ -73,6 +87,10 @@ public class CSVSecurityRegistryDAO implements SecurityRegistryDAO {
                 StringTokenizer st = new StringTokenizer(line,",");
                 String stkName = (st.nextToken()).trim();
 				String stkCode = (st.nextToken()).trim();
+				String sector = (st.nextToken()).trim();
+				gicsSectors.put(stkCode, sector);
+				String group = (st.nextToken()).trim();
+				gicsIndustryGrps.put(stkCode, group);
 				StockEntity stock = new StockEntity();
 				stock.setExchange(exchange);
 				stock.setName(stkName);

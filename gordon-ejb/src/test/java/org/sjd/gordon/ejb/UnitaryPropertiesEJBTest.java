@@ -3,7 +3,6 @@ package org.sjd.gordon.ejb;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-import java.util.Date;
 import java.util.List;
 
 import org.junit.BeforeClass;
@@ -22,8 +21,8 @@ public class UnitaryPropertiesEJBTest extends AbstractEJBTest {
 		
 		@BeforeClass 
 		public static void createExchangeAndStock() throws Exception {
-			initContainer();
-			ExchangeService exchangeEJB = (ExchangeService) ctx.lookup("java:global/classes/ExchangeEJB!org.sjd.gordon.ejb.ExchangeService"); 
+			truncateDatabase();
+			ExchangeService exchangeEJB = (ExchangeService) AllEjbTests.ctx.lookup("java:global/classes/ExchangeEJB!org.sjd.gordon.ejb.ExchangeService"); 
 	   	 
 	    	exchange = new Exchange();
 	    	exchange.setActive(true);
@@ -34,11 +33,9 @@ public class UnitaryPropertiesEJBTest extends AbstractEJBTest {
 	        stock = new StockEntity();
 	    	stock.setCode("BHP");
 	    	stock.setExchange(exchange);
-	    	stock.setLastTradeDate(new Date());
-	    	stock.setListDate(new Date());
 	    	stock.setName("BHP Ltd");
 	    	
-	    	StockEntityService stockEntityEjb = (StockEntityService) ctx.lookup("java:global/classes/StockEntityEJB!org.sjd.gordon.ejb.StockEntityService");
+	    	StockEntityService stockEntityEjb = (StockEntityService) AllEjbTests.ctx.lookup("java:global/classes/StockEntityEJB!org.sjd.gordon.ejb.StockEntityService");
 	    	stock = stockEntityEjb.createStock(stock);
 		}
 		
@@ -48,7 +45,7 @@ public class UnitaryPropertiesEJBTest extends AbstractEJBTest {
 	    	definition.setDescription("A desc");
 	    	definition.setName("A Property");
 	    	definition.setType(DataType.STRING);
-	    	UnitaryPropertiesEJB unitaryPropertyEJB = (UnitaryPropertiesEJB) ctx.lookup("java:global/classes/UnitaryPropertiesEJB");
+	    	UnitaryPropertiesEJB unitaryPropertyEJB = (UnitaryPropertiesEJB) AllEjbTests.ctx.lookup("java:global/classes/UnitaryPropertiesEJB");
 	    	definition = unitaryPropertyEJB.addDefinition(definition);
 	    	assertNotNull("ID should not be null", definition.getId());
 	    	

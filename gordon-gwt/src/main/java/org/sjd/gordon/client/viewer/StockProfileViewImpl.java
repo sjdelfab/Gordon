@@ -13,10 +13,12 @@ import com.google.inject.Inject;
 import com.google.inject.name.Named;
 import com.gwtplatform.mvp.client.ViewImpl;
 
-public class GeneralInformationViewImpl extends ViewImpl implements GeneralInformationPresenter.GeneralInformationView {
+public class StockProfileViewImpl extends ViewImpl implements StockProfilePresenter.StockProfileView {
 
 	private LabelField nameTextField = new LabelField();
 	private LabelField codeTextField = new LabelField();
+	private LabelField gicsSectorTextField = new LabelField();
+	private LabelField gicsIndustryGroupTextField = new LabelField();
 	private LabelField listDateTextField = new LabelField();
 	private LabelField lastTradeTextField = new LabelField();
 
@@ -30,7 +32,7 @@ public class GeneralInformationViewImpl extends ViewImpl implements GeneralInfor
 	private int height;
 	private LayoutContainer main;
 	
-	public GeneralInformationViewImpl() {
+	public StockProfileViewImpl() {
 		main = new LayoutContainer();
 		main.setStyleAttribute("backgroundColor", "#FFFFFF");
 		main.setStyleAttribute("paddingLeft", "10px");
@@ -45,6 +47,12 @@ public class GeneralInformationViewImpl extends ViewImpl implements GeneralInfor
 		codeTextField.setFieldLabel("Code");
 		main.add(codeTextField, new FormData("30%"));
 
+		gicsSectorTextField.setFieldLabel("GICS Sector");
+		main.add(gicsSectorTextField, new FormData("30%"));
+		
+		gicsIndustryGroupTextField.setFieldLabel("GICS Industry Group");
+		main.add(gicsIndustryGroupTextField, new FormData("30%"));
+		
 		listDateTextField.setFieldLabel("List Date");
 		listDateTextField.setEnabled(false);
 		main.add(listDateTextField, new FormData("30%"));
@@ -58,6 +66,8 @@ public class GeneralInformationViewImpl extends ViewImpl implements GeneralInfor
 	public void setStock(StockDetails stockDetails) {
 		nameTextField.setValue(stockDetails.getName());
 		codeTextField.setValue(stockDetails.getCode());
+		gicsSectorTextField.setValue(stockDetails.getPrimarySectorName());
+		gicsIndustryGroupTextField.setValue(stockDetails.getPrimaryIndustryGroupName());
 		if (stockDetails.getListDate() != null) {
 			listDateTextField.setValue(dateFormatter.format(stockDetails.getListDate()));
 		}
