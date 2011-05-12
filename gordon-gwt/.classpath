@@ -10,8 +10,6 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/gordon-model"/>
 	<classpathentry kind="con" path="com.google.appengine.eclipse.core.GAE_CONTAINER"/>
 	<classpathentry kind="con" path="com.google.gwt.eclipse.core.GWT_CONTAINER"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/gordon-guicejpa"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/gordon-gwtcore"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/gordon-ejb"/>
 	<classpathentry kind="output" path="src/main/webapp/WEB-INF/classes"/>
 </classpath>

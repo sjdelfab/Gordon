@@ -1,6 +1,6 @@
 package org.sjd.gordon.client.viewer;
 
-import org.sjd.gordon.shared.viewer.StockDetails;
+import org.sjd.gordon.shared.viewer.StockDetail;
 
 import com.extjs.gxt.ui.client.event.Events;
 import com.extjs.gxt.ui.client.event.Listener;
@@ -17,7 +17,7 @@ public class StockView extends ViewImpl implements StockPresenter.StockPanelView
 	private TabPanel tabbedPanel;
 	private StockProfilePresenter generalInformalPresenter;
 	private TradeHistoryPresenter tradeHistoryPresenter;
-	private StockDetails stockDetails;
+	private StockDetail stockDetails;
 	@Inject
 	@Named("width")
 	private int width;
@@ -51,14 +51,14 @@ public class StockView extends ViewImpl implements StockPresenter.StockPanelView
 	}
 
 	@Override
-	public void setStock(StockDetails stockDetails) {
+	public void setStock(StockDetail stockDetails) {
 		this.stockDetails = stockDetails;
 		generalInformalPresenter.setStock(stockDetails);
 	}
 
 	@Override
 	public Widget asWidget() {
-		tabbedPanel.setSize(width-200, height-50);
+		tabbedPanel.setSize(width, height-50);
 		return tabbedPanel;
 	}
 

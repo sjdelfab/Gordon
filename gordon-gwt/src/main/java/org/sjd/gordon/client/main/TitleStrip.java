@@ -1,27 +1,46 @@
 package org.sjd.gordon.client.main;
 
 import org.sjd.gordon.client.gxt.Button;
+import org.sjd.gordon.client.gxt.ClickableLabel;
 import org.sjd.gordon.client.gxt.MenuItem;
+import org.sjd.gordon.client.main.TitleStripPresenter.EditCurrentUserDialogCallback;
+import org.sjd.gordon.client.security.ChangePasswordEditPanel;
+import org.sjd.gordon.client.security.ChangePasswordEditPanel.ChangePasswordCallback;
 import org.sjd.gordon.client.security.ChangeUserNameEvent;
 import org.sjd.gordon.client.security.ChangeUserNameEventHandler;
 import org.sjd.gordon.model.Exchange;
+import org.sjd.gordon.shared.security.UserDetail;
 
+import com.extjs.gxt.ui.client.Style.LayoutRegion;
+import com.extjs.gxt.ui.client.Style.Scroll;
+import com.extjs.gxt.ui.client.event.ButtonEvent;
 import com.extjs.gxt.ui.client.event.DomEvent;
 import com.extjs.gxt.ui.client.event.Events;
 import com.extjs.gxt.ui.client.event.Listener;
+import com.extjs.gxt.ui.client.event.SelectionListener;
 import com.extjs.gxt.ui.client.util.Margins;
 import com.extjs.gxt.ui.client.util.Padding;
+import com.extjs.gxt.ui.client.widget.Dialog;
 import com.extjs.gxt.ui.client.widget.Html;
-import com.extjs.gxt.ui.client.widget.Label;
 import com.extjs.gxt.ui.client.widget.LayoutContainer;
+import com.extjs.gxt.ui.client.widget.MessageBox;
 import com.extjs.gxt.ui.client.widget.Text;
+import com.extjs.gxt.ui.client.widget.form.FormPanel.LabelAlign;
+import com.extjs.gxt.ui.client.widget.form.TextField;
+import com.extjs.gxt.ui.client.widget.layout.BorderLayoutData;
+import com.extjs.gxt.ui.client.widget.layout.FormData;
+import com.extjs.gxt.ui.client.widget.layout.FormLayout;
 import com.extjs.gxt.ui.client.widget.layout.HBoxLayout;
 import com.extjs.gxt.ui.client.widget.layout.HBoxLayout.HBoxLayoutAlign;
 import com.extjs.gxt.ui.client.widget.layout.HBoxLayoutData;
 import com.extjs.gxt.ui.client.widget.menu.Menu;
 import com.extjs.gxt.ui.client.widget.menu.MenuBar;
 import com.extjs.gxt.ui.client.widget.menu.MenuBarItem;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.HasClickHandlers;
+import com.google.gwt.user.client.Element;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Widget;
 import com.gwtplatform.mvp.client.ViewImpl;
 
@@ -31,7 +50,9 @@ public class TitleStrip extends ViewImpl implements ChangeUserNameEventHandler, 
 	private LayoutContainer container;
 	private Button logoutButton;
 	private MenuItem registriesMenuItem;
+	private MenuItem userSetupMenuItem;
 	private Menu registriesSubMenu = new Menu();
+	private ClickableLabel settingsMenuItem = new ClickableLabel("Settings");
 	
 	public TitleStrip() {
 		container = new LayoutContainer();
@@ -64,19 +85,21 @@ public class TitleStrip extends ViewImpl implements ChangeUserNameEventHandler, 
 		registriesMenuItem.setSubMenu(registriesSubMenu);
 		setupMenu.add(registriesMenuItem);	
 		
-		MenuItem unitaryDefinitionMenuItem = new MenuItem("Unitary Definitions");
-		setupMenu.add(unitaryDefinitionMenuItem);
-		MenuItem tabularDefinitionMenuItem = new MenuItem("Tabular Definitions");
-		setupMenu.add(tabularDefinitionMenuItem);
-		MenuItem layoutMenuItem = new MenuItem("Layout");
-		setupMenu.add(layoutMenuItem);
+		userSetupMenuItem = new MenuItem("Users");
+		setupMenu.add(userSetupMenuItem);
+		
+//		MenuItem unitaryDefinitionMenuItem = new MenuItem("Unitary Definitions");
+//	    setupMenu.add(unitaryDefinitionMenuItem);
+//		MenuItem tabularDefinitionMenuItem = new MenuItem("Tabular Definitions");
+//		setupMenu.add(tabularDefinitionMenuItem);
+//		MenuItem layoutMenuItem = new MenuItem("Layout");
+//		setupMenu.add(layoutMenuItem);
 
 		MenuBarItem setupMenuBarItem = new MenuBarItem("Setup", setupMenu);
 		bar.add(setupMenuBarItem);
 		
 		container.add(bar, new HBoxLayoutData(new Margins(3)));
 		
-        final Label settingsMenuItem = new Label("Settings");
         settingsMenuItem.setSize(60, 16);
         settingsMenuItem.setStyleAttribute("vertical-align","middle");
         settingsMenuItem.setStyleAttribute("horizontal-align","middle");
@@ -129,6 +152,151 @@ public class TitleStrip extends ViewImpl implements ChangeUserNameEventHandler, 
 		MenuItem registryMenuItem = new MenuItem(exchange.getCode());
 		registriesSubMenu.add(registryMenuItem);
 		return registryMenuItem;
-		
 	}
+
+	@Override
+	public HasClickHandlers getUserSetup() {
+		return userSetupMenuItem;
+	}
+
+	@Override
+	public HasClickHandlers getSettings() {
+		return settingsMenuItem;
+	}
+
+	@Override
+	public ChangeUserNameEventHandler getChangeUserNameEventHandler() {
+		return this;
+	}
+	
+	@Override
+	public void logout() {
+		Window.Location.assign("Login.html");
+	}
+	
+	public void showPasswordSuccessfullyChangedMessage() {
+		MessageBox.info("Password Changed", "Password successfully changed", null);
+	}
+	
+	@Override
+	public void showEditDialog(UserDetail details, final EditCurrentUserDialogCallback callback) {
+		final Dialog editDialog = new Dialog();  
+	    editDialog.setHeading("Change your details");  
+	    editDialog.setButtons(Dialog.OKCANCEL);  
+	    editDialog.setBodyStyleName("pad-text");
+	    BorderLayoutData data = new BorderLayoutData(LayoutRegion.CENTER);
+	    final EditorUserDetailsPanel editorPanel = new EditorUserDetailsPanel(callback);
+    	editorPanel.setDetails(details);
+	    editDialog.add(editorPanel,data);  
+	    editDialog.setScrollMode(Scroll.AUTO);  
+	    editDialog.setHideOnButtonClick(false);
+	    editDialog.getButtonById(Dialog.OK).addSelectionListener(new SelectionListener<ButtonEvent>() {
+			@Override
+			public void componentSelected(ButtonEvent ce) {
+				if (!editorPanel.valid()) {
+					ce.cancelBubble();
+					return;
+				}
+				UserDetail details = editorPanel.getUserDetails(); 
+				editDialog.setVisible(false);
+			    callback.commit(details);
+			}
+		});
+	    editDialog.getButtonById(Dialog.CANCEL).addSelectionListener(new SelectionListener<ButtonEvent>() {
+			@Override
+			public void componentSelected(ButtonEvent ce) {
+				editDialog.setVisible(false);
+			}
+	    });
+	    editDialog.setResizable(false);
+	    editDialog.show();
+	}
+	
+	private class EditorUserDetailsPanel extends LayoutContainer {
+		
+		private TextField<String> firstNameTextField = new TextField<String>();
+		private TextField<String> lastNameTextField = new TextField<String>();
+		
+		private UserDetail currentDetails;
+		private EditCurrentUserDialogCallback callback;
+		
+		private EditorUserDetailsPanel(EditCurrentUserDialogCallback callback) {
+			this.callback = callback;
+		}
+		
+		@Override  
+		protected void onRender(Element parent, int index) {
+			super.onRender(parent, index);
+			
+			setStyleAttribute("backgroundColor", "#FFFFFF");
+			setStyleAttribute("paddingLeft", "10px");
+			setStyleAttribute("paddingTop", "10px");
+			FormLayout layout = new FormLayout();
+			layout.setLabelAlign(LabelAlign.LEFT);
+			setLayout(layout);
+
+			firstNameTextField.getMessages().setBlankText("Must specify a first name.");
+			firstNameTextField.setAllowBlank(false);
+			
+			firstNameTextField.setFieldLabel("First Name");
+			add(firstNameTextField, new FormData("30%"));
+
+			lastNameTextField.getMessages().setBlankText("Must specify a last name.");
+			lastNameTextField.setAllowBlank(false);
+			lastNameTextField.setFieldLabel("Last Name");
+			add(lastNameTextField, new FormData("30%"));
+
+			Button changePasswordButton = new Button("Change Password");
+			changePasswordButton.addClickHandler(new ClickHandler() {
+				@Override
+				public void onClick(ClickEvent arg0) {
+					ChangePasswordEditPanel.showChangePasswordDialog(currentDetails, new ChangePasswordCallback() {
+						@Override
+						public void changePassword(Integer userId, char[] password) {
+							callback.changePassword(userId, password);
+						}
+					});
+				}
+			});
+			add(changePasswordButton, new FormData("50%"));
+			
+			setSize(285,105);
+			
+			if (currentDetails != null) {
+				firstNameTextField.setValue(currentDetails.getFirstName());
+				lastNameTextField.setValue(currentDetails.getLastName());
+			}
+		}
+		
+		UserDetail getUserDetails() {
+			UserDetail details = new UserDetail(currentDetails);
+			details.setFirstName(firstNameTextField.getValue());
+			details.setLastName(lastNameTextField.getValue());
+			return details;
+		}
+		
+		void setDetails(UserDetail details) {
+			this.currentDetails = details;
+		}
+		
+		boolean valid() {
+			lastNameTextField.validate();
+			firstNameTextField.validate();
+			if (lastNameTextField.getValue() == null || lastNameTextField.getValue().equals("")) {
+				return false;
+			}
+			if (firstNameTextField.getValue() == null || firstNameTextField.getValue().equals("")) {
+				return false;
+			}
+			return true;
+		}
+		
+		@Override
+		protected void onHide() {
+			super.onHide();
+			this.currentDetails = null;
+			this.callback = null;
+		}
+	}
+	
 }

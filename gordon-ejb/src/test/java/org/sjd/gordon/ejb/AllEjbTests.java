@@ -10,9 +10,13 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
+import org.sjd.gordon.ejb.authorisation.SecurityTest;
+
+import com.sun.appserv.security.ProgrammaticLogin;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
+	SecurityTest.class,
 	DisplayModelEJBTest.class,
 	ExchangeEJBTest.class,
 	GicsEJBTest.class,
@@ -23,7 +27,7 @@ import org.junit.runners.Suite;
 public class AllEjbTests {
 
 	static EJBContainer ec; 
-	static Context ctx; 
+	public static Context ctx; 
  	
 	@BeforeClass
 	public static void initContainer() throws Exception {
@@ -31,6 +35,11 @@ public class AllEjbTests {
 		p.put("org.glassfish.ejb.embedded.glassfish.installation.root", "./src/test/glassfish");
 		ec = EJBContainer.createEJBContainer(p);
 		ctx = ec.getContext();
+		ProgrammaticLogin pl = new ProgrammaticLogin();
+		boolean result = pl.login("admin", new char[]{'a','d','m','i','n'}, "file", true);
+		if (!result) {
+			throw new RuntimeException("Failed login");
+		}
 	}
 
     @AfterClass 

@@ -1,6 +1,6 @@
 package org.sjd.gordon.client.viewer;
 
-import org.sjd.gordon.shared.viewer.StockDetails;
+import org.sjd.gordon.shared.viewer.StockDetail;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.inject.Inject;
@@ -17,7 +17,7 @@ public class StockProfilePresenter extends Presenter<StockProfilePresenter.Stock
 	public interface StockProfileProxy extends Proxy<StockProfilePresenter> { }
 
 	public interface StockProfileView extends View { 
-		public void setStock(StockDetails stockDetails);
+		public void setStock(StockDetail stockDetails);
 	}
 	
 	@Inject
@@ -31,7 +31,7 @@ public class StockProfilePresenter extends Presenter<StockProfilePresenter.Stock
 	@Override
 	protected void onUnbind() { }
 
-	public void setStock(StockDetails stockDetails) {
+	public void setStock(StockDetail stockDetails) {
 		getView().setStock(stockDetails);
 	}
 

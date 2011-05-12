@@ -5,7 +5,7 @@ import javax.persistence.EntityManager;
 import org.sjd.gordon.model.StockEntity;
 import org.sjd.gordon.shared.viewer.GetStockDetails;
 import org.sjd.gordon.shared.viewer.GotStockDetails;
-import org.sjd.gordon.shared.viewer.StockDetails;
+import org.sjd.gordon.shared.viewer.StockDetail;
 
 import com.google.inject.Inject;
 import com.gwtplatform.dispatch.server.ExecutionContext;
@@ -19,7 +19,7 @@ public class GetStockDetailsJpaHandler implements ActionHandler<GetStockDetails,
 	@Override
 	public GotStockDetails execute(GetStockDetails getDetails, ExecutionContext context) throws ActionException {
 		StockEntity stockEntity = em.find(StockEntity.class, getDetails.getStockId());
-		return new GotStockDetails(StockDetails.fromEntity(stockEntity));
+		return new GotStockDetails(StockDetail.fromEntity(stockEntity));
 	}
 
 	@Override

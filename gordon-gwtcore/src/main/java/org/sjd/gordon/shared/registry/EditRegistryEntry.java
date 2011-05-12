@@ -2,7 +2,7 @@ package org.sjd.gordon.shared.registry;
 
 import java.io.Serializable;
 
-import org.sjd.gordon.shared.viewer.StockDetails;
+import org.sjd.gordon.shared.viewer.StockDetail;
 
 import com.gwtplatform.dispatch.shared.UnsecuredActionImpl;
 
@@ -12,19 +12,19 @@ public class EditRegistryEntry extends UnsecuredActionImpl<EditRegistryEntryResp
 	
 	public static enum EditType {ADD, UPDATE};
 	
-	private StockDetails stockDetails;
+	private StockDetail stockDetails;
 	private Integer exchangeId;
 	private EditType editType;
 	
 	public EditRegistryEntry() { }
 	
-	public EditRegistryEntry(StockDetails details, Integer exchangeId, EditType editType) { 
+	public EditRegistryEntry(StockDetail details, Integer exchangeId, EditType editType) { 
 		this.stockDetails = details;
 		this.exchangeId = exchangeId;
 		this.editType = editType;
 	}
 	
-	public StockDetails getStockDetails() {
+	public StockDetail getStockDetails() {
 		return stockDetails;
 	}
 	

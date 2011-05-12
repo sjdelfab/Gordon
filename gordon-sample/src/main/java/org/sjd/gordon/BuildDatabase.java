@@ -19,9 +19,11 @@ import org.sjd.gordon.dao.csv.CSVSecurityRegistryDAO;
 import org.sjd.gordon.model.Exchange;
 import org.sjd.gordon.model.GicsIndustryGroup;
 import org.sjd.gordon.model.GicsSector;
+import org.sjd.gordon.model.Group;
 import org.sjd.gordon.model.StockDayTradeRecord;
 import org.sjd.gordon.model.StockEntity;
 import org.sjd.gordon.model.User;
+import org.sjd.gordon.util.SHA_256_Util;
 
 public class BuildDatabase {
 
@@ -207,10 +209,19 @@ public class BuildDatabase {
     	user.setFirstName("Simon");
     	user.setLastName("Doe");
     	user.setUsername("sdoe");
-    	user.setPassword("NoSecrets");
+    	user.setActive(Boolean.TRUE);
+    	user.setPassword(SHA_256_Util.hashPassword("NoSecrets"));
+    	Group adminGroup = new Group();
+    	adminGroup.setName("ADMIN");
+    	user.addGroup(adminGroup);
+    	Group userGroup = new Group();
+    	userGroup.setName("USER");
+    	user.addGroup(userGroup);
     	
     	EntityTransaction tx = em.getTransaction(); 
-    	tx.begin(); 
+    	tx.begin();
+    	em.persist(adminGroup);
+    	em.persist(userGroup);
         em.persist(user);
         tx.commit(); 
         
@@ -218,7 +229,9 @@ public class BuildDatabase {
     	user.setFirstName("NOTORIOUS");
     	user.setLastName("S.T.E.W");
     	user.setUsername("nstew");
-    	user.setPassword("LuvYouBaby69");
+    	user.setActive(Boolean.TRUE);
+    	user.setPassword(SHA_256_Util.hashPassword("LuvYouBaby69"));
+    	user.addGroup(userGroup);
     	
     	tx = em.getTransaction(); 
     	tx.begin(); 

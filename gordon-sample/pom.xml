@@ -20,6 +20,12 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
+			<groupId>org.sjd.gordon</groupId>
+			<artifactId>gordon-gwtcore</artifactId>
+			<version>1.0</version>
+			<scope>provided</scope>
+		</dependency>		
+		<dependency>
 			<groupId>org.eclipse.persistence</groupId>
 			<artifactId>javax.persistence</artifactId>
 			<version>${javax.persistence-version}</version>

@@ -8,9 +8,11 @@ import org.sjd.gordon.client.navigation.NavigationPresenter;
 import org.sjd.gordon.client.navigation.NavigationView;
 import org.sjd.gordon.client.registry.RegistryPresenter;
 import org.sjd.gordon.client.registry.RegistryViewImpl;
+import org.sjd.gordon.client.security.UserSetupPanelView;
+import org.sjd.gordon.client.security.UsersSetupPresenter;
+import org.sjd.gordon.client.viewer.StockPresenter;
 import org.sjd.gordon.client.viewer.StockProfilePresenter;
 import org.sjd.gordon.client.viewer.StockProfileViewImpl;
-import org.sjd.gordon.client.viewer.StockPresenter;
 import org.sjd.gordon.client.viewer.StockView;
 import org.sjd.gordon.client.viewer.TabbedPanelPresenter;
 import org.sjd.gordon.client.viewer.TabbedPanelViewImpl;
@@ -39,7 +41,7 @@ public class GordonClientModule extends AbstractPresenterModule {
 		bind(RootPresenter.class).asEagerSingleton();
 		bind(ProxyFailureHandler.class).to(DefaultProxyFailureHandler.class).in(Singleton.class);
 		
-		bindConstant().annotatedWith(Names.named("width")).to(1344);
+		bindConstant().annotatedWith(Names.named("width")).to(1152);
 		bindConstant().annotatedWith(Names.named("height")).to(756);
 		
 		bindPresenter(NavigationPresenter.class, NavigationPresenter.NavigationPanelView.class, NavigationView.class, 
@@ -57,7 +59,8 @@ public class GordonClientModule extends AbstractPresenterModule {
 		bindPresenter(TitleStripPresenter.class, TitleStripPresenter.TitleStripView.class, TitleStrip.class, 
 				TitleStripPresenter.TitleStripProxy.class);
 		bindPresenterWidget(RegistryPresenter.class, RegistryPresenter.RegistryPanelView.class, RegistryViewImpl.class);
-		
+		bindPresenter(UsersSetupPresenter.class, UsersSetupPresenter.UsersSetupView.class, UserSetupPanelView.class, 
+				UsersSetupPresenter.UsersSetupPanelProxy.class);
 	}
 
 }

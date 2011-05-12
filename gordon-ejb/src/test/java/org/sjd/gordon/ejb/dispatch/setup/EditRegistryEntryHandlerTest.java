@@ -7,11 +7,8 @@ import java.sql.SQLException;
 import java.util.Date;
 
 import org.eclipse.persistence.exceptions.DatabaseException;
-import org.hamcrest.Description;
 import org.jmock.Expectations;
 import org.jmock.Mockery;
-import org.jmock.api.Action;
-import org.jmock.api.Invocation;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -27,14 +24,14 @@ import org.sjd.gordon.shared.exceptions.OptimisticLockException;
 import org.sjd.gordon.shared.registry.EditRegistryEntry;
 import org.sjd.gordon.shared.registry.EditRegistryEntry.EditType;
 import org.sjd.gordon.shared.registry.EditRegistryEntryResponse;
-import org.sjd.gordon.shared.viewer.StockDetails;
+import org.sjd.gordon.shared.viewer.StockDetail;
 
 import com.gwtplatform.dispatch.server.ExecutionContext;
 
 public class EditRegistryEntryHandlerTest {
 
 	private Mockery context;
-	private StockDetails newDetails;
+	private StockDetail newDetails;
 	private StockEntityService stockService;
 	private ExchangeService exchangeService;
 	private GicsService gicsService;
@@ -47,7 +44,7 @@ public class EditRegistryEntryHandlerTest {
 	@Before
     public void beforeTest() {
         context = new Mockery();
-        newDetails = new StockDetails();
+        newDetails = new StockDetail();
     	newDetails.setCode("ABC");
     	newDetails.setName("ABC Ltd");
     	stockService = context.mock(StockEntityService.class);
@@ -111,7 +108,7 @@ public class EditRegistryEntryHandlerTest {
     	});
     	EditRegistryEntry editEntry = new EditRegistryEntry(newDetails,Integer.valueOf(1),EditType.ADD);
     	EditRegistryEntryResponse response = handler.execute(editEntry, executionContext);
-    	StockDetails returnedDetails = response.getStock();
+    	StockDetail returnedDetails = response.getStock();
     	assertEquals("ABC",returnedDetails.getCode());
     	assertEquals(Long.valueOf(1),returnedDetails.getId());
     	assertEquals("ABC Ltd",returnedDetails.getName());
@@ -160,7 +157,7 @@ public class EditRegistryEntryHandlerTest {
     	
     	EditRegistryEntry editEntry = new EditRegistryEntry(newDetails,Integer.valueOf(1),EditType.UPDATE);
     	EditRegistryEntryResponse response = handler.execute(editEntry, executionContext);
-    	StockDetails returnedDetails = response.getStock();
+    	StockDetail returnedDetails = response.getStock();
     	assertEquals("ABC",returnedDetails.getCode());
     	assertEquals(Long.valueOf(1),returnedDetails.getId());
     	assertEquals("ABC Ltd",returnedDetails.getName());
@@ -217,7 +214,7 @@ public class EditRegistryEntryHandlerTest {
     	
     	EditRegistryEntry editEntry = new EditRegistryEntry(newDetails,Integer.valueOf(1),EditType.UPDATE);
     	EditRegistryEntryResponse response = handler.execute(editEntry, executionContext);
-    	StockDetails returnedDetails = response.getStock();
+    	StockDetail returnedDetails = response.getStock();
     	assertEquals("ABC",returnedDetails.getCode());
     	assertEquals(Long.valueOf(1),returnedDetails.getId());
     	assertEquals("ABC Ltd",returnedDetails.getName());
@@ -231,28 +228,4 @@ public class EditRegistryEntryHandlerTest {
     	assertEquals(date,returnedDetails.getLastTradeDate());    	
     }
     
-    public static class ReturnParameter implements Action {
-
-    	private int paramIndex;
-    	
-    	public ReturnParameter(int paramIndex) {
-    		this.paramIndex = paramIndex;
-    	}
-    	
-		@Override
-		public void describeTo(Description description) {
-			description.appendText("Return parameter");
-		}
-
-		@Override
-		public Object invoke(Invocation invocation) throws Throwable {
-			Object param = modify(invocation.getParameter(paramIndex));
-			return param;
-		}
-		
-		protected Object modify(Object param) {
-			return param;
-		}
-    	
-    }
 }

@@ -6,8 +6,11 @@ import org.sjd.gordon.client.navigation.ShowStockEventHandler;
 import org.sjd.gordon.client.registry.RegistryPresenter;
 import org.sjd.gordon.client.registry.ShowRegistryEvent;
 import org.sjd.gordon.client.registry.ShowRegistryEventHandler;
+import org.sjd.gordon.client.security.ShowUserSetupEvent;
+import org.sjd.gordon.client.security.ShowUserSetupEventHandler;
+import org.sjd.gordon.client.security.UsersSetupPresenter;
 import org.sjd.gordon.model.Exchange;
-import org.sjd.gordon.shared.viewer.StockDetails;
+import org.sjd.gordon.shared.viewer.StockDetail;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.inject.Inject;
@@ -24,8 +27,9 @@ public class TabbedPanelPresenter extends Presenter<TabbedPanelPresenter.TabbedP
 	public interface TabbedPanelProxy extends Proxy<TabbedPanelPresenter> { }
 
 	public interface TabbedPanelView extends View { 
-		public void addStock(StockPresenter stockPresenter, StockDetails stockDetails);
+		public void addStock(StockPresenter stockPresenter, StockDetail stockDetails);
 		public void showRegistryEditor(Exchange exchange, Provider<RegistryPresenter> registryPresenterProvider);
+		public void showUserSetupEditor(Provider<UsersSetupPresenter> usersSetupPresenter);
 	}
 
 	private GordonGinjector injector;
@@ -48,6 +52,13 @@ public class TabbedPanelPresenter extends Presenter<TabbedPanelPresenter.TabbedP
 				TabbedPanelPresenter.this.showRegistryEditor(event.getExchange());
 			}
 		});
+		eventBus.addHandler(ShowUserSetupEvent.TYPE, new ShowUserSetupEventHandler() {
+			@Override
+			public void show(ShowUserSetupEvent event) {
+				TabbedPanelPresenter.this.showUserSetupEditor();
+			}
+		});
+
 	}	
 
 	@Override
@@ -57,5 +68,9 @@ public class TabbedPanelPresenter extends Presenter<TabbedPanelPresenter.TabbedP
 
 	private void showRegistryEditor(Exchange exchange) {
 		getView().showRegistryEditor(exchange, injector.getRegistryPresenter());
+	}
+	
+	private void showUserSetupEditor() {
+		getView().showUserSetupEditor(injector.getUsersSetupPresenter());
 	}
 }

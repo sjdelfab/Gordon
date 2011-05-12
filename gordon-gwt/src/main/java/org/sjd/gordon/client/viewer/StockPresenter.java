@@ -1,6 +1,6 @@
 package org.sjd.gordon.client.viewer;
 
-import org.sjd.gordon.shared.viewer.StockDetails;
+import org.sjd.gordon.shared.viewer.StockDetail;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.inject.Inject;
@@ -16,7 +16,7 @@ public class StockPresenter extends Presenter<StockPresenter.StockPanelView,Stoc
 	public interface StockPanelProxy extends Proxy<StockPresenter> { }
 
 	public interface StockPanelView extends View { 
-		public void setStock(StockDetails stockDetails);
+		public void setStock(StockDetail stockDetails);
 	}
 	
 	@Inject

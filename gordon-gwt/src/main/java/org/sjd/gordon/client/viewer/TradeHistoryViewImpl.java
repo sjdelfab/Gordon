@@ -6,6 +6,8 @@ import org.sjd.gordon.model.StockDayTradeRecord;
 
 import com.extjs.gxt.ui.client.widget.LayoutContainer;
 import com.extjs.gxt.ui.client.widget.layout.CenterLayout;
+import com.google.gwt.dom.client.Element;
+import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.visualization.client.AbstractDataTable.ColumnType;
 import com.google.gwt.visualization.client.DataTable;
@@ -26,13 +28,27 @@ public class TradeHistoryViewImpl extends ViewImpl implements TradeHistoryPresen
 	private int height;
 	private LayoutContainer container;
 	
+	private Element loadingMessage;
+	
 	public TradeHistoryViewImpl() {
 		container = new LayoutContainer();
-		container.setLayout(new CenterLayout()); 		
+		container.setLayout(new CenterLayout());
+		// TODO Put in convenience utility method 
+		loadingMessage = DOM.createDiv();
+		loadingMessage.setId("progress_loading");
+		Element innerDiv = DOM.createDiv();
+		innerDiv.setClassName("progress_loading-indicator");
+		Element img = DOM.createImg();
+		img.setAttribute("src", "resources/images/default/shared/large-loading.gif");
+		img.setAttribute("width","32");
+		img.setAttribute("height","32");
+		innerDiv.appendChild(img);
+		loadingMessage.appendChild(innerDiv);
 	}
 
 	@Override
 	public void setTradeHistory(final ArrayList<StockDayTradeRecord> tradeHistory) {
+		container.getElement().appendChild(loadingMessage);
 		Runnable onLoadCallback = new Runnable() {
 
 			@Override
@@ -49,9 +65,10 @@ public class TradeHistoryViewImpl extends ViewImpl implements TradeHistoryPresen
 			    	data.setValue(i, 0, rec.getDate());
 			    	data.setValue(i, 1, rec.getClosePrice().doubleValue());
 			    }
-			    int graphWidth = width-314;
-			    int graphHeight = height-136;
+			    int graphWidth = width-50;
+			    int graphHeight = height-176;
 			    AnnotatedTimeLine chart = new AnnotatedTimeLine(data, options, graphWidth+ "px", graphHeight + "px");
+			    container.getElement().removeChild(loadingMessage);
 			    container.add(chart);
 			    container.layout(true);
 			}
@@ -62,7 +79,7 @@ public class TradeHistoryViewImpl extends ViewImpl implements TradeHistoryPresen
 
 	@Override
 	public Widget asWidget() {
-		container.setSize(width-200, height-50);
+		container.setSize(width, height-130);
 		return container;
 	}
 }

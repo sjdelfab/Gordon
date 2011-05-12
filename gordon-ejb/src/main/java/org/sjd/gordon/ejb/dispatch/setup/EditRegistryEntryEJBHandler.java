@@ -12,7 +12,7 @@ import org.sjd.gordon.model.StockEntity;
 import org.sjd.gordon.shared.registry.EditRegistryEntry;
 import org.sjd.gordon.shared.registry.EditRegistryEntry.EditType;
 import org.sjd.gordon.shared.registry.EditRegistryEntryResponse;
-import org.sjd.gordon.shared.viewer.StockDetails;
+import org.sjd.gordon.shared.viewer.StockDetail;
 
 import com.google.inject.Inject;
 import com.gwtplatform.dispatch.server.ExecutionContext;
@@ -35,7 +35,7 @@ public class EditRegistryEntryEJBHandler extends AbstractHandler implements Acti
 	@Override
 	public EditRegistryEntryResponse execute(EditRegistryEntry editEntry, ExecutionContext context) throws ActionException {
 		EditRegistryEntry.EditType editType = editEntry.getEditType();
-		StockDetails newStockDetails = editEntry.getStockDetails();
+		StockDetail newStockDetails = editEntry.getStockDetails();
 		try {
 			if (editType == EditType.ADD) {
 				 newStockDetails = add(editEntry);
@@ -48,8 +48,8 @@ public class EditRegistryEntryEJBHandler extends AbstractHandler implements Acti
 		return new EditRegistryEntryResponse(newStockDetails);
 	}
 
-	private StockDetails add(EditRegistryEntry editEntry) throws Exception {
-		StockDetails newStockDetails = editEntry.getStockDetails();
+	private StockDetail add(EditRegistryEntry editEntry) throws Exception {
+		StockDetail newStockDetails = editEntry.getStockDetails();
 		StockEntity newStock = new StockEntity();
 		newStock.setCode(newStockDetails.getCode());
 		newStock.setName(newStockDetails.getName());
@@ -59,7 +59,7 @@ public class EditRegistryEntryEJBHandler extends AbstractHandler implements Acti
 		}
 		newStock.setExchange(exchangeService.findExchangeById(editEntry.getExchangeId()));
 		newStock = stockService.createStock(newStock);
-		newStockDetails = StockDetails.fromEntity(newStock);
+		newStockDetails = StockDetail.fromEntity(newStock);
 		// lost the sector info, so re-add
 		if (newStockDetails.getPrimaryIndustryGroupId() != null) {
 			newStockDetails.setPrimarySectorId(editEntry.getStockDetails().getPrimarySectorId());
@@ -68,8 +68,8 @@ public class EditRegistryEntryEJBHandler extends AbstractHandler implements Acti
 		return newStockDetails;
 	}
 	
-	private StockDetails update(EditRegistryEntry editEntry) throws Exception {
-		StockDetails newStockDetails = editEntry.getStockDetails();
+	private StockDetail update(EditRegistryEntry editEntry) throws Exception {
+		StockDetail newStockDetails = editEntry.getStockDetails();
 		StockEntity stockEntity = stockService.findStockById(newStockDetails.getId());
 		stockEntity.setVersion(newStockDetails.getVersion());
 		stockEntity.setCode(newStockDetails.getCode());
@@ -88,7 +88,7 @@ public class EditRegistryEntryEJBHandler extends AbstractHandler implements Acti
 		Date listDate = newStockDetails.getListDate();
 		Date lastTradeDate = newStockDetails.getLastTradeDate();
 		BigDecimal currentPrice = newStockDetails.getCurrentPrice();
-		newStockDetails = StockDetails.fromEntity(stockService.updateStock(stockEntity));
+		newStockDetails = StockDetail.fromEntity(stockService.updateStock(stockEntity));
 		newStockDetails.setListDate(listDate);
 		newStockDetails.setLastTradeDate(lastTradeDate);
 		newStockDetails.setCurrentPrice(currentPrice);

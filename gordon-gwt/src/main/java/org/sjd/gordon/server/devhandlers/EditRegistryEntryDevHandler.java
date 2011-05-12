@@ -3,7 +3,7 @@ package org.sjd.gordon.server.devhandlers;
 import org.sjd.gordon.shared.registry.EditRegistryEntry;
 import org.sjd.gordon.shared.registry.EditRegistryEntry.EditType;
 import org.sjd.gordon.shared.registry.EditRegistryEntryResponse;
-import org.sjd.gordon.shared.viewer.StockDetails;
+import org.sjd.gordon.shared.viewer.StockDetail;
 
 import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.server.actionhandler.ActionHandler;
@@ -14,13 +14,13 @@ public class EditRegistryEntryDevHandler implements ActionHandler<EditRegistryEn
 	@Override
 	public EditRegistryEntryResponse execute(EditRegistryEntry editEntry, ExecutionContext context) throws ActionException {
 		EditRegistryEntry.EditType editType = editEntry.getEditType();
-		StockDetails newStockDetails = editEntry.getStockDetails();
+		StockDetail newStockDetails = editEntry.getStockDetails();
 		if (editType == EditType.ADD) {
-			Long currentMaxId = Data.getMaxId();
+			Long currentMaxId = Data.getStockMaxId();
 			newStockDetails.setId(currentMaxId+1);
 			Data.detailsMap.put(currentMaxId + 1, newStockDetails);
 		} else {
-			StockDetails currentStock = Data.detailsMap.get(newStockDetails.getId());
+			StockDetail currentStock = Data.detailsMap.get(newStockDetails.getId());
 			currentStock.mergeTo(newStockDetails);
 		}
 		return new EditRegistryEntryResponse(newStockDetails);

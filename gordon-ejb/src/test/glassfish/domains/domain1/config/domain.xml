@@ -65,7 +65,12 @@
 			<jms-service type="EMBEDDED" default-jms-host="default_JMS_host">
 
 			</jms-service>
-			<security-service>
+			<security-service  default-realm="file" activate-default-principal-to-role-mapping="true">
+			    <auth-realm classname="com.sun.enterprise.security.auth.realm.file.FileRealm" name="file">
+			        <property name="assign-groups" value="ADMIN"></property>
+          			<property name="file" value="${com.sun.aas.instanceRoot}/config/keyfile"></property>
+          			<property name="jaas-context" value="fileRealm"></property>
+        		</auth-realm>
 				<jacc-provider
 					policy-configuration-factory-provider="com.sun.enterprise.security.provider.PolicyConfigurationFactoryImpl"
 					policy-provider="com.sun.enterprise.security.provider.PolicyWrapper"

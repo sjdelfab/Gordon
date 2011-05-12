@@ -185,7 +185,7 @@
 				<configuration>
 					<argLine>-Xms512m -Xmx1024m</argLine>
 					<includes>
-						<include>org/sjd/gordon/ejb/AllEjbTests.java</include>
+						<!--  <include>org/sjd/gordon/ejb/AllEjbTests.java</include>-->
 						<include>org/sjd/gordon/ejb/dispatch/**/*.java</include>
 					</includes>
 				</configuration>

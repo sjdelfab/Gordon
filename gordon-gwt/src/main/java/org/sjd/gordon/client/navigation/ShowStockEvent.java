@@ -1,6 +1,6 @@
 package org.sjd.gordon.client.navigation;
 
-import org.sjd.gordon.shared.viewer.StockDetails;
+import org.sjd.gordon.shared.viewer.StockDetail;
 
 import com.google.gwt.event.shared.GwtEvent;
 
@@ -8,13 +8,13 @@ public class ShowStockEvent extends GwtEvent<ShowStockEventHandler> {
 
 	public static Type<ShowStockEventHandler> TYPE = new Type<ShowStockEventHandler>();
 	
-	private StockDetails stockDetails;
+	private StockDetail stockDetails;
 	
-	public ShowStockEvent(StockDetails stockDetails) {
+	public ShowStockEvent(StockDetail stockDetails) {
 		this.stockDetails = stockDetails;
 	}
 	
-	public StockDetails getStockDetails() {
+	public StockDetail getStockDetails() {
 		return stockDetails;
 	}
 	

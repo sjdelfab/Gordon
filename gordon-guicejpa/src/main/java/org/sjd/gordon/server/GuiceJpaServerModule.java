@@ -2,7 +2,6 @@ package org.sjd.gordon.server;
 
 import org.sjd.gordon.shared.navigation.GetExchanges;
 import org.sjd.gordon.shared.navigation.GetStocks;
-import org.sjd.gordon.shared.security.Login;
 import org.sjd.gordon.shared.security.Logout;
 import org.sjd.gordon.shared.viewer.GetStockDetails;
 import org.sjd.gordon.shared.viewer.GetTradeHistory;
@@ -15,7 +14,6 @@ public class GuiceJpaServerModule extends HandlerModule {
 	@Override
 	protected void configureHandlers() {
 		bind(GuiceJPAInitializer.class).in(Singleton.class);
-		bindHandler(Login.class, AuthenticationJpaHandler.class);
 		bindHandler(GetStocks.class, GetStocksJpaHandler.class);
 		bindHandler(GetExchanges.class, GetExchangesJpaHandler.class);
 		bindHandler(GetTradeHistory.class, GetTradeHistoryJpaHandler.class);

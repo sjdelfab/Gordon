@@ -27,9 +27,11 @@
 		<path id="cp">
 			<path path="../target/classes/"/>
 			<path path="../../gordon-domain/target/classes/"/>
+			<path path="../../gordon-gwtcore/target/classes/"/>
 			<fileset dir="../lib/" includes="*.jar"/>
 			<fileset dir="../../gordon-domain/repository/org/eclipse/persistence/eclipselink/2.0.0/" includes="*.jar"/>
 			<fileset dir="../../gordon-domain/repository/org/eclipse/persistence/javax.persistence/2.0.0/" includes="*.jar"/>
+			<fileset dir="../../gordon-gwt/repository/com/google/gwt/gwt-servlet/2.2.0/" includes="*.jar"/>
 		</path>
 		<java classpathref="cp" classname="org.sjd.gordon.BuildDatabase" fork="true" jvmversion="1.6">
 			<arg value="ASX200ListedCompanies.csv"/>

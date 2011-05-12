@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import org.sjd.gordon.model.StockDayTradeRecord;
 import org.sjd.gordon.shared.viewer.GetTradeHistory;
-import org.sjd.gordon.shared.viewer.StockDetails;
+import org.sjd.gordon.shared.viewer.StockDetail;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.inject.Inject;
@@ -24,7 +24,7 @@ public class TradeHistoryPresenter extends Presenter<TradeHistoryPresenter.Trade
 		public void setTradeHistory(ArrayList<StockDayTradeRecord> tradeHistory);
 	}	
 	
-	private StockDetails stockDetails;
+	private StockDetail stockDetails;
 	private final DispatchAsync dispatcher;
 	
 	@Inject
@@ -41,7 +41,7 @@ public class TradeHistoryPresenter extends Presenter<TradeHistoryPresenter.Trade
 	protected void onUnbind() { }
 
 
-	public void setStock(StockDetails stockDetails) {
+	public void setStock(StockDetail stockDetails) {
 		if (this.stockDetails == null) {
 			this.stockDetails = stockDetails;
 			GetTradeHistory getExchanges = new GetTradeHistory(this.stockDetails.getId());

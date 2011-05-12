@@ -8,7 +8,7 @@ import org.sjd.gordon.shared.navigation.GetExchanges;
 import org.sjd.gordon.shared.navigation.GetStocks;
 import org.sjd.gordon.shared.navigation.StockName;
 import org.sjd.gordon.shared.viewer.GetStockDetails;
-import org.sjd.gordon.shared.viewer.StockDetails;
+import org.sjd.gordon.shared.viewer.StockDetail;
 
 import com.extjs.gxt.ui.client.data.BeanModel;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -97,7 +97,7 @@ public class NavigationPresenter extends Presenter<NavigationPresenter.Navigatio
 		GetStockDetails getExchanges = new GetStockDetails(stockName.getId());
 		dispatcher.execute(getExchanges, new LoadStockDetailsCallback() {
 			@Override
-			public void loaded(StockDetails stockDetails) {
+			public void loaded(StockDetail stockDetails) {
 				getEventBus().fireEvent(new ShowStockEvent(stockDetails));
 			}
 		});

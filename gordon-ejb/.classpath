@@ -13,5 +13,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/EJB Local Library"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/gordon-gwtcore"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/GWT Local Library"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Glassfish Embedded Static"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

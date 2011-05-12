@@ -10,7 +10,7 @@ import org.sjd.gordon.shared.registry.GicsSectorName;
 
 import com.extjs.gxt.ui.client.data.BaseModel;
 
-public class StockDetails extends BaseModel implements Serializable {
+public class StockDetail extends BaseModel implements Serializable {
 	
 	private static final long serialVersionUID = 2946987725770341556L;
 	
@@ -28,9 +28,9 @@ public class StockDetails extends BaseModel implements Serializable {
 	private Long id;
 	private Integer version;
 
-	public StockDetails() {}
+	public StockDetail() {}
 	
-	public StockDetails(StockDetails details) {
+	public StockDetail(StockDetail details) {
 		setId(details.getId());
 		setVersion(details.getVersion());
 		setName(details.getName());
@@ -146,8 +146,8 @@ public class StockDetails extends BaseModel implements Serializable {
 		set(CURRENT_PRICE, currentPrice);
 	}	
 	
-	public static StockDetails fromEntity(StockEntity stockEntity) {
-		StockDetails stockDetails = new StockDetails();
+	public static StockDetail fromEntity(StockEntity stockEntity) {
+		StockDetail stockDetails = new StockDetail();
 		stockDetails.id = stockEntity.getId();
 		stockDetails.version = stockEntity.getVersion();
 		stockDetails.setName(stockEntity.getName());
@@ -157,7 +157,7 @@ public class StockDetails extends BaseModel implements Serializable {
 		return stockDetails;
 	}
 
-	public void mergeTo(StockDetails newStockDetails) {
+	public void mergeTo(StockDetail newStockDetails) {
 		setCode(newStockDetails.getCode());
 		setName(newStockDetails.getName());
 		setPrimaryIndustryGroupId(newStockDetails.getPrimaryIndustryGroupId());
@@ -174,7 +174,7 @@ public class StockDetails extends BaseModel implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		StockDetails other = (StockDetails) obj;
+		StockDetail other = (StockDetail) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

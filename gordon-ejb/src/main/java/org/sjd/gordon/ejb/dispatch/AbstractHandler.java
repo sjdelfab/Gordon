@@ -1,9 +1,13 @@
 package org.sjd.gordon.ejb.dispatch;
 
+import javax.ejb.AccessLocalException;
+import javax.ejb.EJBAccessException;
+
 import org.eclipse.persistence.exceptions.DatabaseException;
 import org.sjd.gordon.shared.exceptions.EntityNotFoundException;
 import org.sjd.gordon.shared.exceptions.NonUniqueResultException;
 import org.sjd.gordon.shared.exceptions.OptimisticLockException;
+import org.sjd.gordon.shared.exceptions.UnauthorisedAccessException;
 
 import com.gwtplatform.dispatch.shared.ActionException;
 
@@ -16,6 +20,10 @@ public abstract class AbstractHandler {
 			return new NonUniqueResultException();
 		} else if (causedBy(thrown, javax.persistence.EntityNotFoundException.class)) {
 			return new EntityNotFoundException();
+		} else if (causedBy(thrown, EJBAccessException.class)) {
+			return new UnauthorisedAccessException();
+		} else if (causedBy(thrown, AccessLocalException.class)) {
+			return new UnauthorisedAccessException();
 		} else if (causedBy(thrown, DatabaseException.class)) {
 			DatabaseException dbException = (DatabaseException)getCause(thrown, DatabaseException.class);
 			if (dbException.getDatabaseErrorCode() == 23505) {

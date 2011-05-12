@@ -1,6 +1,6 @@
 package org.sjd.gordon.client.viewer;
 
-import org.sjd.gordon.shared.viewer.StockDetails;
+import org.sjd.gordon.shared.viewer.StockDetail;
 
 import com.extjs.gxt.ui.client.widget.LayoutContainer;
 import com.extjs.gxt.ui.client.widget.form.FormPanel.LabelAlign;
@@ -63,7 +63,7 @@ public class StockProfileViewImpl extends ViewImpl implements StockProfilePresen
 	}
 
 	@Override
-	public void setStock(StockDetails stockDetails) {
+	public void setStock(StockDetail stockDetails) {
 		nameTextField.setValue(stockDetails.getName());
 		codeTextField.setValue(stockDetails.getCode());
 		gicsSectorTextField.setValue(stockDetails.getPrimarySectorName());
@@ -78,7 +78,7 @@ public class StockProfileViewImpl extends ViewImpl implements StockProfilePresen
 
 	@Override
 	public Widget asWidget() {
-		main.setSize(width-200, height-50);
+		main.setSize(width, height-90);
 		return main;
 	}
 

@@ -16,17 +16,20 @@ import com.extjs.gxt.ui.client.data.BeanModelLookup;
 import com.extjs.gxt.ui.client.event.SelectionChangedEvent;
 import com.extjs.gxt.ui.client.event.SelectionChangedListener;
 import com.extjs.gxt.ui.client.store.ListStore;
+import com.extjs.gxt.ui.client.util.Margins;
 import com.extjs.gxt.ui.client.util.Padding;
-import com.extjs.gxt.ui.client.widget.ContentPanel;
 import com.extjs.gxt.ui.client.widget.Html;
+import com.extjs.gxt.ui.client.widget.LayoutContainer;
 import com.extjs.gxt.ui.client.widget.form.ComboBox.TriggerAction;
-import com.extjs.gxt.ui.client.widget.layout.VBoxLayout;
-import com.extjs.gxt.ui.client.widget.layout.VBoxLayout.VBoxLayoutAlign;
-import com.extjs.gxt.ui.client.widget.layout.VBoxLayoutData;
+import com.extjs.gxt.ui.client.widget.layout.HBoxLayout;
+import com.extjs.gxt.ui.client.widget.layout.HBoxLayout.HBoxLayoutAlign;
+import com.extjs.gxt.ui.client.widget.layout.HBoxLayoutData;
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.user.client.ui.HasValue;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.inject.Inject;
+import com.google.inject.name.Named;
 import com.gwtplatform.mvp.client.ViewImpl;
 
 public class NavigationView extends ViewImpl implements NavigationPresenter.NavigationPanelView {
@@ -38,33 +41,27 @@ public class NavigationView extends ViewImpl implements NavigationPresenter.Navi
 	private ListStore<BeanModel> stockStore;
 	private ListStore<BeanModel> exchangeStore;
 	
-	private ContentPanel panel;
-	
+	private LayoutContainer panel;
+	@Inject
+	@Named("width")
+	private int width;
+
 	public NavigationView() {
-		panel = new ContentPanel();
-
-		panel.setHeading("Navigation");
-		
-		VBoxLayout mainLayout = new VBoxLayout();  
-        mainLayout.setPadding(new Padding(0));  
-        mainLayout.setVBoxLayoutAlign(VBoxLayoutAlign.STRETCH);  
-        panel.setLayout(mainLayout);
+		panel = new LayoutContainer();
+		panel.setWidth(width);
+		panel.setHeight(40);
+		HBoxLayout layout = new HBoxLayout();  
+        layout.setPadding(new Padding(5));  
+        layout.setHBoxLayoutAlign(HBoxLayoutAlign.MIDDLE);  
+        panel.setLayout(layout); 
         
-		ContentPanel navigationPanel = new ContentPanel();
-		navigationPanel.setCollapsible(false);
-		navigationPanel.setHeaderVisible(false);
-		VBoxLayout navigationLayout = new VBoxLayout();
-		navigationLayout.setPadding(new Padding(5));
-		navigationLayout.setVBoxLayoutAlign(VBoxLayoutAlign.LEFT);
-		navigationPanel.setLayout(navigationLayout);
-
 		stockStore = Registry.get(Gordon.STOCKS_STORE);
 		exchangeStore = Registry.get(Gordon.EXCHANGE_STORE);
 		
-		VBoxLayoutData vBoxData = new VBoxLayoutData(5, 5, 5, 5);  
-
-		navigationPanel.add(new Html("<b style=\"font-size:13px;font-family:arial\">Exchange:</b>"),vBoxData);
+		panel.add(new Html("<b style=\"font-size:13px;font-family:arial\">Exchange:</b>"),new HBoxLayoutData(new Margins(0, 5, 0, 15)));
+		
 		exchangeComboBox.setEmptyText("Select a exchange...");
+		exchangeComboBox.setFieldLabel("Exchange");
 		exchangeComboBox.setDisplayField("name");
 		exchangeComboBox.setWidth(170);
 		exchangeComboBox.setStore(exchangeStore);
@@ -77,12 +74,13 @@ public class NavigationView extends ViewImpl implements NavigationPresenter.Navi
 				ValueChangeEvent.fire(exchangeComboBox, se.getSelectedItem());
 			}
 		});
-		navigationPanel.add(exchangeComboBox, vBoxData);
-		
-		navigationPanel.add(new Html("<b style=\"font-size:13px;font-family:arial\">Stock Code:</b>"),vBoxData);
+		panel.add(exchangeComboBox,  new HBoxLayoutData(new Margins(0, 5, 0, 0)));
+				
+		panel.add(new Html("<b style=\"font-size:13px;font-family:arial\">Stock Code:</b>"),new HBoxLayoutData(new Margins(0, 5, 0, 15)));
 		
 		codeComboBox = new ComboBox<BeanModel>();
 		codeComboBox.setEmptyText("Select a code...");
+		codeComboBox.setFieldLabel("Code");
 		codeComboBox.setDisplayField("code");
 		codeComboBox.setWidth(170);
 		codeComboBox.setStore(stockStore);
@@ -94,9 +92,9 @@ public class NavigationView extends ViewImpl implements NavigationPresenter.Navi
 				nameComboBox.setValue(se.getSelectedItem()); 
 			}
 		});
-		navigationPanel.add(codeComboBox, vBoxData);
-
-		navigationPanel.add(new Html("<b style=\"font-size:13px;font-family:arial\">Stock Name:</b>"),vBoxData);
+		panel.add(codeComboBox,  new HBoxLayoutData(new Margins(0, 5, 0, 0)));
+		
+		panel.add(new Html("<b style=\"font-size:13px;font-family:arial\">Stock Name:</b>"),new HBoxLayoutData(new Margins(0, 5, 0, 15)));
 		
 		nameComboBox = new ComboBox<BeanModel>();
 		nameComboBox.setEmptyText("Select a name...");
@@ -111,13 +109,10 @@ public class NavigationView extends ViewImpl implements NavigationPresenter.Navi
 				codeComboBox.setValue(se.getSelectedItem()); 
 			}
 		});
-		navigationPanel.add(nameComboBox, vBoxData);
+		panel.add(nameComboBox,  new HBoxLayoutData(new Margins(0, 5, 0, 0)));
 		
-		navigationPanel.add(viewButton,vBoxData);
+		panel.add(viewButton,  new HBoxLayoutData(new Margins(0, 5, 0, 15)));
 		
-		vBoxData = new VBoxLayoutData(0, 0, 0, 0);  
-	    vBoxData.setFlex(1);
-		panel.add(navigationPanel, vBoxData);
 	}
 	
 	public void setStocks(ArrayList<StockName> stocks) {

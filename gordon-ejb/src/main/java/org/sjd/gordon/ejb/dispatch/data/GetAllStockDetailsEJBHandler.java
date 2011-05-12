@@ -10,7 +10,7 @@ import org.sjd.gordon.model.StockDayTradeRecord;
 import org.sjd.gordon.model.StockEntity;
 import org.sjd.gordon.shared.registry.GetAllStockDetails;
 import org.sjd.gordon.shared.registry.GotAllStockDetails;
-import org.sjd.gordon.shared.viewer.StockDetails;
+import org.sjd.gordon.shared.viewer.StockDetail;
 
 import com.google.inject.Inject;
 import com.gwtplatform.dispatch.server.ExecutionContext;
@@ -27,10 +27,10 @@ public class GetAllStockDetailsEJBHandler implements ActionHandler<GetAllStockDe
 	@Override
 	public GotAllStockDetails execute(GetAllStockDetails getDetails, ExecutionContext context) throws ActionException {
 		List<StockEntity> stocks = stockEjb.getStocks(getDetails.getExchangeId());
-		ArrayList<StockDetails> details = new ArrayList<StockDetails>(stocks.size());
+		ArrayList<StockDetail> details = new ArrayList<StockDetail>(stocks.size());
 		for (StockEntity entity : stocks) {
 			StockDayTradeRecord firstDayTrade = stockEjb.getFirstTradeDay(entity.getId());
-			StockDetails stockDetails = StockDetails.fromEntity(entity);
+			StockDetail stockDetails = StockDetail.fromEntity(entity);
 			if (entity.getGicsIndustryGroup() != null) {
 				Integer industryGrpId = entity.getGicsIndustryGroup().getId();
 				GicsSector sector = gicsService.findSectorByIndustryGroupId(industryGrpId);

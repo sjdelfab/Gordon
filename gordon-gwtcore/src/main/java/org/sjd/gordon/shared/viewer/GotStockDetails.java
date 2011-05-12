@@ -8,15 +8,15 @@ public class GotStockDetails implements Serializable, Result {
 
 	private static final long serialVersionUID = 8265913539728211233L;
 
-	private StockDetails stockDetails;
+	private StockDetail stockDetails;
 	
 	public GotStockDetails() { }
 	
-	public GotStockDetails(StockDetails stockDetails) {
+	public GotStockDetails(StockDetail stockDetails) {
 		this.stockDetails = stockDetails;
 	}
 	
-	public StockDetails getStockDetails() {
+	public StockDetail getStockDetails() {
 		return stockDetails;
 	}
 }

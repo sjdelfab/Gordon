@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import org.sjd.gordon.shared.registry.GetAllStockDetails;
 import org.sjd.gordon.shared.registry.GotAllStockDetails;
-import org.sjd.gordon.shared.viewer.StockDetails;
+import org.sjd.gordon.shared.viewer.StockDetail;
 
 import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.server.actionhandler.ActionHandler;
@@ -14,7 +14,7 @@ public class GetAllStockDetailsDevHandler implements ActionHandler<GetAllStockDe
 	
 	@Override
 	public GotAllStockDetails execute(GetAllStockDetails getDetails, ExecutionContext context) throws ActionException {
-		ArrayList<StockDetails> details = new ArrayList<StockDetails>(Data.detailsMap.values());
+		ArrayList<StockDetail> details = new ArrayList<StockDetail>(Data.detailsMap.values());
 		return new GotAllStockDetails(details);
 	}
 

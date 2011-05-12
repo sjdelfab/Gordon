@@ -2,6 +2,7 @@ package org.sjd.gordon.ejb;
 
 import java.util.List;
 
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -21,15 +22,18 @@ public class StockEntityEJB implements StockEntityService {
         return em.find(StockEntity.class, id); 
     } 
  
+    @RolesAllowed({"ADMIN"})
     public StockEntity createStock(StockEntity stock) { 
         em.persist(stock); 
         return stock; 
     }
     
+    @RolesAllowed({"ADMIN"})
     public StockEntity updateStock(StockEntity stock) {
     	return em.merge(stock);
     }
     
+    @RolesAllowed({"ADMIN"})
     public void deleteStock(StockEntity stock) {
     	deleteAllDayTrades(stock);
     	// TODO Delete unitary data
@@ -56,6 +60,7 @@ public class StockEntityEJB implements StockEntityService {
     	return trade;
     }
     
+    @RolesAllowed({"ADMIN"})
     public void deleteAllDayTrades(StockEntity stock) {
     	String deleteAllDayTrades = "DELETE FROM StockDayTradeRecord t WHERE t.stockId = :stockId";
     	Query query = em.createQuery(deleteAllDayTrades);

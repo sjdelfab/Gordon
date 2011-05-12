@@ -9,7 +9,8 @@ import org.junit.runners.Suite;
         TabularDatasetTest.class,
         StockTest.class,
         UnitaryPropertyTest.class,
-        GicsTest.class
+        GicsTest.class,
+        UserTest.class
         })
 public class RunAllJpaTests {
 

@@ -20,6 +20,7 @@
         <class>org.sjd.gordon.model.UnitaryPropertyDefinition</class>
         <class>org.sjd.gordon.model.UnitaryPropertyValue</class>
         <class>org.sjd.gordon.model.User</class>
+        <class>org.sjd.gordon.model.Group</class>
         <class>org.sjd.gordon.model.GicsSector</class>
         <class>org.sjd.gordon.model.GicsIndustryGroup</class>        
         <properties>

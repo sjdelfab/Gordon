@@ -4,11 +4,10 @@ import org.sjd.gordon.client.main.MainPagePresenter.MainPageView;
 import org.sjd.gordon.client.navigation.NavigationPresenter;
 import org.sjd.gordon.client.viewer.TabbedPanelPresenter;
 
-import com.extjs.gxt.ui.client.Style.LayoutRegion;
 import com.extjs.gxt.ui.client.util.Margins;
 import com.extjs.gxt.ui.client.widget.LayoutContainer;
-import com.extjs.gxt.ui.client.widget.layout.BorderLayout;
-import com.extjs.gxt.ui.client.widget.layout.BorderLayoutData;
+import com.extjs.gxt.ui.client.widget.layout.VBoxLayout;
+import com.extjs.gxt.ui.client.widget.layout.VBoxLayoutData;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
@@ -16,7 +15,7 @@ import com.gwtplatform.mvp.client.ViewImpl;
 
 public class MainPage extends ViewImpl implements MainPageView {
 
-	private LayoutContainer viewport;
+	private LayoutContainer mainContainer;
 	
 	private NavigationPresenter navigationPresenter;
 	private TabbedPanelPresenter tabbedPanelPresenter;
@@ -32,10 +31,10 @@ public class MainPage extends ViewImpl implements MainPageView {
 			                TitleStripPresenter titleStripPresenter) {
 		this.navigationPresenter = navigationPresenter;
 		this.tabbedPanelPresenter = tabbedPanelPresenter;
-		viewport = new LayoutContainer();
-		final BorderLayout borderLayout = new BorderLayout();
-		viewport.setLayout(borderLayout);
-		viewport.setStyleAttribute("backgroundColor", "#FFFFFF");
+		mainContainer = new LayoutContainer();
+		VBoxLayout layout = new VBoxLayout();
+		mainContainer.setLayout(layout);
+		mainContainer.setStyleAttribute("backgroundColor", "#FFFFFF");
 		addTitleStrip(titleStripPresenter);
 		setNavigationPanel();
 		setMainPanel();
@@ -43,34 +42,20 @@ public class MainPage extends ViewImpl implements MainPageView {
 
 	@Override
 	public Widget asWidget() {
-		viewport.setSize(width, height);
-		return viewport;
+		mainContainer.setSize(width, height);
+		return mainContainer;
 	}
 	
 	private void setMainPanel() {
-		BorderLayoutData centerData = new BorderLayoutData(LayoutRegion.CENTER);
-		centerData.setCollapsible(false);
-		viewport.add(tabbedPanelPresenter.getView().asWidget(), centerData);
-		BorderLayoutData southData = new BorderLayoutData(LayoutRegion.SOUTH);
-		southData.setHidden(true);
-		LayoutContainer southContainer = new LayoutContainer();
-		southContainer.setSize(0, 0);
-		viewport.add(southContainer, southData);
+		mainContainer.add(tabbedPanelPresenter.getView().asWidget(), new VBoxLayoutData(new Margins(0, 0, 0, 0)));
 	}
 	
 	private void setNavigationPanel() {
-		BorderLayoutData westData = new BorderLayoutData(LayoutRegion.WEST, 200, 150, 300);
-		westData.setCollapsible(false);
-		westData.setSplit(false);
-		viewport.add(navigationPresenter.getView().asWidget(), westData);
-		viewport.layout();
+		mainContainer.add(navigationPresenter.getView().asWidget(), new VBoxLayoutData(new Margins(0, 0, 0, 0)));
+		mainContainer.layout();
 	}
 	
 	private void addTitleStrip(TitleStripPresenter titleStripPresenter) {
-		BorderLayoutData northData = new BorderLayoutData(LayoutRegion.NORTH, 33);
-		northData.setMargins(new Margins());
-		northData.setCollapsible(false);
-		northData.setSplit(false);
-		viewport.add(titleStripPresenter.getView().asWidget(),northData);
+		mainContainer.add(titleStripPresenter.getView().asWidget(), new VBoxLayoutData(new Margins(0, 0, 0, 0)));
 	}
 }

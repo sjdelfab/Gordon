@@ -8,7 +8,7 @@ import org.sjd.gordon.client.registry.RegistryPresenter.EditDialogCallback;
 import org.sjd.gordon.client.registry.RegistryPresenter.RegistryPanelView;
 import org.sjd.gordon.shared.registry.GicsIndustryGroupName;
 import org.sjd.gordon.shared.registry.GicsSectorName;
-import org.sjd.gordon.shared.viewer.StockDetails;
+import org.sjd.gordon.shared.viewer.StockDetail;
 
 import com.allen_sauer.gwt.log.client.Log;
 import com.extjs.gxt.ui.client.Style.HorizontalAlignment;
@@ -65,63 +65,63 @@ public class RegistryViewImpl extends ViewImpl implements RegistryPanelView {
 	
 	private PagingModelMemoryProxy proxy;
 	private PagingLoader<PagingLoadResult<ModelData>> loader;
-	private ListStore<StockDetails> store;
+	private ListStore<StockDetail> store;
 	private Button addButton, removeButton, updateButton;
-	private Grid<StockDetails> grid;
-	private ArrayList<StockDetails> stocks;
+	private Grid<StockDetail> grid;
+	private ArrayList<StockDetail> stocks;
 	private ArrayList<GicsSectorName> sectors;
 	
 	public RegistryViewImpl() {    
-		proxy = new PagingModelMemoryProxy(new ArrayList<StockDetails>(0));
+		proxy = new PagingModelMemoryProxy(new ArrayList<StockDetail>(0));
 	    loader = new BasePagingLoader<PagingLoadResult<ModelData>>(proxy);  
 	    loader.setRemoteSort(true);  
 	  
-	    store = new ListStore<StockDetails>(loader);
+	    store = new ListStore<StockDetail>(loader);
 	    
-	    final PagingToolBar toolBar = new PagingToolBar(MAX_PAGE_SIZE);  
-	    toolBar.bind(loader);
+	    final PagingToolBar pagingToolBar = new PagingToolBar(MAX_PAGE_SIZE);  
+	    pagingToolBar.bind(loader);
 	  
 	    List<ColumnConfig> configs = new ArrayList<ColumnConfig>();  
 	  
 	    ColumnConfig column = new ColumnConfig();  
-	    column.setId(StockDetails.NAME);  
+	    column.setId(StockDetail.NAME);  
 	    column.setHeader("Company");  
 	    column.setWidth(200);  
 	    configs.add(column);  
 	  
 	    column = new ColumnConfig();  
-	    column.setId(StockDetails.CODE);  
+	    column.setId(StockDetail.CODE);  
 	    column.setHeader("Code");  
 	    column.setWidth(100);  
 	    configs.add(column);  
 	  
 	    column = new ColumnConfig();  
-	    column.setId(StockDetails.GICS_PRIMARY_SECTOR_NAME);  
+	    column.setId(StockDetail.GICS_PRIMARY_SECTOR_NAME);  
 	    column.setHeader("Primary GICS Sector");  
 	    column.setWidth(200);  
 	    configs.add(column);
 	    
 	    column = new ColumnConfig();  
-	    column.setId(StockDetails.GICS_PRIMARY_INDUSTRY_GROUP_NAME);  
+	    column.setId(StockDetail.GICS_PRIMARY_INDUSTRY_GROUP_NAME);  
 	    column.setHeader("Primary GICS Industry");  
 	    column.setWidth(200);  
 	    configs.add(column);
 	    
 	    column = new ColumnConfig();  
-	    column.setId(StockDetails.LIST_DATE);  
+	    column.setId(StockDetail.LIST_DATE);  
 	    column.setHeader("List Date"); 
 	    column.setDateTimeFormat(DateTimeFormat.getFormat("dd/MM/yyyy"));
 	    column.setAlignment(HorizontalAlignment.RIGHT);  
 	    column.setWidth(75);  
 	    configs.add(column);  
 	  
-	    column = new ColumnConfig(StockDetails.LAST_TRADE_DATE, "Last Trade Date", 150);  
+	    column = new ColumnConfig(StockDetail.LAST_TRADE_DATE, "Last Trade Date", 150);  
 	    column.setAlignment(HorizontalAlignment.RIGHT);  
 	    column.setDateTimeFormat(DateTimeFormat.getFormat("dd/MM/yyyy"));  
 	    configs.add(column);  
 
 	    column = new ColumnConfig();  
-	    column.setId(StockDetails.CURRENT_PRICE);  
+	    column.setId(StockDetail.CURRENT_PRICE);  
 	    column.setHeader("Current Price");  
 	    column.setWidth(100);  
 	    configs.add(column);
@@ -144,16 +144,16 @@ public class RegistryViewImpl extends ViewImpl implements RegistryPanelView {
 	    contentPanel.setHeaderVisible(false);
 	    contentPanel.setButtonAlign(HorizontalAlignment.CENTER);  
 	    contentPanel.setLayout(new FitLayout());  
-	    contentPanel.setBottomComponent(toolBar);  
+	    contentPanel.setBottomComponent(pagingToolBar);  
 	    
-	    grid = new Grid<StockDetails>(store, columnModel);  
+	    grid = new Grid<StockDetail>(store, columnModel);  
 	    grid.setBorders(true);
-	    grid.getAriaSupport().setDescribedBy(toolBar.getId() + "-display");  
+	    grid.getAriaSupport().setDescribedBy(pagingToolBar.getId() + "-display");  
 	    contentPanel.add(grid);  
 	}
 	
 	@Override
-	public void setStocks(ArrayList<StockDetails> stocks) {
+	public void setStocks(ArrayList<StockDetail> stocks) {
 		this.stocks = stocks;
 	    proxy.setData(stocks);
 	    if (stocks.size() > MAX_PAGE_SIZE) {
@@ -170,17 +170,17 @@ public class RegistryViewImpl extends ViewImpl implements RegistryPanelView {
 	
 	@Override
 	public Widget asWidget() {
-		contentPanel.setSize(width-200, height-60);  
+		contentPanel.setSize(width, height-117);  
 		return contentPanel;
 	}
 
 	@Override
-	public StockDetails getSelectedItem() {
+	public StockDetail getSelectedItem() {
 		return grid.getSelectionModel().getSelectedItem();
 	}
 
 	@Override
-	public void remove(StockDetails stock) {
+	public void remove(StockDetail stock) {
 		if (store.contains(stock)) {
 			store.remove(stock);
 			store.commitChanges();
@@ -217,7 +217,7 @@ public class RegistryViewImpl extends ViewImpl implements RegistryPanelView {
 	}
 
 	@Override
-	public void add(StockDetails details) {
+	public void add(StockDetail details) {
 		store.add(details);
 		stocks.add(details);
 		store.commitChanges();
@@ -229,11 +229,11 @@ public class RegistryViewImpl extends ViewImpl implements RegistryPanelView {
 	}
 
 	@Override
-	public void showEditDialog(StockDetails details, EditDialogCallback callback) {
+	public void showEditDialog(StockDetail details, EditDialogCallback callback) {
 		showEditDialog(callback, "Update", details);
 	}
 	
-	private void showEditDialog(final EditDialogCallback callback, String title, StockDetails details) {
+	private void showEditDialog(final EditDialogCallback callback, String title, StockDetail details) {
 		final Dialog editDialog = new Dialog();  
 	    editDialog.setHeading(title);  
 	    editDialog.setButtons(Dialog.OKCANCEL);  
@@ -253,7 +253,7 @@ public class RegistryViewImpl extends ViewImpl implements RegistryPanelView {
 					ce.cancelBubble();
 					return;
 				}
-				StockDetails details = editorPanel.getStockDetails(); 
+				StockDetail details = editorPanel.getStockDetails(); 
 				editDialog.setVisible(false);
 			    callback.commit(details);
 			}
@@ -269,7 +269,7 @@ public class RegistryViewImpl extends ViewImpl implements RegistryPanelView {
 	}
 
 	@Override
-	public void update(StockDetails details) {
+	public void update(StockDetail details) {
 		if (store.contains(details)) {
 			store.update(details);
 			store.commitChanges();
@@ -283,7 +283,6 @@ public class RegistryViewImpl extends ViewImpl implements RegistryPanelView {
 		} else {
 			Log.info("Update: Can't find stock: " + details.getCode());			
 		}
-		
 	}	
 	
 	private class EditorPanel extends LayoutContainer {
@@ -294,7 +293,7 @@ public class RegistryViewImpl extends ViewImpl implements RegistryPanelView {
 		private ListStore<GicsSectorName> gicsSectorStore;
 		private ComboBox<GicsIndustryGroupName> gicsIndustryGroupCombo = new ComboBox<GicsIndustryGroupName>();
 		private ListStore<GicsIndustryGroupName> gicsIndustryGroupStore;
-		private StockDetails currentDetails;
+		private StockDetail currentDetails;
 		
 		@Override  
 		protected void onRender(Element parent, int index) {
@@ -357,8 +356,8 @@ public class RegistryViewImpl extends ViewImpl implements RegistryPanelView {
 			}
 		}
 		
-		StockDetails getStockDetails() {
-			StockDetails details = new StockDetails();
+		StockDetail getStockDetails() {
+			StockDetail details = new StockDetail();
 			details.setPrimarySector(gicsSectorCombo.getSelection().get(0));
 			details.setPrimaryIndustryGroup(gicsIndustryGroupCombo.getSelection().get(0));
 			details.setCode(codeTextField.getValue());
@@ -373,7 +372,7 @@ public class RegistryViewImpl extends ViewImpl implements RegistryPanelView {
 			return details;
 		}
 		
-		void setDetails(StockDetails details) {
+		void setDetails(StockDetail details) {
 			this.currentDetails = details;
 		}
 		
