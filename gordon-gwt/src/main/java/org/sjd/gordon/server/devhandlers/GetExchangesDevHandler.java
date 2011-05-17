@@ -3,18 +3,18 @@ package org.sjd.gordon.server.devhandlers;
 import java.util.ArrayList;
 
 import org.sjd.gordon.model.Exchange;
-import org.sjd.gordon.shared.navigation.GetExchanges;
-import org.sjd.gordon.shared.navigation.GotExchanges;
+import org.sjd.gordon.shared.navigation.GetExchangesAction;
+import org.sjd.gordon.shared.navigation.GetExchangesResult;
 
 import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.server.actionhandler.ActionHandler;
 import com.gwtplatform.dispatch.shared.ActionException;
 
-public class GetExchangesDevHandler implements ActionHandler<GetExchanges,GotExchanges> {
+public class GetExchangesDevHandler implements ActionHandler<GetExchangesAction,GetExchangesResult> {
 
 	@Override
-	public GotExchanges execute(GetExchanges getExchanges, ExecutionContext context) throws ActionException {
-		return new GotExchanges(create());
+	public GetExchangesResult execute(GetExchangesAction getExchanges, ExecutionContext context) throws ActionException {
+		return new GetExchangesResult(create());
 	}
 	
 	private ArrayList<Exchange> create() {
@@ -28,12 +28,12 @@ public class GetExchangesDevHandler implements ActionHandler<GetExchanges,GotExc
 	}
 
 	@Override
-	public Class<GetExchanges> getActionType() {
-		return GetExchanges.class;
+	public Class<GetExchangesAction> getActionType() {
+		return GetExchangesAction.class;
 	}
 
 	@Override
-	public void undo(GetExchanges action, GotExchanges result, ExecutionContext context) throws ActionException {
+	public void undo(GetExchangesAction action, GetExchangesResult result, ExecutionContext context) throws ActionException {
 		// Nothing
 	}
 

@@ -1,28 +1,28 @@
 package org.sjd.gordon.server.devhandlers;
 
-import org.sjd.gordon.shared.registry.DeleteRegistryEntry;
-import org.sjd.gordon.shared.registry.DeleteRegistryEntryResponse;
+import org.sjd.gordon.shared.registry.DeleteRegistryEntryAction;
+import org.sjd.gordon.shared.registry.DeleteRegistryEntryResult;
 
 import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.server.actionhandler.ActionHandler;
 import com.gwtplatform.dispatch.shared.ActionException;
 
-public class DeleteRegistryEntryDevHandler implements ActionHandler<DeleteRegistryEntry,DeleteRegistryEntryResponse> {
+public class DeleteRegistryEntryDevHandler implements ActionHandler<DeleteRegistryEntryAction,DeleteRegistryEntryResult> {
 
 	@Override
-	public DeleteRegistryEntryResponse execute(DeleteRegistryEntry deleteEntry, ExecutionContext context) throws ActionException {
+	public DeleteRegistryEntryResult execute(DeleteRegistryEntryAction deleteEntry, ExecutionContext context) throws ActionException {
 		Data.detailsMap.remove(deleteEntry.getStockId());
-		DeleteRegistryEntryResponse response = new DeleteRegistryEntryResponse();
+		DeleteRegistryEntryResult response = new DeleteRegistryEntryResult();
 		return response;
 	}
 
 	@Override
-	public Class<DeleteRegistryEntry> getActionType() {
-		return DeleteRegistryEntry.class;
+	public Class<DeleteRegistryEntryAction> getActionType() {
+		return DeleteRegistryEntryAction.class;
 	}
 
 	@Override
-	public void undo(DeleteRegistryEntry action, DeleteRegistryEntryResponse result, ExecutionContext context) throws ActionException {
+	public void undo(DeleteRegistryEntryAction action, DeleteRegistryEntryResult result, ExecutionContext context) throws ActionException {
 		// Nothing to do here
 	}
 

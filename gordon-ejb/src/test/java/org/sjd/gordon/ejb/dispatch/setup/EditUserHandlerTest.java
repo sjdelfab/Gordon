@@ -17,9 +17,9 @@ import org.sjd.gordon.model.Group;
 import org.sjd.gordon.model.User;
 import org.sjd.gordon.shared.exceptions.NonUniqueResultException;
 import org.sjd.gordon.shared.exceptions.OptimisticLockException;
-import org.sjd.gordon.shared.security.EditUser;
 import org.sjd.gordon.shared.security.EditUser.EditType;
-import org.sjd.gordon.shared.security.EditUserResponse;
+import org.sjd.gordon.shared.security.EditUserAction;
+import org.sjd.gordon.shared.security.EditUserResult;
 import org.sjd.gordon.shared.security.UserDetail;
 
 import com.gwtplatform.dispatch.server.ExecutionContext;
@@ -65,7 +65,7 @@ public class EditUserHandlerTest {
     		{ allowing(userService).createUser(with(any(User.class))); will(throwException(new RuntimeException(dbException))); }
     		{ allowing(userService).findGroupByName(with("ADMIN")); will(returnValue(adminGroup)); }
     	});
-    	EditUser editUser = new EditUser(userDetail,EditType.ADD);
+    	EditUserAction editUser = new EditUserAction(userDetail,EditType.ADD);
     	thrown.expect(NonUniqueResultException.class);
     	handler.execute(editUser, executionContext);
     }
@@ -83,7 +83,7 @@ public class EditUserHandlerTest {
     		{ allowing(userService).updateUser(with(any(User.class))); will(throwException(new RuntimeException(throwing)));}
     		{ allowing(userService).findGroupByName(with("USER")); will(returnValue(userGroup)); }
     	});
-    	EditUser editUser = new EditUser(userDetail,EditType.UPDATE);
+    	EditUserAction editUser = new EditUserAction(userDetail,EditType.UPDATE);
     	thrown.expect(OptimisticLockException.class);
     	handler.execute(editUser, executionContext);
     }
@@ -107,9 +107,9 @@ public class EditUserHandlerTest {
     		{ allowing(userService).createUser(with(any(User.class))); will(createUserAction); }
     		{ allowing(userService).findGroupByName(with("ADMIN")); will(returnValue(adminGroup)); }
     	});
-    	EditUser editUser = new EditUser(userDetail,EditType.ADD);
-    	EditUserResponse response = handler.execute(editUser, executionContext);
-    	UserDetail returnedDetails = response.getUser();
+    	EditUserAction editUser = new EditUserAction(userDetail,EditType.ADD);
+    	EditUserResult response = handler.execute(editUser, executionContext);
+    	UserDetail returnedDetails = response.getUpdatedUserDetails();
     	assertEquals("Simon",returnedDetails.getFirstName());
     	assertEquals(Integer.valueOf(1),returnedDetails.getId());
     	assertEquals("Smith",returnedDetails.getLastName());
@@ -138,9 +138,9 @@ public class EditUserHandlerTest {
     		{ allowing(userService).findGroupByName(with("ADMIN")); will(returnValue(adminGroup)); }
     		{ allowing(userService).findGroupByName(with("USER")); will(returnValue(userGroup)); }
     	});
-    	EditUser editUser = new EditUser(userDetail,EditType.ADD);
-    	EditUserResponse response = handler.execute(editUser, executionContext);
-    	UserDetail returnedDetails = response.getUser();
+    	EditUserAction editUser = new EditUserAction(userDetail,EditType.ADD);
+    	EditUserResult response = handler.execute(editUser, executionContext);
+    	UserDetail returnedDetails = response.getUpdatedUserDetails();
     	assertEquals("Simon",returnedDetails.getFirstName());
     	assertEquals(Integer.valueOf(1),returnedDetails.getId());
     	assertEquals("Smith",returnedDetails.getLastName());
@@ -186,9 +186,9 @@ public class EditUserHandlerTest {
     		{ allowing(userService).findGroupByName(with("USER")); will(returnValue(userGroup)); }
     	});
     	
-    	EditUser editUser = new EditUser(userDetail,EditType.UPDATE);
-    	EditUserResponse response = handler.execute(editUser, executionContext);
-    	UserDetail returnedDetails = response.getUser();
+    	EditUserAction editUser = new EditUserAction(userDetail,EditType.UPDATE);
+    	EditUserResult response = handler.execute(editUser, executionContext);
+    	UserDetail returnedDetails = response.getUpdatedUserDetails();
     	assertEquals("Simon",returnedDetails.getFirstName());
     	assertEquals(Integer.valueOf(1),returnedDetails.getId());
     	assertEquals("Smith",returnedDetails.getLastName());

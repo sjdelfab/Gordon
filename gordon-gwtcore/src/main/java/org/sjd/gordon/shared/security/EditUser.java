@@ -1,31 +1,17 @@
 package org.sjd.gordon.shared.security;
 
-import java.io.Serializable;
-
+import com.gwtplatform.dispatch.annotation.GenDispatch;
+import com.gwtplatform.dispatch.annotation.In;
+import com.gwtplatform.dispatch.annotation.Out;
 import com.gwtplatform.dispatch.shared.UnsecuredActionImpl;
 
-public class EditUser extends UnsecuredActionImpl<EditUserResponse> implements Serializable {
-
-	private static final long serialVersionUID = -6265427278304024373L;
+@GenDispatch(isSecure = false, serviceName = UnsecuredActionImpl.DEFAULT_SERVICE_NAME)
+public class EditUser {
 
 	public static enum EditType {ADD, UPDATE};
 	
-	private UserDetail userDetails;
-	private EditType editType;
-	
-	public EditUser() { }
-	
-	public EditUser(UserDetail details, EditType editType) { 
-		this.userDetails = details;
-		this.editType = editType;
-	}
-	
-	public UserDetail getUserDetail() {
-		return userDetails;
-	}
-	
-	public EditType getEditType() {
-		return editType;
-	}
+	@In(1) UserDetail newUserDetails;
+	@In(2) EditType editType;
+	@Out(1) UserDetail updatedUserDetails;
 
 }

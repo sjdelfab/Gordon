@@ -68,8 +68,9 @@ public class TabbedPanelViewImpl extends ViewImpl implements TabbedPanelPresente
 			RegistryPresenter registryPresenter = registryPresenterProvider.get();
 			registryPresenter.setExchange(exchange);
 			item = new TabItem();
-			item.setText(REGISTRY_LABEL + " (" + exchange.getCode() + ")");
+			item.setText(exchange.getCode() + " " + REGISTRY_LABEL);
 			item.setItemId(id);
+			item.setIconStyle(exchange.getCode().toLowerCase());
 			item.addStyleName("pad-text");
 			item.setClosable(true);
 			item.add(registryPresenter.getView().asWidget());
@@ -77,7 +78,6 @@ public class TabbedPanelViewImpl extends ViewImpl implements TabbedPanelPresente
 			tabbedPanel.setSelection(item);
 		}
 	}
-	
 	
 	@Override
 	public Widget asWidget() {
@@ -96,6 +96,7 @@ public class TabbedPanelViewImpl extends ViewImpl implements TabbedPanelPresente
 			item = new TabItem();
 			item.setText(USERS_LABEL);
 			item.setItemId(id);
+			item.setIconStyle("users");
 			item.addStyleName("pad-text");
 			item.setClosable(true);
 			item.add(userSetupPresenter.getView().asWidget());

@@ -1,11 +1,15 @@
 package org.sjd.gordon.shared.navigation;
 
-import java.io.Serializable;
+import java.util.ArrayList;
 
+import org.sjd.gordon.model.Exchange;
+
+import com.gwtplatform.dispatch.annotation.GenDispatch;
+import com.gwtplatform.dispatch.annotation.Out;
 import com.gwtplatform.dispatch.shared.UnsecuredActionImpl;
 
-public class GetExchanges extends UnsecuredActionImpl<GotExchanges> implements Serializable {
+@GenDispatch(isSecure = false, serviceName = UnsecuredActionImpl.DEFAULT_SERVICE_NAME)
+public class GetExchanges {
 
-	private static final long serialVersionUID = -1698961640270135270L;
-
+	@Out(1) ArrayList<Exchange> exchanges;
 }

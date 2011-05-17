@@ -3,7 +3,7 @@ package org.sjd.gordon.client.viewer;
 import java.util.ArrayList;
 
 import org.sjd.gordon.model.StockDayTradeRecord;
-import org.sjd.gordon.shared.viewer.GetTradeHistory;
+import org.sjd.gordon.shared.viewer.GetTradeHistoryAction;
 import org.sjd.gordon.shared.viewer.StockDetail;
 
 import com.google.gwt.event.shared.EventBus;
@@ -44,8 +44,8 @@ public class TradeHistoryPresenter extends Presenter<TradeHistoryPresenter.Trade
 	public void setStock(StockDetail stockDetails) {
 		if (this.stockDetails == null) {
 			this.stockDetails = stockDetails;
-			GetTradeHistory getExchanges = new GetTradeHistory(this.stockDetails.getId());
-			dispatcher.execute(getExchanges, new LoadTradeHistoryCallback() {
+			GetTradeHistoryAction getTradeHistoryAction = new GetTradeHistoryAction(this.stockDetails.getId());
+			dispatcher.execute(getTradeHistoryAction, new LoadTradeHistoryCallback() {
 				@Override
 				public void loaded(ArrayList<StockDayTradeRecord> tradeHistory) {
 					getView().setTradeHistory(tradeHistory);

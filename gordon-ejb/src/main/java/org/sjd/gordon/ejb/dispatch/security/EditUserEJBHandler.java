@@ -9,7 +9,8 @@ import org.sjd.gordon.model.Group;
 import org.sjd.gordon.model.User;
 import org.sjd.gordon.shared.security.EditUser;
 import org.sjd.gordon.shared.security.EditUser.EditType;
-import org.sjd.gordon.shared.security.EditUserResponse;
+import org.sjd.gordon.shared.security.EditUserAction;
+import org.sjd.gordon.shared.security.EditUserResult;
 import org.sjd.gordon.shared.security.UserDetail;
 import org.sjd.gordon.util.SHA_256_Util;
 
@@ -18,7 +19,7 @@ import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.server.actionhandler.ActionHandler;
 import com.gwtplatform.dispatch.shared.ActionException;
 
-public class EditUserEJBHandler extends AbstractHandler implements ActionHandler<EditUser,EditUserResponse> {
+public class EditUserEJBHandler extends AbstractHandler implements ActionHandler<EditUserAction,EditUserResult> {
 
     private UserService userService;
 	
@@ -28,9 +29,9 @@ public class EditUserEJBHandler extends AbstractHandler implements ActionHandler
 	}
 	
 	@Override
-	public EditUserResponse execute(EditUser editUser, ExecutionContext context) throws ActionException {
+	public EditUserResult execute(EditUserAction editUser, ExecutionContext context) throws ActionException {
 		EditUser.EditType editType = editUser.getEditType();
-		UserDetail newUserDetails = editUser.getUserDetail();
+		UserDetail newUserDetails = editUser.getNewUserDetails();
 		try {
 			if (editType == EditType.ADD) {
 				 newUserDetails = add(editUser);
@@ -40,11 +41,11 @@ public class EditUserEJBHandler extends AbstractHandler implements ActionHandler
 		} catch (Throwable cause) {
 			throw translateException(cause);
 		}
-		return new EditUserResponse(newUserDetails);
+		return new EditUserResult(newUserDetails);
 	}
 
-	private UserDetail add(EditUser editUser) throws Exception {
-		UserDetail newUserDetail = editUser.getUserDetail();
+	private UserDetail add(EditUserAction editUser) throws Exception {
+		UserDetail newUserDetail = editUser.getNewUserDetails();
 		User newUser = new User();
 		newUser.setFirstName(newUserDetail.getFirstName());
 		newUser.setLastName(newUserDetail.getLastName());
@@ -64,8 +65,8 @@ public class EditUserEJBHandler extends AbstractHandler implements ActionHandler
 		return newUserDetail;
 	}
 
-	private UserDetail update(EditUser editUser) {
-		UserDetail newUserDetail = editUser.getUserDetail();
+	private UserDetail update(EditUserAction editUser) {
+		UserDetail newUserDetail = editUser.getNewUserDetails();
 		User user = userService.findUserById(newUserDetail.getId());
 		user.setVersion(newUserDetail.getVersion());
 		user.setFirstName(newUserDetail.getFirstName());
@@ -85,12 +86,12 @@ public class EditUserEJBHandler extends AbstractHandler implements ActionHandler
 	}	
 	
 	@Override
-	public Class<EditUser> getActionType() {
-		return EditUser.class;
+	public Class<EditUserAction> getActionType() {
+		return EditUserAction.class;
 	}
 
 	@Override
-	public void undo(EditUser action, EditUserResponse result, ExecutionContext context) throws ActionException {
+	public void undo(EditUserAction action, EditUserResult result, ExecutionContext context) throws ActionException {
 		// Nothing to do here
 	}
 

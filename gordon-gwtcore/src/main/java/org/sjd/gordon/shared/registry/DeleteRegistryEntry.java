@@ -1,23 +1,12 @@
 package org.sjd.gordon.shared.registry;
 
-import java.io.Serializable;
-
+import com.gwtplatform.dispatch.annotation.GenDispatch;
+import com.gwtplatform.dispatch.annotation.In;
 import com.gwtplatform.dispatch.shared.UnsecuredActionImpl;
 
-public class DeleteRegistryEntry extends UnsecuredActionImpl<DeleteRegistryEntryResponse> implements Serializable {
+@GenDispatch(isSecure = false, serviceName = UnsecuredActionImpl.DEFAULT_SERVICE_NAME)
+public class DeleteRegistryEntry {
 	
-	private static final long serialVersionUID = 430614148737827199L;
-	
-	private Long stockId;
-	
-	public DeleteRegistryEntry() { }
-	
-	public DeleteRegistryEntry(Long stockId) {
-		this.stockId = stockId;
-	}
-	
-	public Long getStockId() {
-		return stockId;
-	}
+	@In(1) Long stockId;
 
 }

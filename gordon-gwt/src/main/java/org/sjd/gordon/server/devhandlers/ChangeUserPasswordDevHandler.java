@@ -1,25 +1,25 @@
 package org.sjd.gordon.server.devhandlers;
 
-import org.sjd.gordon.shared.security.ChangePasswordResponse;
-import org.sjd.gordon.shared.security.ChangeUserPassword;
+import org.sjd.gordon.shared.security.ChangeUserPasswordAction;
+import org.sjd.gordon.shared.security.ChangeUserPasswordResult;
 
 import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.server.actionhandler.ActionHandler;
 import com.gwtplatform.dispatch.shared.ActionException;
 
-public class ChangeUserPasswordDevHandler implements ActionHandler<ChangeUserPassword,ChangePasswordResponse> {
+public class ChangeUserPasswordDevHandler implements ActionHandler<ChangeUserPasswordAction,ChangeUserPasswordResult> {
 
 	@Override
-	public ChangePasswordResponse execute(ChangeUserPassword action, ExecutionContext context) throws ActionException {
-		return new ChangePasswordResponse();
+	public ChangeUserPasswordResult execute(ChangeUserPasswordAction action, ExecutionContext context) throws ActionException {
+		return new ChangeUserPasswordResult();
 	}
 
 	@Override
-	public Class<ChangeUserPassword> getActionType() {
-		return ChangeUserPassword.class;
+	public Class<ChangeUserPasswordAction> getActionType() {
+		return ChangeUserPasswordAction.class;
 	}
 
 	@Override
-	public void undo(ChangeUserPassword action, ChangePasswordResponse response, ExecutionContext context) throws ActionException { }
+	public void undo(ChangeUserPasswordAction action, ChangeUserPasswordResult response, ExecutionContext context) throws ActionException { }
 
 }

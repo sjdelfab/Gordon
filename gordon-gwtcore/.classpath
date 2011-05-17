@@ -7,5 +7,10 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/GWT Local Library"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Model Local Library"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/gordon-model"/>
+	<classpathentry kind="src" path=".apt_generated">
+		<attributes>
+			<attribute name="optional" value="true"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

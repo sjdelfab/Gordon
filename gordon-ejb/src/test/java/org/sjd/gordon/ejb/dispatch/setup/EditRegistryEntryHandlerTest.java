@@ -21,9 +21,9 @@ import org.sjd.gordon.model.GicsIndustryGroup;
 import org.sjd.gordon.model.StockEntity;
 import org.sjd.gordon.shared.exceptions.NonUniqueResultException;
 import org.sjd.gordon.shared.exceptions.OptimisticLockException;
-import org.sjd.gordon.shared.registry.EditRegistryEntry;
 import org.sjd.gordon.shared.registry.EditRegistryEntry.EditType;
-import org.sjd.gordon.shared.registry.EditRegistryEntryResponse;
+import org.sjd.gordon.shared.registry.EditRegistryEntryAction;
+import org.sjd.gordon.shared.registry.EditRegistryEntryResult;
 import org.sjd.gordon.shared.viewer.StockDetail;
 
 import com.gwtplatform.dispatch.server.ExecutionContext;
@@ -65,7 +65,7 @@ public class EditRegistryEntryHandlerTest {
     		{ allowing(stockService).createStock(with(any(StockEntity.class))); will(throwException(new RuntimeException(dbException))); }
     		{ allowing(exchangeService).findExchangeById(with(any(Integer.class))); will(returnValue(exchange)); }
     	});
-    	EditRegistryEntry editEntry = new EditRegistryEntry(newDetails,Integer.valueOf(1),EditType.ADD);
+    	EditRegistryEntryAction editEntry = new EditRegistryEntryAction(newDetails,Integer.valueOf(1),EditType.ADD);
     	thrown.expect(NonUniqueResultException.class);
     	handler.execute(editEntry, executionContext);
     }
@@ -77,7 +77,7 @@ public class EditRegistryEntryHandlerTest {
     		{ allowing(stockService).findStockById(with(any(Long.class))); will(returnValue(new StockEntity())); }
     		{ allowing(stockService).updateStock(with(any(StockEntity.class))); will(throwException(new RuntimeException(throwing)));}
     	});
-    	EditRegistryEntry editEntry = new EditRegistryEntry(newDetails,Integer.valueOf(1),EditType.UPDATE);
+    	EditRegistryEntryAction editEntry = new EditRegistryEntryAction(newDetails,Integer.valueOf(1),EditType.UPDATE);
     	thrown.expect(OptimisticLockException.class);
     	handler.execute(editEntry, executionContext);
     }
@@ -106,8 +106,8 @@ public class EditRegistryEntryHandlerTest {
     		{ allowing(exchangeService).findExchangeById(with(any(Integer.class))); will(returnValue(exchange)); }
     		{ allowing(gicsService).findIndustryGroupById(with(any(Integer.class))); will(returnValue(industryGroup)); }
     	});
-    	EditRegistryEntry editEntry = new EditRegistryEntry(newDetails,Integer.valueOf(1),EditType.ADD);
-    	EditRegistryEntryResponse response = handler.execute(editEntry, executionContext);
+    	EditRegistryEntryAction editEntry = new EditRegistryEntryAction(newDetails,Integer.valueOf(1),EditType.ADD);
+    	EditRegistryEntryResult response = handler.execute(editEntry, executionContext);
     	StockDetail returnedDetails = response.getStock();
     	assertEquals("ABC",returnedDetails.getCode());
     	assertEquals(Long.valueOf(1),returnedDetails.getId());
@@ -155,8 +155,8 @@ public class EditRegistryEntryHandlerTest {
     		{ allowing(gicsService).findIndustryGroupById(with(any(Integer.class))); will(returnValue(industryGroup)); }
     	});
     	
-    	EditRegistryEntry editEntry = new EditRegistryEntry(newDetails,Integer.valueOf(1),EditType.UPDATE);
-    	EditRegistryEntryResponse response = handler.execute(editEntry, executionContext);
+    	EditRegistryEntryAction editEntry = new EditRegistryEntryAction(newDetails,Integer.valueOf(1),EditType.UPDATE);
+    	EditRegistryEntryResult response = handler.execute(editEntry, executionContext);
     	StockDetail returnedDetails = response.getStock();
     	assertEquals("ABC",returnedDetails.getCode());
     	assertEquals(Long.valueOf(1),returnedDetails.getId());
@@ -212,8 +212,8 @@ public class EditRegistryEntryHandlerTest {
     		{ allowing(gicsService).findIndustryGroupById(with(any(Integer.class))); will(returnValue(industryGroup)); }
     	});
     	
-    	EditRegistryEntry editEntry = new EditRegistryEntry(newDetails,Integer.valueOf(1),EditType.UPDATE);
-    	EditRegistryEntryResponse response = handler.execute(editEntry, executionContext);
+    	EditRegistryEntryAction editEntry = new EditRegistryEntryAction(newDetails,Integer.valueOf(1),EditType.UPDATE);
+    	EditRegistryEntryResult response = handler.execute(editEntry, executionContext);
     	StockDetail returnedDetails = response.getStock();
     	assertEquals("ABC",returnedDetails.getCode());
     	assertEquals(Long.valueOf(1),returnedDetails.getId());

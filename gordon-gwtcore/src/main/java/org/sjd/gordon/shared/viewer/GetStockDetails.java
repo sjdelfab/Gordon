@@ -1,24 +1,13 @@
 package org.sjd.gordon.shared.viewer;
 
-import java.io.Serializable;
-
+import com.gwtplatform.dispatch.annotation.GenDispatch;
+import com.gwtplatform.dispatch.annotation.In;
+import com.gwtplatform.dispatch.annotation.Out;
 import com.gwtplatform.dispatch.shared.UnsecuredActionImpl;
 
-public class GetStockDetails extends UnsecuredActionImpl<GotStockDetails> implements Serializable {
+@GenDispatch(isSecure = false, serviceName = UnsecuredActionImpl.DEFAULT_SERVICE_NAME)
+public class GetStockDetails {
 	
-
-	private static final long serialVersionUID = 3079572278718211356L;
-	
-	private Long stockId;
-	
-	public GetStockDetails() { }
-	
-	public GetStockDetails(Long stockId) {
-		this.stockId = stockId;
-	}
-
-	public Long getStockId() {
-		return stockId;
-	}
-
+	@In(1) Long stockId;
+	@Out(1) StockDetail stockDetails;
 }

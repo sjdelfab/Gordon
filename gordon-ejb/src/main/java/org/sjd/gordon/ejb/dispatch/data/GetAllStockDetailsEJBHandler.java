@@ -8,8 +8,8 @@ import org.sjd.gordon.ejb.setup.GicsService;
 import org.sjd.gordon.model.GicsSector;
 import org.sjd.gordon.model.StockDayTradeRecord;
 import org.sjd.gordon.model.StockEntity;
-import org.sjd.gordon.shared.registry.GetAllStockDetails;
-import org.sjd.gordon.shared.registry.GotAllStockDetails;
+import org.sjd.gordon.shared.registry.GetAllRegistryEntriesAction;
+import org.sjd.gordon.shared.registry.GetAllRegistryEntriesResult;
 import org.sjd.gordon.shared.viewer.StockDetail;
 
 import com.google.inject.Inject;
@@ -17,7 +17,7 @@ import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.server.actionhandler.ActionHandler;
 import com.gwtplatform.dispatch.shared.ActionException;
 
-public class GetAllStockDetailsEJBHandler implements ActionHandler<GetAllStockDetails, GotAllStockDetails> {
+public class GetAllStockDetailsEJBHandler implements ActionHandler<GetAllRegistryEntriesAction, GetAllRegistryEntriesResult> {
 
 	@Inject
 	private StockEntityService stockEjb;
@@ -25,7 +25,7 @@ public class GetAllStockDetailsEJBHandler implements ActionHandler<GetAllStockDe
 	private GicsService gicsService;
 
 	@Override
-	public GotAllStockDetails execute(GetAllStockDetails getDetails, ExecutionContext context) throws ActionException {
+	public GetAllRegistryEntriesResult execute(GetAllRegistryEntriesAction getDetails, ExecutionContext context) throws ActionException {
 		List<StockEntity> stocks = stockEjb.getStocks(getDetails.getExchangeId());
 		ArrayList<StockDetail> details = new ArrayList<StockDetail>(stocks.size());
 		for (StockEntity entity : stocks) {
@@ -47,16 +47,16 @@ public class GetAllStockDetailsEJBHandler implements ActionHandler<GetAllStockDe
 			}
 			details.add(stockDetails);
 		}
-		return new GotAllStockDetails(details);
+		return new GetAllRegistryEntriesResult(details);
 	}
 
 	@Override
-	public Class<GetAllStockDetails> getActionType() {
-		return GetAllStockDetails.class;
+	public Class<GetAllRegistryEntriesAction> getActionType() {
+		return GetAllRegistryEntriesAction.class;
 	}
 
 	@Override
-	public void undo(GetAllStockDetails action, GotAllStockDetails result, ExecutionContext context)
+	public void undo(GetAllRegistryEntriesAction action, GetAllRegistryEntriesResult result, ExecutionContext context)
 			throws ActionException {
 	}
 

@@ -1,23 +1,16 @@
 package org.sjd.gordon.shared.navigation;
 
-import java.io.Serializable;
+import java.util.ArrayList;
 
+import com.gwtplatform.dispatch.annotation.GenDispatch;
+import com.gwtplatform.dispatch.annotation.In;
+import com.gwtplatform.dispatch.annotation.Out;
 import com.gwtplatform.dispatch.shared.UnsecuredActionImpl;
 
-public class GetStocks extends UnsecuredActionImpl<GotStocks> implements Serializable {
+@GenDispatch(isSecure = false, serviceName = UnsecuredActionImpl.DEFAULT_SERVICE_NAME)
+public class GetStocks {
 
-	private static final long serialVersionUID = 4956388101107782497L;
+	@In(1) Integer exchangeId;
+	@Out(1) ArrayList<StockName> stocks;
 	
-	private Integer exchangeId;
-	
-	public GetStocks() { }
-	
-	public GetStocks(Integer exchangeId) {
-		this.exchangeId = exchangeId;
-	}
-
-	public Integer getExchangeId() {
-		return exchangeId;
-	}
-
 }

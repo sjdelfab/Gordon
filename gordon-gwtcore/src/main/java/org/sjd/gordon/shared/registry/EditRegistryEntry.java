@@ -1,39 +1,20 @@
 package org.sjd.gordon.shared.registry;
 
-import java.io.Serializable;
-
 import org.sjd.gordon.shared.viewer.StockDetail;
 
+import com.gwtplatform.dispatch.annotation.GenDispatch;
+import com.gwtplatform.dispatch.annotation.In;
+import com.gwtplatform.dispatch.annotation.Out;
 import com.gwtplatform.dispatch.shared.UnsecuredActionImpl;
 
-public class EditRegistryEntry extends UnsecuredActionImpl<EditRegistryEntryResponse> implements Serializable {
-
-	private static final long serialVersionUID = 4851344234581096095L;
+@GenDispatch(isSecure = false, serviceName = UnsecuredActionImpl.DEFAULT_SERVICE_NAME)
+public class EditRegistryEntry {
 	
 	public static enum EditType {ADD, UPDATE};
 	
-	private StockDetail stockDetails;
-	private Integer exchangeId;
-	private EditType editType;
+	@In(1) StockDetail stockDetails;
+	@In(2) Integer exchangeId;
+	@In(3) EditType editType;
+	@Out(1) StockDetail stock;
 	
-	public EditRegistryEntry() { }
-	
-	public EditRegistryEntry(StockDetail details, Integer exchangeId, EditType editType) { 
-		this.stockDetails = details;
-		this.exchangeId = exchangeId;
-		this.editType = editType;
-	}
-	
-	public StockDetail getStockDetails() {
-		return stockDetails;
-	}
-	
-	public Integer getExchangeId() {
-		return exchangeId;
-	}
-	
-	public EditType getEditType() {
-		return editType;
-	}
-
 }

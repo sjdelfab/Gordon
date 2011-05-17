@@ -11,7 +11,8 @@ import org.sjd.gordon.model.GicsIndustryGroup;
 import org.sjd.gordon.model.StockEntity;
 import org.sjd.gordon.shared.registry.EditRegistryEntry;
 import org.sjd.gordon.shared.registry.EditRegistryEntry.EditType;
-import org.sjd.gordon.shared.registry.EditRegistryEntryResponse;
+import org.sjd.gordon.shared.registry.EditRegistryEntryAction;
+import org.sjd.gordon.shared.registry.EditRegistryEntryResult;
 import org.sjd.gordon.shared.viewer.StockDetail;
 
 import com.google.inject.Inject;
@@ -19,7 +20,7 @@ import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.server.actionhandler.ActionHandler;
 import com.gwtplatform.dispatch.shared.ActionException;
 
-public class EditRegistryEntryEJBHandler extends AbstractHandler implements ActionHandler<EditRegistryEntry,EditRegistryEntryResponse> {
+public class EditRegistryEntryEJBHandler extends AbstractHandler implements ActionHandler<EditRegistryEntryAction,EditRegistryEntryResult> {
 
 	private StockEntityService stockService;
 	private ExchangeService exchangeService;
@@ -33,7 +34,7 @@ public class EditRegistryEntryEJBHandler extends AbstractHandler implements Acti
 	}
 	
 	@Override
-	public EditRegistryEntryResponse execute(EditRegistryEntry editEntry, ExecutionContext context) throws ActionException {
+	public EditRegistryEntryResult execute(EditRegistryEntryAction editEntry, ExecutionContext context) throws ActionException {
 		EditRegistryEntry.EditType editType = editEntry.getEditType();
 		StockDetail newStockDetails = editEntry.getStockDetails();
 		try {
@@ -45,10 +46,10 @@ public class EditRegistryEntryEJBHandler extends AbstractHandler implements Acti
 		} catch (Throwable cause) {
 			throw translateException(cause);
 		}
-		return new EditRegistryEntryResponse(newStockDetails);
+		return new EditRegistryEntryResult(newStockDetails);
 	}
 
-	private StockDetail add(EditRegistryEntry editEntry) throws Exception {
+	private StockDetail add(EditRegistryEntryAction editEntry) throws Exception {
 		StockDetail newStockDetails = editEntry.getStockDetails();
 		StockEntity newStock = new StockEntity();
 		newStock.setCode(newStockDetails.getCode());
@@ -68,7 +69,7 @@ public class EditRegistryEntryEJBHandler extends AbstractHandler implements Acti
 		return newStockDetails;
 	}
 	
-	private StockDetail update(EditRegistryEntry editEntry) throws Exception {
+	private StockDetail update(EditRegistryEntryAction editEntry) throws Exception {
 		StockDetail newStockDetails = editEntry.getStockDetails();
 		StockEntity stockEntity = stockService.findStockById(newStockDetails.getId());
 		stockEntity.setVersion(newStockDetails.getVersion());
@@ -100,12 +101,12 @@ public class EditRegistryEntryEJBHandler extends AbstractHandler implements Acti
 	}
 	
 	@Override
-	public Class<EditRegistryEntry> getActionType() {
-		return EditRegistryEntry.class;
+	public Class<EditRegistryEntryAction> getActionType() {
+		return EditRegistryEntryAction.class;
 	}
 
 	@Override
-	public void undo(EditRegistryEntry action, EditRegistryEntryResponse result, ExecutionContext context) throws ActionException {
+	public void undo(EditRegistryEntryAction action, EditRegistryEntryResult result, ExecutionContext context) throws ActionException {
 		// Nothing to do here
 	}
 	

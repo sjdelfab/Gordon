@@ -7,34 +7,34 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
 import org.sjd.gordon.model.StockDayTradeRecord;
-import org.sjd.gordon.shared.viewer.GetTradeHistory;
-import org.sjd.gordon.shared.viewer.GotTradeHistory;
+import org.sjd.gordon.shared.viewer.GetTradeHistoryAction;
+import org.sjd.gordon.shared.viewer.GetTradeHistoryResult;
 
 import com.google.inject.Inject;
 import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.server.actionhandler.ActionHandler;
 import com.gwtplatform.dispatch.shared.ActionException;
 
-public class GetTradeHistoryJpaHandler implements ActionHandler<GetTradeHistory, GotTradeHistory> {
+public class GetTradeHistoryJpaHandler implements ActionHandler<GetTradeHistoryAction, GetTradeHistoryResult> {
 
 	@Inject EntityManager em;
 	
 	@Override
-	public GotTradeHistory execute(GetTradeHistory getTradeHistory, ExecutionContext context) throws ActionException {
+	public GetTradeHistoryResult execute(GetTradeHistoryAction getTradeHistory, ExecutionContext context) throws ActionException {
 		String getStockTradeHistory = "SELECT s FROM StockDayTradeRecord s WHERE s.stockId = :id ORDER BY s.id";
     	TypedQuery<StockDayTradeRecord> query = em.createQuery(getStockTradeHistory, StockDayTradeRecord.class);
     	query.setParameter("id", getTradeHistory.getStockId());
     	List<StockDayTradeRecord> tradeHistory = query.getResultList();
-		return new GotTradeHistory(new ArrayList<StockDayTradeRecord>(tradeHistory));
+		return new GetTradeHistoryResult(new ArrayList<StockDayTradeRecord>(tradeHistory));
 	}
 
 	@Override
-	public Class<GetTradeHistory> getActionType() {
-		return GetTradeHistory.class;
+	public Class<GetTradeHistoryAction> getActionType() {
+		return GetTradeHistoryAction.class;
 	}
 
 	@Override
-	public void undo(GetTradeHistory action, GotTradeHistory result, ExecutionContext context) throws ActionException {
+	public void undo(GetTradeHistoryAction action, GetTradeHistoryResult result, ExecutionContext context) throws ActionException {
 		
 	}
 

@@ -5,17 +5,18 @@ import java.util.ArrayList;
 import org.sjd.gordon.client.navigation.LoadExchangesCallback;
 import org.sjd.gordon.client.registry.ShowRegistryEvent;
 import org.sjd.gordon.client.security.ChangeUserNameEvent;
-import org.sjd.gordon.client.security.ChangeUserNameEventHandler;
+import org.sjd.gordon.client.security.ChangeUserNameEvent.ChangeUserNameHandler;
 import org.sjd.gordon.client.security.ChangeUserPasswordCallback;
 import org.sjd.gordon.client.security.EditUserCallback;
 import org.sjd.gordon.client.security.LogoutCallback;
 import org.sjd.gordon.client.security.ShowUserSetupEvent;
 import org.sjd.gordon.model.Exchange;
-import org.sjd.gordon.shared.navigation.GetExchanges;
-import org.sjd.gordon.shared.security.ChangeUserPassword;
+import org.sjd.gordon.shared.navigation.GetExchangesAction;
+import org.sjd.gordon.shared.security.ChangeUserPasswordAction;
 import org.sjd.gordon.shared.security.EditUser;
-import org.sjd.gordon.shared.security.GetCurrentUser;
-import org.sjd.gordon.shared.security.Logout;
+import org.sjd.gordon.shared.security.EditUserAction;
+import org.sjd.gordon.shared.security.GetCurrentUserAction;
+import org.sjd.gordon.shared.security.LogoutAction;
 import org.sjd.gordon.shared.security.UserDetail;
 
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -40,7 +41,7 @@ public class TitleStripPresenter extends Presenter<TitleStripPresenter.TitleStri
 		public HasClickHandlers addExchange(Exchange exchange);
 		public HasClickHandlers getUserSetup();
 		public HasClickHandlers getSettings();
-		public ChangeUserNameEventHandler getChangeUserNameEventHandler();
+		public ChangeUserNameHandler getChangeUserNameEventHandler();
 		public void showEditDialog(UserDetail details, EditCurrentUserDialogCallback callback);
 		public void logout();
 		public void showPasswordSuccessfullyChangedMessage();
@@ -48,7 +49,7 @@ public class TitleStripPresenter extends Presenter<TitleStripPresenter.TitleStri
 
 	interface EditCurrentUserDialogCallback {
 		void commit(UserDetail details);
-		void changePassword(Integer userId, char[] password);
+		void changePassword(Integer userId, String password);
 	}	
 	
 	private final DispatchAsync dispatcher;
@@ -57,12 +58,12 @@ public class TitleStripPresenter extends Presenter<TitleStripPresenter.TitleStri
 	@Inject
 	public TitleStripPresenter(EventBus eventBus, TitleStripView view, TitleStripProxy proxy, final DispatchAsync dispatcher) {
 		super(eventBus, view, proxy);
-		eventBus.addHandler(ChangeUserNameEvent.TYPE, view.getChangeUserNameEventHandler());
+		eventBus.addHandler(ChangeUserNameEvent.getType(), view.getChangeUserNameEventHandler());
 		this.dispatcher = dispatcher;
 		view.getLogout().addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-				dispatcher.execute(new Logout(), new LogoutCallback() {
+				dispatcher.execute(new LogoutAction(), new LogoutCallback() {
 					@Override
 					public void logout() {
 						getView().logout();
@@ -85,7 +86,7 @@ public class TitleStripPresenter extends Presenter<TitleStripPresenter.TitleStri
 						updateUser(details);
 					}
 					@Override
-					public void changePassword(Integer userId, char[] password) {
+					public void changePassword(Integer userId, String password) {
 						changeUserPassword(userId,password);
 					}
 				});
@@ -94,7 +95,7 @@ public class TitleStripPresenter extends Presenter<TitleStripPresenter.TitleStri
 	}
 	
 	private void updateUser(UserDetail details) {
-		EditUser action = new EditUser(details, EditUser.EditType.UPDATE);
+		EditUserAction action = new EditUserAction(details, EditUser.EditType.UPDATE);
 		dispatcher.execute(action, new EditUserCallback() {
 			@Override
 			public void commited(UserDetail user) {
@@ -104,8 +105,8 @@ public class TitleStripPresenter extends Presenter<TitleStripPresenter.TitleStri
 		});
 	}
 	
-	private void changeUserPassword(Integer userId, char[] password) {
-		ChangeUserPassword changeUserPassword = new ChangeUserPassword(userId, password);
+	private void changeUserPassword(Integer userId, String password) {
+		ChangeUserPasswordAction changeUserPassword = new ChangeUserPasswordAction(userId, password);
 		dispatcher.execute(changeUserPassword, new ChangeUserPasswordCallback() {
 			@Override
 			public void passwordSuccessfullyChanged() {
@@ -125,7 +126,7 @@ public class TitleStripPresenter extends Presenter<TitleStripPresenter.TitleStri
 	}
 	
 	private void load() {
-		GetExchanges getExchanges = new GetExchanges();
+		GetExchangesAction getExchanges = new GetExchangesAction();
 		dispatcher.execute(getExchanges, new LoadExchangesCallback() {
 			@Override
 			public void loaded(ArrayList<Exchange> exchanges) {
@@ -139,7 +140,7 @@ public class TitleStripPresenter extends Presenter<TitleStripPresenter.TitleStri
 				}
 			}
 		});
-		GetCurrentUser getCurrentUser = new GetCurrentUser();
+		GetCurrentUserAction getCurrentUser = new GetCurrentUserAction();
 		dispatcher.execute(getCurrentUser, new LoadCurrentUserCallback() {
 			@Override
 			public void loaded(UserDetail user) {

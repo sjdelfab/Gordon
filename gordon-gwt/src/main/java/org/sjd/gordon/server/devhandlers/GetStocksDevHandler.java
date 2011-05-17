@@ -2,19 +2,19 @@ package org.sjd.gordon.server.devhandlers;
 
 import java.util.ArrayList;
 
-import org.sjd.gordon.shared.navigation.GetStocks;
-import org.sjd.gordon.shared.navigation.GotStocks;
+import org.sjd.gordon.shared.navigation.GetStocksAction;
+import org.sjd.gordon.shared.navigation.GetStocksResult;
 import org.sjd.gordon.shared.navigation.StockName;
 
 import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.server.actionhandler.ActionHandler;
 import com.gwtplatform.dispatch.shared.ActionException;
 
-public class GetStocksDevHandler implements ActionHandler<GetStocks,GotStocks> {
+public class GetStocksDevHandler implements ActionHandler<GetStocksAction,GetStocksResult> {
 
 	@Override
-	public GotStocks execute(GetStocks getStocks, ExecutionContext context) throws ActionException {
-		return new GotStocks(create());
+	public GetStocksResult execute(GetStocksAction getStocks, ExecutionContext context) throws ActionException {
+		return new GetStocksResult(create());
 	}
 	
 	private ArrayList<StockName> create() {
@@ -31,12 +31,12 @@ public class GetStocksDevHandler implements ActionHandler<GetStocks,GotStocks> {
 	}
 
 	@Override
-	public Class<GetStocks> getActionType() {
-		return GetStocks.class;
+	public Class<GetStocksAction> getActionType() {
+		return GetStocksAction.class;
 	}
 
 	@Override
-	public void undo(GetStocks action, GotStocks result, ExecutionContext context) throws ActionException {
+	public void undo(GetStocksAction action, GetStocksResult result, ExecutionContext context) throws ActionException {
 		// Nothing
 	}
 

@@ -2,28 +2,28 @@ package org.sjd.gordon.server.devhandlers;
 
 import java.util.ArrayList;
 
-import org.sjd.gordon.shared.registry.GetAllStockDetails;
-import org.sjd.gordon.shared.registry.GotAllStockDetails;
+import org.sjd.gordon.shared.registry.GetAllRegistryEntriesAction;
+import org.sjd.gordon.shared.registry.GetAllRegistryEntriesResult;
 import org.sjd.gordon.shared.viewer.StockDetail;
 
 import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.server.actionhandler.ActionHandler;
 import com.gwtplatform.dispatch.shared.ActionException;
 
-public class GetAllStockDetailsDevHandler implements ActionHandler<GetAllStockDetails, GotAllStockDetails> {
+public class GetAllStockDetailsDevHandler implements ActionHandler<GetAllRegistryEntriesAction, GetAllRegistryEntriesResult> {
 	
 	@Override
-	public GotAllStockDetails execute(GetAllStockDetails getDetails, ExecutionContext context) throws ActionException {
+	public GetAllRegistryEntriesResult execute(GetAllRegistryEntriesAction getDetails, ExecutionContext context) throws ActionException {
 		ArrayList<StockDetail> details = new ArrayList<StockDetail>(Data.detailsMap.values());
-		return new GotAllStockDetails(details);
+		return new GetAllRegistryEntriesResult(details);
 	}
 
 	@Override
-	public Class<GetAllStockDetails> getActionType() {
-		return GetAllStockDetails.class;
+	public Class<GetAllRegistryEntriesAction> getActionType() {
+		return GetAllRegistryEntriesAction.class;
 	}
 
 	@Override
-	public void undo(GetAllStockDetails action, GotAllStockDetails result, ExecutionContext context) throws ActionException { }
+	public void undo(GetAllRegistryEntriesAction action, GetAllRegistryEntriesResult result, ExecutionContext context) throws ActionException { }
 
 }

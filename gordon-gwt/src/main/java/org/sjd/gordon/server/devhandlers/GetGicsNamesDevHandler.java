@@ -2,16 +2,16 @@ package org.sjd.gordon.server.devhandlers;
 
 import java.util.ArrayList;
 
-import org.sjd.gordon.shared.registry.GetGicsSectors;
+import org.sjd.gordon.shared.registry.GetGicsSectorsAction;
+import org.sjd.gordon.shared.registry.GetGicsSectorsResult;
 import org.sjd.gordon.shared.registry.GicsIndustryGroupName;
 import org.sjd.gordon.shared.registry.GicsSectorName;
-import org.sjd.gordon.shared.registry.GotGicsSectors;
 
 import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.server.actionhandler.ActionHandler;
 import com.gwtplatform.dispatch.shared.ActionException;
 
-public class GetGicsNamesDevHandler implements ActionHandler<GetGicsSectors, GotGicsSectors> {
+public class GetGicsNamesDevHandler implements ActionHandler<GetGicsSectorsAction, GetGicsSectorsResult> {
 
 	private static ArrayList<GicsSectorName> names = new ArrayList<GicsSectorName>();
 	
@@ -79,16 +79,16 @@ public class GetGicsNamesDevHandler implements ActionHandler<GetGicsSectors, Got
 	}
 	
 	@Override
-	public GotGicsSectors execute(GetGicsSectors getDetails, ExecutionContext context) throws ActionException {
-		return new GotGicsSectors(names);
+	public GetGicsSectorsResult execute(GetGicsSectorsAction getDetails, ExecutionContext context) throws ActionException {
+		return new GetGicsSectorsResult(names);
 	}
 
 	@Override
-	public Class<GetGicsSectors> getActionType() {
-		return GetGicsSectors.class;
+	public Class<GetGicsSectorsAction> getActionType() {
+		return GetGicsSectorsAction.class;
 	}
 
 	@Override
-	public void undo(GetGicsSectors action, GotGicsSectors result, ExecutionContext context) throws ActionException { }
+	public void undo(GetGicsSectorsAction action, GetGicsSectorsResult result, ExecutionContext context) throws ActionException { }
 
 }

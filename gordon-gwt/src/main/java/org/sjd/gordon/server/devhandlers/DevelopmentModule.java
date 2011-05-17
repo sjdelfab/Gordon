@@ -1,20 +1,20 @@
 package org.sjd.gordon.server.devhandlers;
 
 import org.sjd.gordon.server.LogoutHandler;
-import org.sjd.gordon.shared.navigation.GetExchanges;
-import org.sjd.gordon.shared.navigation.GetStocks;
-import org.sjd.gordon.shared.registry.DeleteRegistryEntry;
-import org.sjd.gordon.shared.registry.EditRegistryEntry;
-import org.sjd.gordon.shared.registry.GetAllStockDetails;
-import org.sjd.gordon.shared.registry.GetGicsSectors;
-import org.sjd.gordon.shared.security.ChangeUserPassword;
-import org.sjd.gordon.shared.security.DeleteUser;
-import org.sjd.gordon.shared.security.EditUser;
-import org.sjd.gordon.shared.security.GetAllUserDetails;
-import org.sjd.gordon.shared.security.GetCurrentUser;
-import org.sjd.gordon.shared.security.Logout;
-import org.sjd.gordon.shared.viewer.GetStockDetails;
-import org.sjd.gordon.shared.viewer.GetTradeHistory;
+import org.sjd.gordon.shared.navigation.GetExchangesAction;
+import org.sjd.gordon.shared.navigation.GetStocksAction;
+import org.sjd.gordon.shared.registry.DeleteRegistryEntryAction;
+import org.sjd.gordon.shared.registry.EditRegistryEntryAction;
+import org.sjd.gordon.shared.registry.GetAllRegistryEntriesAction;
+import org.sjd.gordon.shared.registry.GetGicsSectorsAction;
+import org.sjd.gordon.shared.security.ChangeUserPasswordAction;
+import org.sjd.gordon.shared.security.DeleteUserAction;
+import org.sjd.gordon.shared.security.EditUserAction;
+import org.sjd.gordon.shared.security.GetAllUsersAction;
+import org.sjd.gordon.shared.security.GetCurrentUserAction;
+import org.sjd.gordon.shared.security.LogoutAction;
+import org.sjd.gordon.shared.viewer.GetStockDetailsAction;
+import org.sjd.gordon.shared.viewer.GetTradeHistoryAction;
 
 import com.gwtplatform.dispatch.server.guice.HandlerModule;
 
@@ -22,22 +22,22 @@ public class DevelopmentModule extends HandlerModule {
 
 	@Override
 	protected void configureHandlers() {
-		bindHandler(GetStocks.class, GetStocksDevHandler.class);
-		bindHandler(GetExchanges.class, GetExchangesDevHandler.class);
-		bindHandler(GetTradeHistory.class, GetTradeHistoryDevHandler.class);
-		bindHandler(GetStockDetails.class, GetStockDetailsDevHandler.class);
-		bindHandler(Logout.class, LogoutHandler.class);
+		bindHandler(GetStocksAction.class, GetStocksDevHandler.class);
+		bindHandler(GetExchangesAction.class, GetExchangesDevHandler.class);
+		bindHandler(GetTradeHistoryAction.class, GetTradeHistoryDevHandler.class);
+		bindHandler(GetStockDetailsAction.class, GetStockDetailsDevHandler.class);
+		bindHandler(LogoutAction.class, LogoutHandler.class);
 		
-		bindHandler(GetAllStockDetails.class, GetAllStockDetailsDevHandler.class);
-		bindHandler(DeleteRegistryEntry.class, DeleteRegistryEntryDevHandler.class);
-		bindHandler(EditRegistryEntry.class, EditRegistryEntryDevHandler.class);
-		bindHandler(GetGicsSectors.class, GetGicsNamesDevHandler.class);
+		bindHandler(GetAllRegistryEntriesAction.class, GetAllStockDetailsDevHandler.class);
+		bindHandler(DeleteRegistryEntryAction.class, DeleteRegistryEntryDevHandler.class);
+		bindHandler(EditRegistryEntryAction.class, EditRegistryEntryDevHandler.class);
+		bindHandler(GetGicsSectorsAction.class, GetGicsNamesDevHandler.class);
 		
-		bindHandler(GetAllUserDetails.class, GetAllUsersDevHandler.class);
-		bindHandler(DeleteUser.class, DeleteUserDevHandler.class);
-		bindHandler(EditUser.class, EditUserDevHandler.class);
-		bindHandler(GetCurrentUser.class, CurrentUserDevHandler.class);
-		bindHandler(ChangeUserPassword.class, ChangeUserPasswordDevHandler.class);
+		bindHandler(GetAllUsersAction.class, GetAllUsersDevHandler.class);
+		bindHandler(DeleteUserAction.class, DeleteUserDevHandler.class);
+		bindHandler(EditUserAction.class, EditUserDevHandler.class);
+		bindHandler(GetCurrentUserAction.class, CurrentUserDevHandler.class);
+		bindHandler(ChangeUserPasswordAction.class, ChangeUserPasswordDevHandler.class);
 	}
 
 }

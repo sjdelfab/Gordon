@@ -1,14 +1,14 @@
 package org.sjd.gordon.client.security;
 
 import org.sjd.gordon.client.AbstractCallback;
-import org.sjd.gordon.shared.security.LogoutResponse;
+import org.sjd.gordon.shared.security.LogoutResult;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
-public abstract class LogoutCallback extends AbstractCallback implements AsyncCallback<LogoutResponse> {
+public abstract class LogoutCallback extends AbstractCallback implements AsyncCallback<LogoutResult> {
 
 	@Override
-	public void onSuccess(LogoutResponse result) { 
+	public void onSuccess(LogoutResult result) { 
 	    logout();
 	}
 	

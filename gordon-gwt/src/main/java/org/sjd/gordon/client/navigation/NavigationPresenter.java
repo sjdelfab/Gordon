@@ -4,10 +4,10 @@ import java.util.ArrayList;
 
 import org.sjd.gordon.client.viewer.LoadStockDetailsCallback;
 import org.sjd.gordon.model.Exchange;
-import org.sjd.gordon.shared.navigation.GetExchanges;
-import org.sjd.gordon.shared.navigation.GetStocks;
+import org.sjd.gordon.shared.navigation.GetExchangesAction;
+import org.sjd.gordon.shared.navigation.GetStocksAction;
 import org.sjd.gordon.shared.navigation.StockName;
-import org.sjd.gordon.shared.viewer.GetStockDetails;
+import org.sjd.gordon.shared.viewer.GetStockDetailsAction;
 import org.sjd.gordon.shared.viewer.StockDetail;
 
 import com.extjs.gxt.ui.client.data.BeanModel;
@@ -71,7 +71,7 @@ public class NavigationPresenter extends Presenter<NavigationPresenter.Navigatio
 			@Override
 			public void onValueChange(ValueChangeEvent<BeanModel> event) {
 				if (event.getValue() != null) {
-					GetStocks getStocks = new GetStocks((Integer) event.getValue().get("id"));
+					GetStocksAction getStocks = new GetStocksAction((Integer) event.getValue().get("id"));
 					dispatcher.execute(getStocks, new LoadStocksCallback() {
 						@Override
 						public void loaded(ArrayList<StockName> stocks) {
@@ -84,7 +84,7 @@ public class NavigationPresenter extends Presenter<NavigationPresenter.Navigatio
 	}
 
 	private void load() {
-		GetExchanges getExchanges = new GetExchanges();
+		GetExchangesAction getExchanges = new GetExchangesAction();
 		dispatcher.execute(getExchanges, new LoadExchangesCallback() {
 			@Override
 			public void loaded(ArrayList<Exchange> exchanges) {
@@ -94,7 +94,7 @@ public class NavigationPresenter extends Presenter<NavigationPresenter.Navigatio
 	}
 
 	private void showStock(StockName stockName) {
-		GetStockDetails getExchanges = new GetStockDetails(stockName.getId());
+		GetStockDetailsAction getExchanges = new GetStockDetailsAction(stockName.getId());
 		dispatcher.execute(getExchanges, new LoadStockDetailsCallback() {
 			@Override
 			public void loaded(StockDetail stockDetails) {

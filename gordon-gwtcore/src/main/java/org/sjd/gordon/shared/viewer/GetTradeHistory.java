@@ -1,22 +1,17 @@
 package org.sjd.gordon.shared.viewer;
 
-import java.io.Serializable;
+import java.util.ArrayList;
 
+import org.sjd.gordon.model.StockDayTradeRecord;
+
+import com.gwtplatform.dispatch.annotation.GenDispatch;
+import com.gwtplatform.dispatch.annotation.In;
+import com.gwtplatform.dispatch.annotation.Out;
 import com.gwtplatform.dispatch.shared.UnsecuredActionImpl;
 
-public class GetTradeHistory extends UnsecuredActionImpl<GotTradeHistory> implements Serializable {
+@GenDispatch(isSecure = false, serviceName = UnsecuredActionImpl.DEFAULT_SERVICE_NAME)
+public class GetTradeHistory {
 	
-	private static final long serialVersionUID = 9131966215398339304L;
-	
-	private Long stockId;
-	
-	public GetTradeHistory() { }
-	
-	public GetTradeHistory(Long stockId) {
-		this.stockId = stockId;
-	}
-
-	public Long getStockId() {
-		return stockId;
-	}
+	@In(1) Long stockId;
+	@Out(1) ArrayList<StockDayTradeRecord> history;
 }

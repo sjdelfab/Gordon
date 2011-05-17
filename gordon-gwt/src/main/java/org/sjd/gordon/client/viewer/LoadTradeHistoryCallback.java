@@ -4,14 +4,14 @@ import java.util.ArrayList;
 
 import org.sjd.gordon.client.AbstractCallback;
 import org.sjd.gordon.model.StockDayTradeRecord;
-import org.sjd.gordon.shared.viewer.GotTradeHistory;
+import org.sjd.gordon.shared.viewer.GetTradeHistoryResult;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
-public abstract class LoadTradeHistoryCallback extends AbstractCallback implements AsyncCallback<GotTradeHistory> {
+public abstract class LoadTradeHistoryCallback extends AbstractCallback implements AsyncCallback<GetTradeHistoryResult> {
 
 	@Override
-	public void onSuccess(GotTradeHistory gotTradeHistory) {
+	public void onSuccess(GetTradeHistoryResult gotTradeHistory) {
 		loaded(gotTradeHistory.getHistory());
 	}
 

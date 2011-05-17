@@ -1,25 +1,25 @@
 package org.sjd.gordon.server.devhandlers;
 
-import org.sjd.gordon.shared.security.GetCurrentUser;
-import org.sjd.gordon.shared.security.GotCurrentUserResponse;
+import org.sjd.gordon.shared.security.GetCurrentUserAction;
+import org.sjd.gordon.shared.security.GetCurrentUserResult;
 
 import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.server.actionhandler.ActionHandler;
 import com.gwtplatform.dispatch.shared.ActionException;
 
-public class CurrentUserDevHandler implements ActionHandler<GetCurrentUser,GotCurrentUserResponse> {
+public class CurrentUserDevHandler implements ActionHandler<GetCurrentUserAction,GetCurrentUserResult> {
 
 	@Override
-	public GotCurrentUserResponse execute(GetCurrentUser action, ExecutionContext context) throws ActionException {
-		return new GotCurrentUserResponse(Data.users.get(Integer.valueOf(1)));
+	public GetCurrentUserResult execute(GetCurrentUserAction action, ExecutionContext context) throws ActionException {
+		return new GetCurrentUserResult(Data.users.get(Integer.valueOf(1)));
 	}
 
 	@Override
-	public Class<GetCurrentUser> getActionType() {
-		return GetCurrentUser.class;
+	public Class<GetCurrentUserAction> getActionType() {
+		return GetCurrentUserAction.class;
 	}
 
 	@Override
-	public void undo(GetCurrentUser action, GotCurrentUserResponse response, ExecutionContext context) throws ActionException { }
+	public void undo(GetCurrentUserAction action, GetCurrentUserResult response, ExecutionContext context) throws ActionException { }
 
 }

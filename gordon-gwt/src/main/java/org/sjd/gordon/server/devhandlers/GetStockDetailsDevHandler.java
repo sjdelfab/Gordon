@@ -1,26 +1,25 @@
 package org.sjd.gordon.server.devhandlers;
 
-import org.sjd.gordon.shared.viewer.GetStockDetails;
-import org.sjd.gordon.shared.viewer.GotStockDetails;
+import org.sjd.gordon.shared.viewer.GetStockDetailsAction;
+import org.sjd.gordon.shared.viewer.GetStockDetailsResult;
 
 import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.server.actionhandler.ActionHandler;
 import com.gwtplatform.dispatch.shared.ActionException;
 
-public class GetStockDetailsDevHandler implements ActionHandler<GetStockDetails, GotStockDetails> {
-
+public class GetStockDetailsDevHandler implements ActionHandler<GetStockDetailsAction, GetStockDetailsResult> {
 	
 	@Override
-	public GotStockDetails execute(GetStockDetails getDetails, ExecutionContext context) throws ActionException {
-		return new GotStockDetails(Data.detailsMap.get(getDetails.getStockId()));
+	public GetStockDetailsResult execute(GetStockDetailsAction getDetails, ExecutionContext context) throws ActionException {
+		return new GetStockDetailsResult(Data.detailsMap.get(getDetails.getStockId()));
 	}
 
 	@Override
-	public Class<GetStockDetails> getActionType() {
-		return GetStockDetails.class;
+	public Class<GetStockDetailsAction> getActionType() {
+		return GetStockDetailsAction.class;
 	}
 
 	@Override
-	public void undo(GetStockDetails action, GotStockDetails result, ExecutionContext context) throws ActionException { }
+	public void undo(GetStockDetailsAction action, GetStockDetailsResult result, ExecutionContext context) throws ActionException { }
 
 }

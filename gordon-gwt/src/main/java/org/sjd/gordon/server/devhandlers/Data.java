@@ -15,26 +15,36 @@ class Data {
 	static Map<Integer,UserDetail> users = new HashMap<Integer,UserDetail>();
 	
 	static {
-		StockDetail stockDetails = new StockDetail();
-		stockDetails.setId(Long.valueOf(1));
-		stockDetails.setCode("ABC");
-		stockDetails.setName("ABC Ltd");
-		stockDetails.setListDate(new Date());
-		stockDetails.setLastTradeDate(new Date());
-		stockDetails.setPrimarySectorName("Energy");
-		stockDetails.setPrimaryIndustryGroupName("Energy");
-		stockDetails.setCurrentPrice(new BigDecimal("3.45"));
-		detailsMap.put(Long.valueOf(1), stockDetails);
-		stockDetails = new StockDetail();
-		stockDetails.setId(Long.valueOf(2));
-		stockDetails.setCode("BHP");
-		stockDetails.setName("BHP Ltd");
-		stockDetails.setListDate(new Date());
-		stockDetails.setLastTradeDate(new Date());
-		stockDetails.setPrimarySectorName("Materials");
-		stockDetails.setPrimaryIndustryGroupName("Materials");
-		stockDetails.setCurrentPrice(new BigDecimal("68.1"));
-		detailsMap.put(Long.valueOf(2), stockDetails);
+		char endLetter = 'A';
+		for (int i = 0; i < 50; i++) {
+			StockDetail stockDetails = new StockDetail();
+			stockDetails.setId(Long.valueOf(i+1));
+			String code = null;
+			if (i < 26) {
+				code = "AA" + endLetter;
+				endLetter++;
+			} else if (i == 26) {
+				endLetter = 'A';
+				code = "AB" + endLetter;
+				endLetter++;
+			} else {
+				code = "AB" + endLetter;
+				endLetter++;
+			}
+			stockDetails.setCode(code);
+			stockDetails.setName(code + " Ltd");
+			stockDetails.setListDate(new Date());
+			stockDetails.setLastTradeDate(new Date());
+			if (i % 2 == 0) {
+				stockDetails.setPrimarySectorName("Energy");
+				stockDetails.setPrimaryIndustryGroupName("Energy");
+			} else {
+				stockDetails.setPrimarySectorName("Materials");
+				stockDetails.setPrimaryIndustryGroupName("Materials");
+			}
+			stockDetails.setCurrentPrice(new BigDecimal("3.45"));
+			detailsMap.put(Long.valueOf(i), stockDetails);
+		}
 		
 		UserDetail user = new UserDetail();
 		user.setId(Integer.valueOf(1));

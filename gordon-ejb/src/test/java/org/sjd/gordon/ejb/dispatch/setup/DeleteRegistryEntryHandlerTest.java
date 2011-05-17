@@ -12,7 +12,7 @@ import org.sjd.gordon.ejb.StockEntityService;
 import org.sjd.gordon.model.StockEntity;
 import org.sjd.gordon.shared.exceptions.EntityNotFoundException;
 import org.sjd.gordon.shared.exceptions.UnauthorisedAccessException;
-import org.sjd.gordon.shared.registry.DeleteRegistryEntry;
+import org.sjd.gordon.shared.registry.DeleteRegistryEntryAction;
 
 import com.gwtplatform.dispatch.server.ExecutionContext;
 
@@ -36,7 +36,7 @@ public class DeleteRegistryEntryHandlerTest {
     	});
     	thrown.expect(EntityNotFoundException.class);
     	DeleteRegistryEntryEJBHandler handler = new DeleteRegistryEntryEJBHandler(service);
-    	DeleteRegistryEntry deleteEntry = new DeleteRegistryEntry(Long.valueOf(1));
+    	DeleteRegistryEntryAction deleteEntry = new DeleteRegistryEntryAction(Long.valueOf(1));
     	handler.execute(deleteEntry, executionContext);
     }
     
@@ -52,7 +52,7 @@ public class DeleteRegistryEntryHandlerTest {
     	});
     	thrown.expect(UnauthorisedAccessException.class);
     	DeleteRegistryEntryEJBHandler handler = new DeleteRegistryEntryEJBHandler(service);
-    	DeleteRegistryEntry deleteEntry = new DeleteRegistryEntry(Long.valueOf(1));
+    	DeleteRegistryEntryAction deleteEntry = new DeleteRegistryEntryAction(Long.valueOf(1));
     	handler.execute(deleteEntry, executionContext);
     }
 }

@@ -61,7 +61,6 @@ public class NavigationView extends ViewImpl implements NavigationPresenter.Navi
 		panel.add(new Html("<b style=\"font-size:13px;font-family:arial\">Exchange:</b>"),new HBoxLayoutData(new Margins(0, 5, 0, 15)));
 		
 		exchangeComboBox.setEmptyText("Select a exchange...");
-		exchangeComboBox.setFieldLabel("Exchange");
 		exchangeComboBox.setDisplayField("name");
 		exchangeComboBox.setWidth(170);
 		exchangeComboBox.setStore(exchangeStore);
@@ -76,11 +75,10 @@ public class NavigationView extends ViewImpl implements NavigationPresenter.Navi
 		});
 		panel.add(exchangeComboBox,  new HBoxLayoutData(new Margins(0, 5, 0, 0)));
 				
-		panel.add(new Html("<b style=\"font-size:13px;font-family:arial\">Stock Code:</b>"),new HBoxLayoutData(new Margins(0, 5, 0, 15)));
+		panel.add(new Html("<b style=\"font-size:13px;font-family:arial\">Symbol:</b>"),new HBoxLayoutData(new Margins(0, 5, 0, 15)));
 		
 		codeComboBox = new ComboBox<BeanModel>();
-		codeComboBox.setEmptyText("Select a code...");
-		codeComboBox.setFieldLabel("Code");
+		codeComboBox.setEmptyText("Select a symbol...");
 		codeComboBox.setDisplayField("code");
 		codeComboBox.setWidth(170);
 		codeComboBox.setStore(stockStore);
@@ -94,7 +92,7 @@ public class NavigationView extends ViewImpl implements NavigationPresenter.Navi
 		});
 		panel.add(codeComboBox,  new HBoxLayoutData(new Margins(0, 5, 0, 0)));
 		
-		panel.add(new Html("<b style=\"font-size:13px;font-family:arial\">Stock Name:</b>"),new HBoxLayoutData(new Margins(0, 5, 0, 15)));
+		panel.add(new Html("<b style=\"font-size:13px;font-family:arial\">Name:</b>"),new HBoxLayoutData(new Margins(0, 5, 0, 15)));
 		
 		nameComboBox = new ComboBox<BeanModel>();
 		nameComboBox.setEmptyText("Select a name...");

@@ -4,15 +4,15 @@ import org.sjd.gordon.ejb.dispatch.AbstractHandler;
 import org.sjd.gordon.ejb.security.UserService;
 import org.sjd.gordon.model.User;
 import org.sjd.gordon.shared.exceptions.EntityNotFoundException;
-import org.sjd.gordon.shared.security.DeleteUser;
-import org.sjd.gordon.shared.security.DeleteUserResponse;
+import org.sjd.gordon.shared.security.DeleteUserAction;
+import org.sjd.gordon.shared.security.DeleteUserResult;
 
 import com.google.inject.Inject;
 import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.server.actionhandler.ActionHandler;
 import com.gwtplatform.dispatch.shared.ActionException;
 
-public class DeleteUserEJBHandler extends AbstractHandler implements ActionHandler<DeleteUser,DeleteUserResponse> {
+public class DeleteUserEJBHandler extends AbstractHandler implements ActionHandler<DeleteUserAction,DeleteUserResult> {
 
     private UserService userService;
 	
@@ -22,14 +22,14 @@ public class DeleteUserEJBHandler extends AbstractHandler implements ActionHandl
 	}
 	
 	@Override
-	public DeleteUserResponse execute(DeleteUser deleteEntry, ExecutionContext context) throws ActionException {
+	public DeleteUserResult execute(DeleteUserAction deleteEntry, ExecutionContext context) throws ActionException {
 		try {
 			User user = userService.findUserById(deleteEntry.getUserId());
 			if (user == null) {
 				throw new EntityNotFoundException();
 			}
 			userService.delete(user);
-			return new DeleteUserResponse();
+			return new DeleteUserResult();
 		} catch (Throwable cause) {
 			if (cause instanceof EntityNotFoundException) {
 				throw (EntityNotFoundException)cause;
@@ -39,12 +39,12 @@ public class DeleteUserEJBHandler extends AbstractHandler implements ActionHandl
 	}
 
 	@Override
-	public Class<DeleteUser> getActionType() {
-		return DeleteUser.class;
+	public Class<DeleteUserAction> getActionType() {
+		return DeleteUserAction.class;
 	}
 
 	@Override
-	public void undo(DeleteUser action, DeleteUserResponse result, ExecutionContext context) throws ActionException {
+	public void undo(DeleteUserAction action, DeleteUserResult result, ExecutionContext context) throws ActionException {
 		// Nothing to do here
 	}
 }

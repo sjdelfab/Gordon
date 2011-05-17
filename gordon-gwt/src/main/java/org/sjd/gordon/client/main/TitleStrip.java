@@ -7,7 +7,7 @@ import org.sjd.gordon.client.main.TitleStripPresenter.EditCurrentUserDialogCallb
 import org.sjd.gordon.client.security.ChangePasswordEditPanel;
 import org.sjd.gordon.client.security.ChangePasswordEditPanel.ChangePasswordCallback;
 import org.sjd.gordon.client.security.ChangeUserNameEvent;
-import org.sjd.gordon.client.security.ChangeUserNameEventHandler;
+import org.sjd.gordon.client.security.ChangeUserNameEvent.ChangeUserNameHandler;
 import org.sjd.gordon.model.Exchange;
 import org.sjd.gordon.shared.security.UserDetail;
 
@@ -44,7 +44,7 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Widget;
 import com.gwtplatform.mvp.client.ViewImpl;
 
-public class TitleStrip extends ViewImpl implements ChangeUserNameEventHandler, TitleStripPresenter.TitleStripView {
+public class TitleStrip extends ViewImpl implements ChangeUserNameHandler, TitleStripPresenter.TitleStripView {
 
 	private Text displayName;
 	private LayoutContainer container;
@@ -86,6 +86,7 @@ public class TitleStrip extends ViewImpl implements ChangeUserNameEventHandler, 
 		setupMenu.add(registriesMenuItem);	
 		
 		userSetupMenuItem = new MenuItem("Users");
+		userSetupMenuItem.setIconStyle("users");
 		setupMenu.add(userSetupMenuItem);
 		
 //		MenuItem unitaryDefinitionMenuItem = new MenuItem("Unitary Definitions");
@@ -132,7 +133,7 @@ public class TitleStrip extends ViewImpl implements ChangeUserNameEventHandler, 
 	}
 
 	@Override
-	public void changedName(ChangeUserNameEvent event) {
+	public void onChangeUserName(ChangeUserNameEvent event) {
 		displayName.setText(event.getNewName());
 		container.layout(true);
 	}
@@ -150,6 +151,7 @@ public class TitleStrip extends ViewImpl implements ChangeUserNameEventHandler, 
 	@Override
 	public HasClickHandlers addExchange(Exchange exchange) {
 		MenuItem registryMenuItem = new MenuItem(exchange.getCode());
+		registryMenuItem.setIconStyle(exchange.getCode().toLowerCase());
 		registriesSubMenu.add(registryMenuItem);
 		return registryMenuItem;
 	}
@@ -165,7 +167,7 @@ public class TitleStrip extends ViewImpl implements ChangeUserNameEventHandler, 
 	}
 
 	@Override
-	public ChangeUserNameEventHandler getChangeUserNameEventHandler() {
+	public ChangeUserNameHandler getChangeUserNameEventHandler() {
 		return this;
 	}
 	
@@ -252,7 +254,7 @@ public class TitleStrip extends ViewImpl implements ChangeUserNameEventHandler, 
 				public void onClick(ClickEvent arg0) {
 					ChangePasswordEditPanel.showChangePasswordDialog(currentDetails, new ChangePasswordCallback() {
 						@Override
-						public void changePassword(Integer userId, char[] password) {
+						public void changePassword(Integer userId, String password) {
 							callback.changePassword(userId, password);
 						}
 					});

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.sjd.gordon.client.gxt.Button;
-import org.sjd.gordon.client.registry.RegistryPresenter.EditDialogCallback;
 import org.sjd.gordon.client.registry.RegistryPresenter.RegistryPanelView;
 import org.sjd.gordon.shared.registry.GicsIndustryGroupName;
 import org.sjd.gordon.shared.registry.GicsSectorName;
@@ -42,15 +41,16 @@ import com.extjs.gxt.ui.client.widget.layout.FormData;
 import com.extjs.gxt.ui.client.widget.layout.FormLayout;
 import com.extjs.gxt.ui.client.widget.toolbar.PagingToolBar;
 import com.extjs.gxt.ui.client.widget.toolbar.ToolBar;
-import com.google.gwt.event.dom.client.HasClickHandlers;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
-import com.gwtplatform.mvp.client.ViewImpl;
+import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 
-public class RegistryViewImpl extends ViewImpl implements RegistryPanelView {
+public class RegistryViewImpl extends ViewWithUiHandlers<RegistryUIHandler> implements RegistryPanelView {
 
 	private static final int MAX_PAGE_SIZE = 25;
 	
@@ -70,7 +70,7 @@ public class RegistryViewImpl extends ViewImpl implements RegistryPanelView {
 	private Grid<StockDetail> grid;
 	private ArrayList<StockDetail> stocks;
 	private ArrayList<GicsSectorName> sectors;
-	
+
 	public RegistryViewImpl() {    
 		proxy = new PagingModelMemoryProxy(new ArrayList<StockDetail>(0));
 	    loader = new BasePagingLoader<PagingLoadResult<ModelData>>(proxy);  
@@ -98,13 +98,13 @@ public class RegistryViewImpl extends ViewImpl implements RegistryPanelView {
 	    column = new ColumnConfig();  
 	    column.setId(StockDetail.GICS_PRIMARY_SECTOR_NAME);  
 	    column.setHeader("Primary GICS Sector");  
-	    column.setWidth(200);  
+	    column.setWidth(270);  
 	    configs.add(column);
 	    
 	    column = new ColumnConfig();  
 	    column.setId(StockDetail.GICS_PRIMARY_INDUSTRY_GROUP_NAME);  
 	    column.setHeader("Primary GICS Industry");  
-	    column.setWidth(200);  
+	    column.setWidth(270);  
 	    configs.add(column);
 	    
 	    column = new ColumnConfig();  
@@ -112,12 +112,13 @@ public class RegistryViewImpl extends ViewImpl implements RegistryPanelView {
 	    column.setHeader("List Date"); 
 	    column.setDateTimeFormat(DateTimeFormat.getFormat("dd/MM/yyyy"));
 	    column.setAlignment(HorizontalAlignment.RIGHT);  
-	    column.setWidth(75);  
+	    column.setWidth(101);  
 	    configs.add(column);  
 	  
 	    column = new ColumnConfig(StockDetail.LAST_TRADE_DATE, "Last Trade Date", 150);  
 	    column.setAlignment(HorizontalAlignment.RIGHT);  
-	    column.setDateTimeFormat(DateTimeFormat.getFormat("dd/MM/yyyy"));  
+	    column.setDateTimeFormat(DateTimeFormat.getFormat("dd/MM/yyyy"));
+	    column.setWidth(105);
 	    configs.add(column);  
 
 	    column = new ColumnConfig();  
@@ -132,11 +133,42 @@ public class RegistryViewImpl extends ViewImpl implements RegistryPanelView {
 	    ToolBar toolbar = new ToolBar();
 	    addButton = new Button();
 	    addButton.setIconStyle("add");
+	    addButton.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				showAddDialog();
+			}
+		});
 	    toolbar.add(addButton);
 	    removeButton = new Button();
 	    removeButton.setIconStyle("remove");
+	    removeButton.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				final StockDetail selected = getSelectedItem();
+				if (selected != null) {
+					confirmDeleteRequest(new Listener<MessageBoxEvent>() {
+						@Override
+						public void handleEvent(MessageBoxEvent be) {
+							if (be.getButtonClicked().getText().equals(be.getDialog().yesText)) {
+								getUiHandlers().delete(selected);
+							}
+						}
+					});
+				}
+			}
+		});
 	    toolbar.add(removeButton);
 	    updateButton = new Button();
+	    updateButton.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent arg0) {
+				final StockDetail selected = getSelectedItem();
+				if (selected != null) {
+					showUpdateDialog(selected);
+				}
+			}
+		});
 	    updateButton.setIconStyle("update");
 	    toolbar.add(updateButton);
 	    contentPanel.setTopComponent(toolbar);
@@ -174,8 +206,7 @@ public class RegistryViewImpl extends ViewImpl implements RegistryPanelView {
 		return contentPanel;
 	}
 
-	@Override
-	public StockDetail getSelectedItem() {
+	private StockDetail getSelectedItem() {
 		return grid.getSelectionModel().getSelectedItem();
 	}
 
@@ -190,13 +221,7 @@ public class RegistryViewImpl extends ViewImpl implements RegistryPanelView {
 		}
 	}
 
-	@Override
-	public HasClickHandlers getDeleteHandler() {
-		return removeButton;
-	}
-
-	@Override
-	public void confirmDeleteRequest(Listener<MessageBoxEvent> callback) {
+	private void confirmDeleteRequest(Listener<MessageBoxEvent> callback) {
 		MessageBox box = new MessageBox();  
         box.setButtons(MessageBox.YESNO);  
         box.setIcon(MessageBox.QUESTION);  
@@ -206,14 +231,16 @@ public class RegistryViewImpl extends ViewImpl implements RegistryPanelView {
         box.show();
 	}
 
-	@Override
-	public HasClickHandlers getAddHandler() {
-		return addButton;
-	}
-
-	@Override
-	public void showEditDialog(final EditDialogCallback callback) {
-		showEditDialog(callback, "Add", null);
+	private void showAddDialog() {
+		EditCallback editCallback = new EditCallback() {
+			@Override
+			void commit(StockDetail details) {
+				getUiHandlers().add(details);
+			}
+    	};
+		Dialog addDialog = createEditDialog(new EditorPanel(),editCallback);
+		addDialog.setHeading("Add"); 
+		addDialog.show();
 	}
 
 	@Override
@@ -222,27 +249,32 @@ public class RegistryViewImpl extends ViewImpl implements RegistryPanelView {
 		stocks.add(details);
 		store.commitChanges();
 	}
-	
-	@Override
-	public HasClickHandlers getUpdateHandler() {
-		return updateButton;
-	}
 
-	@Override
-	public void showEditDialog(StockDetail details, EditDialogCallback callback) {
-		showEditDialog(callback, "Update", details);
+	private void showUpdateDialog(final StockDetail selected) {
+		EditorPanel editorPanel = new EditorPanel();
+    	editorPanel.setDetails(selected);
+    	EditCallback editCallback = new EditCallback() {
+			@Override
+			void commit(StockDetail details) {
+				StockDetail stock = new StockDetail(selected);
+				stock.mergeTo(details);
+				getUiHandlers().update(details);
+			}
+    	};
+		Dialog updateDialog = createEditDialog(editorPanel,editCallback);
+		updateDialog.setHeading("Update"); 
+		updateDialog.show();
 	}
 	
-	private void showEditDialog(final EditDialogCallback callback, String title, StockDetail details) {
-		final Dialog editDialog = new Dialog();  
-	    editDialog.setHeading(title);  
+	private abstract class EditCallback {
+		abstract void commit(StockDetail details);
+	}
+	
+	private Dialog createEditDialog(final EditorPanel editorPanel, final EditCallback editCallback) {
+		final Dialog editDialog = new Dialog();
 	    editDialog.setButtons(Dialog.OKCANCEL);  
 	    editDialog.setBodyStyleName("pad-text");
 	    BorderLayoutData data = new BorderLayoutData(LayoutRegion.CENTER);
-	    final EditorPanel editorPanel = new EditorPanel();
-	    if (details != null) {
-	    	editorPanel.setDetails(details);
-	    }
 	    editDialog.add(editorPanel,data);  
 	    editDialog.setScrollMode(Scroll.AUTO);  
 	    editDialog.setHideOnButtonClick(false);
@@ -255,7 +287,7 @@ public class RegistryViewImpl extends ViewImpl implements RegistryPanelView {
 				}
 				StockDetail details = editorPanel.getStockDetails(); 
 				editDialog.setVisible(false);
-			    callback.commit(details);
+				editCallback.commit(details);
 			}
 		});
 	    editDialog.getButtonById(Dialog.CANCEL).addSelectionListener(new SelectionListener<ButtonEvent>() {
@@ -265,7 +297,7 @@ public class RegistryViewImpl extends ViewImpl implements RegistryPanelView {
 			}
 	    });
 	    editDialog.setResizable(false);
-	    editDialog.show();
+	    return editDialog;
 	}
 
 	@Override

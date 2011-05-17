@@ -7,8 +7,8 @@ import org.sjd.gordon.ejb.dispatch.AbstractHandler;
 import org.sjd.gordon.ejb.security.UserService;
 import org.sjd.gordon.model.Group;
 import org.sjd.gordon.model.User;
-import org.sjd.gordon.shared.security.GetAllUserDetails;
-import org.sjd.gordon.shared.security.GotAllUserDetails;
+import org.sjd.gordon.shared.security.GetAllUsersAction;
+import org.sjd.gordon.shared.security.GetAllUsersResult;
 import org.sjd.gordon.shared.security.UserDetail;
 
 import com.google.inject.Inject;
@@ -16,7 +16,7 @@ import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.server.actionhandler.ActionHandler;
 import com.gwtplatform.dispatch.shared.ActionException;
 
-public class GetAllUsersEJBHandler extends AbstractHandler implements ActionHandler<GetAllUserDetails, GotAllUserDetails> {
+public class GetAllUsersEJBHandler extends AbstractHandler implements ActionHandler<GetAllUsersAction, GetAllUsersResult> {
 	
 	private UserService userService;
 	
@@ -26,22 +26,22 @@ public class GetAllUsersEJBHandler extends AbstractHandler implements ActionHand
 	}
 	
 	@Override
-	public GotAllUserDetails execute(GetAllUserDetails getDetails, ExecutionContext context) throws ActionException {
+	public GetAllUsersResult execute(GetAllUsersAction getDetails, ExecutionContext context) throws ActionException {
 		List<User> users = userService.getUsers();
 		ArrayList<UserDetail> userDetails = new ArrayList<UserDetail>(users.size());
 		for(User user: users) {
 			userDetails.add(fromEntity(user));
 		}
-		return new GotAllUserDetails(userDetails);
+		return new GetAllUsersResult(userDetails);
 	}
 
 	@Override
-	public Class<GetAllUserDetails> getActionType() {
-		return GetAllUserDetails.class;
+	public Class<GetAllUsersAction> getActionType() {
+		return GetAllUsersAction.class;
 	}
 
 	@Override
-	public void undo(GetAllUserDetails action, GotAllUserDetails result, ExecutionContext context) throws ActionException { }
+	public void undo(GetAllUsersAction action, GetAllUsersResult result, ExecutionContext context) throws ActionException { }
 	
 	public static UserDetail fromEntity(User user) {
 		UserDetail userDetail = new UserDetail();

@@ -1,11 +1,14 @@
 package org.sjd.gordon.shared.registry;
 
-import java.io.Serializable;
+import java.util.ArrayList;
 
+import com.gwtplatform.dispatch.annotation.GenDispatch;
+import com.gwtplatform.dispatch.annotation.Out;
 import com.gwtplatform.dispatch.shared.UnsecuredActionImpl;
 
-public class GetGicsSectors extends UnsecuredActionImpl<GotGicsSectors> implements Serializable {
+@GenDispatch(isSecure = false, serviceName = UnsecuredActionImpl.DEFAULT_SERVICE_NAME)
+public class GetGicsSectors {
 
-	private static final long serialVersionUID = -5414017898556072156L;
-
+	@Out(1) ArrayList<GicsSectorName> sectorNames;
+	
 }

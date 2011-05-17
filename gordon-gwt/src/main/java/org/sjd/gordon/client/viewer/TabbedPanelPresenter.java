@@ -2,12 +2,12 @@ package org.sjd.gordon.client.viewer;
 
 import org.sjd.gordon.client.GordonGinjector;
 import org.sjd.gordon.client.navigation.ShowStockEvent;
-import org.sjd.gordon.client.navigation.ShowStockEventHandler;
+import org.sjd.gordon.client.navigation.ShowStockEvent.ShowStockHandler;
 import org.sjd.gordon.client.registry.RegistryPresenter;
 import org.sjd.gordon.client.registry.ShowRegistryEvent;
-import org.sjd.gordon.client.registry.ShowRegistryEventHandler;
+import org.sjd.gordon.client.registry.ShowRegistryEvent.ShowRegistryHandler;
 import org.sjd.gordon.client.security.ShowUserSetupEvent;
-import org.sjd.gordon.client.security.ShowUserSetupEventHandler;
+import org.sjd.gordon.client.security.ShowUserSetupEvent.ShowUserSetupHandler;
 import org.sjd.gordon.client.security.UsersSetupPresenter;
 import org.sjd.gordon.model.Exchange;
 import org.sjd.gordon.shared.viewer.StockDetail;
@@ -38,23 +38,23 @@ public class TabbedPanelPresenter extends Presenter<TabbedPanelPresenter.TabbedP
 	public TabbedPanelPresenter(EventBus eventBus, TabbedPanelView view, TabbedPanelProxy proxy, final GordonGinjector injector) {
 		super(eventBus,view,proxy);
 		this.injector = injector;
-		eventBus.addHandler(ShowStockEvent.TYPE, new ShowStockEventHandler() {
+		eventBus.addHandler(ShowStockEvent.getType(), new ShowStockHandler() {
 			@Override
-			public void show(ShowStockEvent event) {
+			public void onShowStock(ShowStockEvent event) {
 				StockPresenter stockPresenter = injector.getStockPresenter().get();
 				stockPresenter.getView().setStock(event.getStockDetails());
 				getView().addStock(stockPresenter, event.getStockDetails());
 			}
 		});
-		eventBus.addHandler(ShowRegistryEvent.TYPE, new ShowRegistryEventHandler() {
+		eventBus.addHandler(ShowRegistryEvent.getType(), new ShowRegistryHandler() {
 			@Override
-			public void show(ShowRegistryEvent event) {
+			public void onShowRegistry(ShowRegistryEvent event) {
 				TabbedPanelPresenter.this.showRegistryEditor(event.getExchange());
 			}
 		});
-		eventBus.addHandler(ShowUserSetupEvent.TYPE, new ShowUserSetupEventHandler() {
+		eventBus.addHandler(ShowUserSetupEvent.getType(), new ShowUserSetupHandler() {
 			@Override
-			public void show(ShowUserSetupEvent event) {
+			public void onShowUserSetup(ShowUserSetupEvent event) {
 				TabbedPanelPresenter.this.showUserSetupEditor();
 			}
 		});

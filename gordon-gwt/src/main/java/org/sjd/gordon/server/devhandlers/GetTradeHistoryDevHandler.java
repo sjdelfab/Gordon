@@ -5,19 +5,19 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import org.sjd.gordon.model.StockDayTradeRecord;
-import org.sjd.gordon.shared.viewer.GetTradeHistory;
-import org.sjd.gordon.shared.viewer.GotTradeHistory;
+import org.sjd.gordon.shared.viewer.GetTradeHistoryAction;
+import org.sjd.gordon.shared.viewer.GetTradeHistoryResult;
 
 import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.server.actionhandler.ActionHandler;
 import com.gwtplatform.dispatch.shared.ActionException;
 
-public class GetTradeHistoryDevHandler implements ActionHandler<GetTradeHistory, GotTradeHistory> {
+public class GetTradeHistoryDevHandler implements ActionHandler<GetTradeHistoryAction, GetTradeHistoryResult> {
 
 	private SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yy");
 
 	@Override
-	public GotTradeHistory execute(GetTradeHistory arg0, ExecutionContext arg1) throws ActionException {
+	public GetTradeHistoryResult execute(GetTradeHistoryAction action, ExecutionContext context) throws ActionException {
 		ArrayList<StockDayTradeRecord> history = new ArrayList<StockDayTradeRecord>();
 		StockDayTradeRecord record = new StockDayTradeRecord();
 		try {
@@ -48,16 +48,16 @@ public class GetTradeHistoryDevHandler implements ActionHandler<GetTradeHistory,
 		} catch (Exception ex) {
 			throw new ActionException(ex);
 		}
-		return new GotTradeHistory(history);
+		return new GetTradeHistoryResult(history);
 	}
 
 	@Override
-	public Class<GetTradeHistory> getActionType() {
-		return GetTradeHistory.class;
+	public Class<GetTradeHistoryAction> getActionType() {
+		return GetTradeHistoryAction.class;
 	}
 
 	@Override
-	public void undo(GetTradeHistory action, GotTradeHistory result, ExecutionContext arg2) throws ActionException {
+	public void undo(GetTradeHistoryAction action, GetTradeHistoryResult result, ExecutionContext context) throws ActionException {
 	}
 
 }

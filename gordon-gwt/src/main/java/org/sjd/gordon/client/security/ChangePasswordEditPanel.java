@@ -59,12 +59,12 @@ public class ChangePasswordEditPanel extends LayoutContainer {
 		return true;
 	}
 	
-	public char[] getNewPassword() {
-		return newPasswordTextField.getValue().toCharArray();
+	public String getNewPassword() {
+		return newPasswordTextField.getValue();
 	}
 	
 	public static interface ChangePasswordCallback {
-		void changePassword(Integer userId, char[] password);
+		void changePassword(Integer userId, String password);
 	}
 	
 	public static void showChangePasswordDialog(final UserDetail currentDetails, final ChangePasswordCallback callback) {
@@ -85,7 +85,7 @@ public class ChangePasswordEditPanel extends LayoutContainer {
 					return;
 				}
 				Integer userId = currentDetails.getId();
-				char[] newPassword = passwordEditorPanel.getNewPassword();
+				String newPassword = passwordEditorPanel.getNewPassword();
 				changePasswordDialog.setVisible(false);
 			    callback.changePassword(userId, newPassword);
 			}

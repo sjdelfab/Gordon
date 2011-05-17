@@ -33,14 +33,15 @@ import com.extjs.gxt.ui.client.widget.layout.FitLayout;
 import com.extjs.gxt.ui.client.widget.layout.FormData;
 import com.extjs.gxt.ui.client.widget.layout.FormLayout;
 import com.extjs.gxt.ui.client.widget.toolbar.ToolBar;
-import com.google.gwt.event.dom.client.HasClickHandlers;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
-import com.gwtplatform.mvp.client.ViewImpl;
+import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 
-public class UserSetupPanelView extends ViewImpl implements UsersSetupView {
+public class UserSetupPanelView extends ViewWithUiHandlers<UserSetupUIHandler> implements UsersSetupView {
 
 	@Inject
 	@Named("width")
@@ -94,14 +95,44 @@ public class UserSetupPanelView extends ViewImpl implements UsersSetupView {
 	    ToolBar toolbar = new ToolBar();
 	    addButton = new Button();
 	    addButton.setIconStyle("add");
+	    addButton.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent arg0) {
+				showAddDialog();
+			}
+		});
 	    toolbar.add(addButton);
 	    removeButton = new Button();
+		removeButton.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				deleteSelectedUser();
+			}
+		});
 	    removeButton.setIconStyle("remove");
 	    toolbar.add(removeButton);
 	    updateButton = new Button();
+	    updateButton.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				final UserDetail selected = getSelectedItem();
+				if (selected != null) {
+					showUpdateDialog(selected);
+				}
+			}
+		});
 	    updateButton.setIconStyle("update");
 	    toolbar.add(updateButton);
 	    changePasswordButton = new Button();
+	    changePasswordButton.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent arg0) {
+				final UserDetail selected = getSelectedItem();
+				if (selected != null) {
+					showChangePasswordDialog(selected);
+				}	
+			}
+		});
 	    changePasswordButton.setIconStyle("personal");
 	    toolbar.add(changePasswordButton);
 	    contentPanel.setTopComponent(toolbar);
@@ -127,8 +158,7 @@ public class UserSetupPanelView extends ViewImpl implements UsersSetupView {
 		store.add(users);
 	}
 
-	@Override
-	public UserDetail getSelectedItem() {
+	private UserDetail getSelectedItem() {
 		return grid.getSelectionModel().getSelectedItem();
 	}
 
@@ -142,13 +172,21 @@ public class UserSetupPanelView extends ViewImpl implements UsersSetupView {
 		}
 	}
 
-	@Override
-	public HasClickHandlers getDeleteHandler() {
-		return removeButton;
+	private void deleteSelectedUser() {
+		final UserDetail selected = getSelectedItem();
+		if (selected != null) {
+			confirmDeleteRequest(new Listener<MessageBoxEvent>() {
+				@Override
+				public void handleEvent(MessageBoxEvent be) {
+					if (be.getButtonClicked().getText().equals(be.getDialog().yesText)) {
+						getUiHandlers().delete(selected);
+					}
+				}
+			});
+		}
 	}
-
-	@Override
-	public void confirmDeleteRequest(Listener<MessageBoxEvent> callback) {
+	
+	private void confirmDeleteRequest(Listener<MessageBoxEvent> callback) {
 		MessageBox box = new MessageBox();  
         box.setButtons(MessageBox.YESNO);  
         box.setIcon(MessageBox.QUESTION);  
@@ -158,39 +196,48 @@ public class UserSetupPanelView extends ViewImpl implements UsersSetupView {
         box.show();
 	}
 
-	@Override
-	public HasClickHandlers getAddHandler() {
-		return addButton;
+	private void showAddDialog() {
+		final EditorPanel editorPanel = new EditorPanel();
+		EditUserDialogCallback callback = new EditUserDialogCallback() {
+			@Override
+			public void commit(UserDetail details) {
+				getUiHandlers().add(details);
+			}
+		};
+		Dialog editDialog = createEditDialog(editorPanel, callback);
+		editDialog.setTitle("Add");
+		editDialog.show();
 	}
-
-	@Override
-	public void showEditDialog(EditUserDialogCallback callback) {
-		showEditDialog(callback, "Add", null);
-	}
-
+	
 	@Override
 	public void add(UserDetail details) {
 		store.add(details);
 		store.commitChanges();
 	}
 
-	@Override
-	public HasClickHandlers getUpdateHandler() {
-		return updateButton;
-	}
-
-	@Override
-	public void showEditDialog(UserDetail details, EditUserDialogCallback callback) {
-		showEditDialog(callback, "Update", details);
+	private void showUpdateDialog(final UserDetail selected) {
+		final EditorPanel editorPanel = new EditorPanel();
+    	editorPanel.setDetails(selected);
+    	EditUserDialogCallback callback = new EditUserDialogCallback() {
+			@Override
+			public void commit(UserDetail details) {
+				UserDetail user = new UserDetail(selected);
+				user.mergeTo(details);
+				getUiHandlers().update(user);
+			}
+		};
+    	Dialog editDialog = createEditDialog(editorPanel,callback);
+    	editDialog.setTitle("Update");
+    	editDialog.show();
 	}
 	
-	@Override
-	public HasClickHandlers getChangePasswordHandler() {
-		return changePasswordButton;
-	}
-	
-	@Override
-	public void showChangePasswordDialog(UserDetail userDetails, ChangePasswordCallback callback) {
+	private void showChangePasswordDialog(UserDetail userDetails) {
+		ChangePasswordCallback callback = new ChangePasswordCallback() {
+			@Override
+			public void changePassword(Integer userId, String password) {
+				getUiHandlers().changePassword(userId,password);
+			}
+		};
 		ChangePasswordEditPanel.showChangePasswordDialog(userDetails, callback);
 	}
 	
@@ -199,16 +246,12 @@ public class UserSetupPanelView extends ViewImpl implements UsersSetupView {
 		MessageBox.info("Password Changed", "Password successfully changed", null);
 	}
 
-	private void showEditDialog(final EditUserDialogCallback callback, String title, UserDetail details) {
+	private Dialog createEditDialog(final EditorPanel editorPanel, final EditUserDialogCallback callback) {
 		final Dialog editDialog = new Dialog();  
-	    editDialog.setHeading(title);  
 	    editDialog.setButtons(Dialog.OKCANCEL);  
 	    editDialog.setBodyStyleName("pad-text");
 	    BorderLayoutData data = new BorderLayoutData(LayoutRegion.CENTER);
-	    final EditorPanel editorPanel = new EditorPanel();
-	    if (details != null) {
-	    	editorPanel.setDetails(details);
-	    }
+	    
 	    editDialog.add(editorPanel,data);  
 	    editDialog.setScrollMode(Scroll.AUTO);  
 	    editDialog.setHideOnButtonClick(false);
@@ -231,7 +274,7 @@ public class UserSetupPanelView extends ViewImpl implements UsersSetupView {
 			}
 	    });
 	    editDialog.setResizable(false);
-	    editDialog.show();
+	    return editDialog;
 	}
 
 	@Override

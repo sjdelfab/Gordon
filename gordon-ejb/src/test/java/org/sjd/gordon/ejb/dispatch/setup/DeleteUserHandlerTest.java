@@ -13,7 +13,7 @@ import org.sjd.gordon.ejb.security.UserService;
 import org.sjd.gordon.model.User;
 import org.sjd.gordon.shared.exceptions.EntityNotFoundException;
 import org.sjd.gordon.shared.exceptions.UnauthorisedAccessException;
-import org.sjd.gordon.shared.security.DeleteUser;
+import org.sjd.gordon.shared.security.DeleteUserAction;
 
 import com.gwtplatform.dispatch.server.ExecutionContext;
 
@@ -37,7 +37,7 @@ public class DeleteUserHandlerTest {
     	});
     	thrown.expect(EntityNotFoundException.class);
     	DeleteUserEJBHandler handler = new DeleteUserEJBHandler(service);
-    	DeleteUser deleteUser = new DeleteUser(Integer.valueOf(1));
+    	DeleteUserAction deleteUser = new DeleteUserAction(Integer.valueOf(1));
     	handler.execute(deleteUser, executionContext);
     }
     
@@ -53,7 +53,7 @@ public class DeleteUserHandlerTest {
     	});
     	thrown.expect(UnauthorisedAccessException.class);
     	DeleteUserEJBHandler handler = new DeleteUserEJBHandler(service);
-    	DeleteUser deleteUser = new DeleteUser(Integer.valueOf(1));
+    	DeleteUserAction deleteUser = new DeleteUserAction(Integer.valueOf(1));
     	handler.execute(deleteUser, executionContext);
     }
 }
