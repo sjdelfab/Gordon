@@ -13,6 +13,9 @@ import com.gwtplatform.dispatch.shared.UnsecuredActionImpl;
 public class GetAllRegistryEntries {
 
 	@In(1) Integer exchangeId;
+	@In(2) Integer limit;
+	@In(3) Integer offset;
 	@Out(1) ArrayList<StockDetail> stocks;
+	@Out(2) Integer totalCount;
 	
 }

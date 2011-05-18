@@ -14,8 +14,16 @@ public class GetAllStockDetailsDevHandler implements ActionHandler<GetAllRegistr
 	
 	@Override
 	public GetAllRegistryEntriesResult execute(GetAllRegistryEntriesAction getDetails, ExecutionContext context) throws ActionException {
-		ArrayList<StockDetail> details = new ArrayList<StockDetail>(Data.detailsMap.values());
-		return new GetAllRegistryEntriesResult(details);
+		int limit = getDetails.getLimit();
+		int offset = getDetails.getOffset();
+		ArrayList<StockDetail> details = new ArrayList<StockDetail>(limit);
+		for(int i=offset; i < (offset + limit); i++) {
+			StockDetail detail = Data.detailsMap.get(Long.valueOf(i));
+			if (detail != null) {
+				details.add(detail);
+			}
+		}
+		return new GetAllRegistryEntriesResult(details,Data.detailsMap.values().size());
 	}
 
 	@Override

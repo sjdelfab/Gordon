@@ -1,6 +1,8 @@
 package org.sjd.gordon.server.devhandlers;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import org.sjd.gordon.shared.security.GetAllUsersAction;
 import org.sjd.gordon.shared.security.GetAllUsersResult;
@@ -15,6 +17,12 @@ public class GetAllUsersDevHandler implements ActionHandler<GetAllUsersAction, G
 	@Override
 	public GetAllUsersResult execute(GetAllUsersAction getDetails, ExecutionContext context) throws ActionException {
 		ArrayList<UserDetail> details = new ArrayList<UserDetail>(Data.users.values());
+		Collections.sort(details, new Comparator<UserDetail>() {
+			@Override
+			public int compare(UserDetail o1, UserDetail o2) {
+				return o1.getLastName().compareTo(o2.getLastName());
+			}
+		});
 		return new GetAllUsersResult(details);
 	}
 

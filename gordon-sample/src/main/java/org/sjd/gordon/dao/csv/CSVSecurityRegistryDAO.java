@@ -4,13 +4,13 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.StringTokenizer;
 
 import org.sjd.gordon.dao.SecurityRegistryDAO;
 import org.sjd.gordon.dao.SecurityRegistryDAOException;
@@ -21,8 +21,6 @@ public class CSVSecurityRegistryDAO implements SecurityRegistryDAO {
     
 	// Code > Name
     private HashMap<String,String> stocks = null;
-    // Stock Code > Sector name 
-    private HashMap<String,String> gicsSectors = new HashMap<String,String>();
     // Stock Code > Industry group 
     private HashMap<String,String> gicsIndustryGrps = new HashMap<String,String>();
     
@@ -66,11 +64,7 @@ public class CSVSecurityRegistryDAO implements SecurityRegistryDAO {
     public boolean exists(String code, Exchange exchange) throws SecurityRegistryDAOException {
         return stocks.get(code) != null;
     }
-    
-    public String getSector(String code) {
-    	return gicsSectors.get(code);
-    }
-
+ 
     public String getIndustryGroup(String code) {
     	return gicsIndustryGrps.get(code);
     }
@@ -84,12 +78,17 @@ public class CSVSecurityRegistryDAO implements SecurityRegistryDAO {
             String line;
             int id = 1;
             while ((line=in.readLine()) != null) {
-                StringTokenizer st = new StringTokenizer(line,",");
-                String stkName = (st.nextToken()).trim();
-				String stkCode = (st.nextToken()).trim();
-				String sector = (st.nextToken()).trim();
-				gicsSectors.put(stkCode, sector);
-				String group = (st.nextToken()).trim();
+            	String[] tokens = line.split("\"");
+            	//System.out.println(Arrays.toString(tokens));
+            	// 0 token is empty
+            	// 1 is stock name
+                String stkName = tokens[1].trim();
+                // 3 is code with a , either side
+				String stkCode = tokens[2].trim().substring(1, 4);
+				//System.out.println(stkCode);
+				// 4 is sector group
+				String group = tokens[3].trim();
+				//System.out.println(group);
 				gicsIndustryGrps.put(stkCode, group);
 				StockEntity stock = new StockEntity();
 				stock.setExchange(exchange);

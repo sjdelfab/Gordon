@@ -14,8 +14,8 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 
 import org.eclipse.persistence.internal.jpa.deployment.PersistenceInitializationHelper;
-import org.sjd.gordon.dao.csv.CSVSecurityHistoryDAO;
 import org.sjd.gordon.dao.csv.CSVSecurityRegistryDAO;
+import org.sjd.gordon.dao.csv.YahooCSVSecurityHistoryDAO;
 import org.sjd.gordon.model.Exchange;
 import org.sjd.gordon.model.GicsIndustryGroup;
 import org.sjd.gordon.model.GicsSector;
@@ -29,7 +29,7 @@ public class BuildDatabase {
 
     private static File masterListFile, csvDirectory = null;
     private static EntityManager em;
-    private static CSVSecurityHistoryDAO tradeHistoryDao;
+    private static YahooCSVSecurityHistoryDAO tradeHistoryDao;
 	
 	public static void main(String[] args) throws Exception {
 		if (args.length != 2) {
@@ -119,7 +119,7 @@ public class BuildDatabase {
     	tx.begin();
     	GicsSector sector = createSector("Consumer Discretionary",25);
     	sector.addIndustryGroup(createIndustry("Automobiles and Components",2510));
-    	sector.addIndustryGroup(createIndustry("Consumer Durables and Apparel",2520));
+    	sector.addIndustryGroup(createIndustry("Consumer Durables & Apparel",2520));
     	sector.addIndustryGroup(createIndustry("Consumer Services",2530));
     	sector.addIndustryGroup(createIndustry("Media",2540));
     	sector.addIndustryGroup(createIndustry("Retailing",2550));
@@ -260,6 +260,10 @@ public class BuildDatabase {
 			EntityTransaction tx = em.getTransaction();
 			String gicsGroupName = registryDao.getIndustryGroup(stock.getCode());
 			Integer gicsGroupId = industryGroupNames.get(gicsGroupName);
+			if (gicsGroupId == null) {
+				System.out.println("GICS Group ID is null for: " + gicsGroupName);
+				throw new RuntimeException("GICS Group ID is null for: " + gicsGroupName);
+			}
 	        tx.begin(); 
 	        GicsIndustryGroup group = em.find(GicsIndustryGroup.class, gicsGroupId);
 	        if (group == null) {
@@ -324,7 +328,7 @@ public class BuildDatabase {
         if (!csvDirectory.canRead()) {
             throw new IOException("Unable to read: " + dir);   
         } 
-        tradeHistoryDao = new CSVSecurityHistoryDAO(csvDirectory.getAbsolutePath());
+        tradeHistoryDao = new YahooCSVSecurityHistoryDAO(csvDirectory.getAbsolutePath());
     }
     
 	private static boolean canFindPersistenceXmlFile() throws Exception {

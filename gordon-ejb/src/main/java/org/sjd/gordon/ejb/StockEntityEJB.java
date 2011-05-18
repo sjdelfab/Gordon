@@ -48,6 +48,22 @@ public class StockEntityEJB implements StockEntityService {
     	return query.getResultList();
     }
 
+    public List<StockEntity> getStocks(Integer exchangeId, Integer offset, Integer pageSize) {
+    	String getStockByExchange = "SELECT s FROM StockEntity s WHERE s.exchange.id = :id ORDER BY s.name";
+    	TypedQuery<StockEntity> query = em.createQuery(getStockByExchange, StockEntity.class).setFirstResult(offset).setMaxResults(pageSize);
+    	query.setParameter("id", exchangeId);
+    	return query.getResultList();
+    }
+    
+    public int getStockCount(Integer exchangeId) {
+    	String getStockByExchange = "SELECT COUNT(s) FROM StockEntity s WHERE s.exchange.id = :id";
+    	TypedQuery<Long> query = em.createQuery(getStockByExchange, Long.class);
+    	query.setParameter("id", exchangeId);
+    	Long count = query.getSingleResult();
+    	return count.intValue();
+    }
+    
+    
     public List<StockDayTradeRecord> getDayTradeData(Long stockId) {
     	String getDayTradeData = "SELECT t FROM StockDayTradeRecord t WHERE t.stockId = :stockId";
     	TypedQuery<StockDayTradeRecord> query = em.createQuery(getDayTradeData, StockDayTradeRecord.class);

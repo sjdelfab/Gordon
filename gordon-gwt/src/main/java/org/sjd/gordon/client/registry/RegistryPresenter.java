@@ -11,7 +11,11 @@ import org.sjd.gordon.shared.registry.GetGicsSectorsAction;
 import org.sjd.gordon.shared.registry.GicsSectorName;
 import org.sjd.gordon.shared.viewer.StockDetail;
 
+import com.extjs.gxt.ui.client.data.BasePagingLoadResult;
+import com.extjs.gxt.ui.client.data.PagingLoadConfig;
+import com.extjs.gxt.ui.client.data.PagingLoadResult;
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.gwtplatform.dispatch.client.DispatchAsync;
 import com.gwtplatform.mvp.client.HasUiHandlers;
@@ -27,7 +31,6 @@ public class RegistryPresenter extends Presenter<RegistryPresenter.RegistryPanel
 	public interface RegistryPanelProxy extends Proxy<RegistryPresenter> { }
 
 	public interface RegistryPanelView extends View, HasUiHandlers<RegistryUIHandler> {
-		public void setStocks(ArrayList<StockDetail> stocks);
 		public void setGicsSectors(ArrayList<GicsSectorName> sectors);
 		public void remove(StockDetail selected);
 		public void add(StockDetail stock);
@@ -44,24 +47,28 @@ public class RegistryPresenter extends Presenter<RegistryPresenter.RegistryPanel
 		getView().setUiHandlers(this);
 	}
 
-	private void load() {
+	@Override
+	public void load(final PagingLoadConfig loadConfig, final AsyncCallback<PagingLoadResult<StockDetail>> callback) {
 		if (exchange== null) {
 			throw new RuntimeException("Exchange must be specified");
 		}
-		GetAllRegistryEntriesAction getStockDetails = new GetAllRegistryEntriesAction(exchange.getId());
+		GetAllRegistryEntriesAction getStockDetails = new GetAllRegistryEntriesAction(exchange.getId(),loadConfig.getLimit(),loadConfig.getOffset());
 		dispatcher.execute(getStockDetails, new LoadAllStockDetailsCallback() {
 			@Override
-			public void loaded(ArrayList<StockDetail> stocks) {
-				getView().setStocks(stocks);
+			public void loaded(ArrayList<StockDetail> stocks, Integer totalCount) {
+				callback.onSuccess(new BasePagingLoadResult<StockDetail>(stocks,loadConfig.getOffset(),totalCount));
 			}
 		});
+	}	
+	
+	private void loadGicsSectors() {
 		dispatcher.execute(new GetGicsSectorsAction(), new LoadGicsSectorNamesCallback() {
 			@Override
 			public void loaded(ArrayList<GicsSectorName> sectors) {
 				getView().setGicsSectors(sectors);
 			}
 		});
-	}	
+	}
 	
 	@Override
 	public void delete(final StockDetail selected) {
@@ -98,6 +105,12 @@ public class RegistryPresenter extends Presenter<RegistryPresenter.RegistryPanel
 	}
 	
 	@Override
+	protected void onBind() {
+		super.onBind();
+		loadGicsSectors();
+	}
+	
+	@Override
 	protected void onUnbind() { }
 
 	@Override
@@ -107,6 +120,5 @@ public class RegistryPresenter extends Presenter<RegistryPresenter.RegistryPanel
 	
 	public void setExchange(Exchange exchange) {
 		this.exchange = exchange;
-		load();
 	}
 }

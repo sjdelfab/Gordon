@@ -31,7 +31,7 @@ public class UserEJB implements UserService {
 
 	@Override
 	public List<User> getUsers() {
-		String getUser = "SELECT u FROM User u";
+		String getUser = "SELECT u FROM User u ORDER BY u.lastName";
     	TypedQuery<User> query = em.createQuery(getUser, User.class);
     	List<User> users = query.getResultList();
 		return users;

@@ -15,9 +15,11 @@ public interface StockEntityService {
     public StockEntity updateStock(StockEntity stock);
     public void deleteStock(StockEntity stock);
     public List<StockEntity> getStocks(Integer exchangeId);
+    public List<StockEntity> getStocks(Integer exchangeId, Integer offset, Integer pageSize);
     public List<StockDayTradeRecord> getDayTradeData(Long stockId);
     public StockDayTradeRecord addDayTrade(StockDayTradeRecord trade);
     public void deleteAllDayTrades(StockEntity stock);
     public StockDayTradeRecord getFirstTradeDay(Long stockId);
     public StockDayTradeRecord getLastTradeDay(Long stockId);
+    public int getStockCount(Integer exchangeId);
 }

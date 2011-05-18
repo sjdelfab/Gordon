@@ -20,16 +20,16 @@ import com.gwtplatform.dispatch.shared.ActionException;
 public class GetAllStockDetailsEJBHandler implements ActionHandler<GetAllRegistryEntriesAction, GetAllRegistryEntriesResult> {
 
 	@Inject
-	private StockEntityService stockEjb;
+	private StockEntityService stockService;
 	@Inject
 	private GicsService gicsService;
 
 	@Override
 	public GetAllRegistryEntriesResult execute(GetAllRegistryEntriesAction getDetails, ExecutionContext context) throws ActionException {
-		List<StockEntity> stocks = stockEjb.getStocks(getDetails.getExchangeId());
+		List<StockEntity> stocks = stockService.getStocks(getDetails.getExchangeId(),getDetails.getOffset(),getDetails.getLimit());
 		ArrayList<StockDetail> details = new ArrayList<StockDetail>(stocks.size());
 		for (StockEntity entity : stocks) {
-			StockDayTradeRecord firstDayTrade = stockEjb.getFirstTradeDay(entity.getId());
+			StockDayTradeRecord firstDayTrade = stockService.getFirstTradeDay(entity.getId());
 			StockDetail stockDetails = StockDetail.fromEntity(entity);
 			if (entity.getGicsIndustryGroup() != null) {
 				Integer industryGrpId = entity.getGicsIndustryGroup().getId();
@@ -40,14 +40,15 @@ public class GetAllStockDetailsEJBHandler implements ActionHandler<GetAllRegistr
 			if (firstDayTrade != null) {
 				stockDetails.setListDate(firstDayTrade.getDate());
 			}
-			StockDayTradeRecord lastTradeDate = stockEjb.getLastTradeDay(entity.getId());
+			StockDayTradeRecord lastTradeDate = stockService.getLastTradeDay(entity.getId());
 			if (lastTradeDate != null) {
 				stockDetails.setLastTradeDate(lastTradeDate.getDate());
 				stockDetails.setCurrentPrice(lastTradeDate.getClosePrice());
 			}
 			details.add(stockDetails);
 		}
-		return new GetAllRegistryEntriesResult(details);
+		Integer totalCount = stockService.getStockCount(getDetails.getExchangeId());
+		return new GetAllRegistryEntriesResult(details,totalCount);
 	}
 
 	@Override

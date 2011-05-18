@@ -103,3 +103,7 @@
 .asx { 
   background: url(resources/images/gordon/flag-au.png) no-repeat center; 
 }
+
+.refresh { 
+  background: url(resources/images/gordon/refresh.png) no-repeat center; 
+}

@@ -56,7 +56,7 @@ public class CsvUtil {
     
     private static final BigDecimal ONE_HUNDRED = new BigDecimal(100);
     
-    public static StockDayTradeRecord parseYahooRow(String line, int securityId) throws ParseException {
+    public static StockDayTradeRecord parseYahooRow(String line, long securityId) throws ParseException {
         StringTokenizer st = new StringTokenizer(line, ",");
         // grab the trade date field in YYYY-MM-dd form
         String tmp = (st.nextToken()).trim();
@@ -85,6 +85,7 @@ public class CsvUtil {
         sdt.setHighPrice(high);
         sdt.setLowPrice(low);
         sdt.setVolume(vol);
+        sdt.setStockId(securityId);
         return sdt;
     }    
     

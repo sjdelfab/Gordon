@@ -94,7 +94,8 @@ public class UsersSetupPresenter extends Presenter<UsersSetupPresenter.UsersSetu
 		});
 	}
 	
-	private void load() {
+	@Override
+	public void load() {
 		GetAllUsersAction getUserDetails = new GetAllUsersAction();
 		dispatcher.execute(getUserDetails, new LoadAllUserDetailsCallback() {
 			@Override

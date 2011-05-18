@@ -14,11 +14,15 @@ import com.extjs.gxt.ui.client.Style.HorizontalAlignment;
 import com.extjs.gxt.ui.client.Style.LayoutRegion;
 import com.extjs.gxt.ui.client.Style.Scroll;
 import com.extjs.gxt.ui.client.data.BasePagingLoader;
+import com.extjs.gxt.ui.client.data.BeanModel;
 import com.extjs.gxt.ui.client.data.ModelData;
+import com.extjs.gxt.ui.client.data.PagingLoadConfig;
 import com.extjs.gxt.ui.client.data.PagingLoadResult;
 import com.extjs.gxt.ui.client.data.PagingLoader;
-import com.extjs.gxt.ui.client.data.PagingModelMemoryProxy;
+import com.extjs.gxt.ui.client.data.RpcProxy;
 import com.extjs.gxt.ui.client.event.ButtonEvent;
+import com.extjs.gxt.ui.client.event.Events;
+import com.extjs.gxt.ui.client.event.GridEvent;
 import com.extjs.gxt.ui.client.event.Listener;
 import com.extjs.gxt.ui.client.event.MessageBoxEvent;
 import com.extjs.gxt.ui.client.event.SelectionChangedEvent;
@@ -45,6 +49,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.Element;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
@@ -63,22 +68,26 @@ public class RegistryViewImpl extends ViewWithUiHandlers<RegistryUIHandler> impl
 	
 	private ContentPanel contentPanel;
 	
-	private PagingModelMemoryProxy proxy;
+	private RpcProxy<PagingLoadResult<StockDetail>> proxy;
 	private PagingLoader<PagingLoadResult<ModelData>> loader;
 	private ListStore<StockDetail> store;
 	private Button addButton, removeButton, updateButton;
 	private Grid<StockDetail> grid;
-	private ArrayList<StockDetail> stocks;
 	private ArrayList<GicsSectorName> sectors;
+	private PagingToolBar pagingToolBar = new PagingToolBar(MAX_PAGE_SIZE);
 
 	public RegistryViewImpl() {    
-		proxy = new PagingModelMemoryProxy(new ArrayList<StockDetail>(0));
+		proxy = new RpcProxy<PagingLoadResult<StockDetail>>() {
+			@Override
+			public void load(Object loadConfig, AsyncCallback<PagingLoadResult<StockDetail>> callback) {
+				getUiHandlers().load((PagingLoadConfig) loadConfig, callback);
+			}
+		};
 	    loader = new BasePagingLoader<PagingLoadResult<ModelData>>(proxy);  
 	    loader.setRemoteSort(true);  
 	  
 	    store = new ListStore<StockDetail>(loader);
-	    
-	    final PagingToolBar pagingToolBar = new PagingToolBar(MAX_PAGE_SIZE);  
+
 	    pagingToolBar.bind(loader);
 	  
 	    List<ColumnConfig> configs = new ArrayList<ColumnConfig>();  
@@ -178,23 +187,17 @@ public class RegistryViewImpl extends ViewWithUiHandlers<RegistryUIHandler> impl
 	    contentPanel.setLayout(new FitLayout());  
 	    contentPanel.setBottomComponent(pagingToolBar);  
 	    
-	    grid = new Grid<StockDetail>(store, columnModel);  
+	    grid = new Grid<StockDetail>(store, columnModel);
+	    grid.addListener(Events.Attach, new Listener<GridEvent<BeanModel>>() {  
+	        public void handleEvent(GridEvent<BeanModel> be) {  
+	          loader.load(0, MAX_PAGE_SIZE);  
+	        }  
+	      });  
 	    grid.setBorders(true);
 	    grid.getAriaSupport().setDescribedBy(pagingToolBar.getId() + "-display");  
 	    contentPanel.add(grid);  
 	}
 	
-	@Override
-	public void setStocks(ArrayList<StockDetail> stocks) {
-		this.stocks = stocks;
-	    proxy.setData(stocks);
-	    if (stocks.size() > MAX_PAGE_SIZE) {
-	        loader.load(0, MAX_PAGE_SIZE);
-	    } else {
-	    	loader.load(0, stocks.size());
-	    }
-	}
-
 	@Override
 	public void setGicsSectors(ArrayList<GicsSectorName> sectors) {
 		this.sectors = sectors;
@@ -215,7 +218,7 @@ public class RegistryViewImpl extends ViewWithUiHandlers<RegistryUIHandler> impl
 		if (store.contains(stock)) {
 			store.remove(stock);
 			store.commitChanges();
-			stocks.remove(stock);
+			pagingToolBar.refresh();
 		} else {
 			Log.info("Remove: Can't find stock: " + stock.getCode());
 		}
@@ -245,9 +248,7 @@ public class RegistryViewImpl extends ViewWithUiHandlers<RegistryUIHandler> impl
 
 	@Override
 	public void add(StockDetail details) {
-		store.add(details);
-		stocks.add(details);
-		store.commitChanges();
+		pagingToolBar.refresh();
 	}
 
 	private void showUpdateDialog(final StockDetail selected) {
@@ -305,13 +306,6 @@ public class RegistryViewImpl extends ViewWithUiHandlers<RegistryUIHandler> impl
 		if (store.contains(details)) {
 			store.update(details);
 			store.commitChanges();
-			int index = stocks.indexOf(details);
-			stocks.remove(index);
-			if (index == stocks.size()) {
-				stocks.add(details);
-			} else {
-				stocks.add(index, details);
-			}
 		} else {
 			Log.info("Update: Can't find stock: " + details.getCode());			
 		}

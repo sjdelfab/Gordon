@@ -52,7 +52,7 @@ public class UserSetupPanelView extends ViewWithUiHandlers<UserSetupUIHandler> i
 	
 	private ContentPanel contentPanel;
 	private ListStore<UserDetail> store;
-	private Button addButton, removeButton, updateButton, changePasswordButton;
+	private Button addButton, removeButton, updateButton, changePasswordButton, refreshButton;
 	private Grid<UserDetail> grid;	
 	
 	public UserSetupPanelView() {
@@ -60,14 +60,14 @@ public class UserSetupPanelView extends ViewWithUiHandlers<UserSetupUIHandler> i
 	    List<ColumnConfig> configs = new ArrayList<ColumnConfig>();  
 		  
 	    ColumnConfig column = new ColumnConfig();  
-	    column.setId(UserDetail.FIRST_NAME);  
-	    column.setHeader("First Name");  
-	    column.setWidth(200);  
-	    configs.add(column);  
-	  
-	    column = new ColumnConfig();  
 	    column.setId(UserDetail.LAST_NAME);  
 	    column.setHeader("Last Name");  
+	    column.setWidth(200);  
+	    configs.add(column);  
+	    
+	    column = new ColumnConfig();
+	    column.setId(UserDetail.FIRST_NAME);  
+	    column.setHeader("First Name");  
 	    column.setWidth(200);  
 	    configs.add(column);  
 	  
@@ -97,7 +97,7 @@ public class UserSetupPanelView extends ViewWithUiHandlers<UserSetupUIHandler> i
 	    addButton.setIconStyle("add");
 	    addButton.addClickHandler(new ClickHandler() {
 			@Override
-			public void onClick(ClickEvent arg0) {
+			public void onClick(ClickEvent event) {
 				showAddDialog();
 			}
 		});
@@ -123,10 +123,11 @@ public class UserSetupPanelView extends ViewWithUiHandlers<UserSetupUIHandler> i
 		});
 	    updateButton.setIconStyle("update");
 	    toolbar.add(updateButton);
+	    
 	    changePasswordButton = new Button();
 	    changePasswordButton.addClickHandler(new ClickHandler() {
 			@Override
-			public void onClick(ClickEvent arg0) {
+			public void onClick(ClickEvent event) {
 				final UserDetail selected = getSelectedItem();
 				if (selected != null) {
 					showChangePasswordDialog(selected);
@@ -135,6 +136,17 @@ public class UserSetupPanelView extends ViewWithUiHandlers<UserSetupUIHandler> i
 		});
 	    changePasswordButton.setIconStyle("personal");
 	    toolbar.add(changePasswordButton);
+	    
+	    refreshButton = new Button();
+	    refreshButton.setIconStyle("refresh");
+	    refreshButton.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				getUiHandlers().load();	
+			}
+		});
+	    toolbar.add(refreshButton);
+	    
 	    contentPanel.setTopComponent(toolbar);
 	    contentPanel.setFrame(false);
 	    contentPanel.setHeaderVisible(false);
@@ -155,6 +167,7 @@ public class UserSetupPanelView extends ViewWithUiHandlers<UserSetupUIHandler> i
 
 	@Override
 	public void setUsers(ArrayList<UserDetail> users) {
+		store.removeAll();
 		store.add(users);
 	}
 

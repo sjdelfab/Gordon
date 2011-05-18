@@ -5,9 +5,11 @@ import com.gwtplatform.dispatch.shared.Result;
 public class GetAllRegistryEntriesResult implements Result { 
 
   java.util.ArrayList<org.sjd.gordon.shared.viewer.StockDetail> stocks;
+  java.lang.Integer totalCount;
 
-  public GetAllRegistryEntriesResult(java.util.ArrayList<org.sjd.gordon.shared.viewer.StockDetail> stocks) {
+  public GetAllRegistryEntriesResult(java.util.ArrayList<org.sjd.gordon.shared.viewer.StockDetail> stocks, java.lang.Integer totalCount) {
     this.stocks = stocks;
+    this.totalCount = totalCount;
   }
 
   protected GetAllRegistryEntriesResult() {
@@ -16,6 +18,10 @@ public class GetAllRegistryEntriesResult implements Result {
 
   public java.util.ArrayList<org.sjd.gordon.shared.viewer.StockDetail> getStocks() {
     return stocks;
+  }
+
+  public java.lang.Integer getTotalCount() {
+    return totalCount;
   }
 
   @Override
@@ -32,6 +38,11 @@ public class GetAllRegistryEntriesResult implements Result {
         return false;
     } else if (!stocks.equals(other.stocks))
       return false;
+    if (totalCount == null) {
+      if (other.totalCount != null)
+        return false;
+    } else if (!totalCount.equals(other.totalCount))
+      return false;
     return true;
   }
 
@@ -39,6 +50,7 @@ public class GetAllRegistryEntriesResult implements Result {
   public int hashCode() {
     int hashCode = 23;
     hashCode = (hashCode * 37) + (stocks == null ? 1 : stocks.hashCode());
+    hashCode = (hashCode * 37) + (totalCount == null ? 1 : totalCount.hashCode());
     return hashCode;
   }
 
@@ -46,6 +58,8 @@ public class GetAllRegistryEntriesResult implements Result {
   public String toString() {
     return "GetAllRegistryEntriesResult["
                  + stocks
+                 + ","
+                 + totalCount
     + "]";
   }
 }

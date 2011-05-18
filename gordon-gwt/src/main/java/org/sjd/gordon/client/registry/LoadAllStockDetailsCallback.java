@@ -12,8 +12,8 @@ public abstract class LoadAllStockDetailsCallback extends AbstractCallback imple
 
 	@Override
 	public void onSuccess(GetAllRegistryEntriesResult allStockDetails) {
-		loaded(allStockDetails.getStocks());
+		loaded(allStockDetails.getStocks(),allStockDetails.getTotalCount());
 	}
 
-	public abstract void loaded(ArrayList<StockDetail> stocks);
+	public abstract void loaded(ArrayList<StockDetail> stocks, Integer totalCount);
 }
