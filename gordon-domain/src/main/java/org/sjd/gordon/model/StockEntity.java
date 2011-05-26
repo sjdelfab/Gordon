@@ -2,6 +2,7 @@ package org.sjd.gordon.model;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -19,6 +20,8 @@ public class StockEntity extends SecurityEntity implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="INDUSTRY_GRP_ID",nullable = true, referencedColumnName="ID")
 	private GicsIndustryGroup gicsIndustryGroup;
+	@Column(name="FLOAT_VOLUME",nullable = false,updatable=false)
+	private Integer floatVolume = Integer.valueOf(0);
 	
 	public StockEntity() {}
 	
@@ -36,6 +39,14 @@ public class StockEntity extends SecurityEntity implements Serializable {
 	
 	public void setGicsIndustryGroup(GicsIndustryGroup industryGroup) {
 		this.gicsIndustryGroup = industryGroup;
+	}
+	
+	public void setFloatVolume(Integer floatVolume) {
+		this.floatVolume = floatVolume;
+	}
+	
+	public Integer getFloatVolume() {
+		return floatVolume;
 	}
 
 }

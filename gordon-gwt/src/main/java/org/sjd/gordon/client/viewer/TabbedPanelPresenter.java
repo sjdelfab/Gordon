@@ -10,7 +10,7 @@ import org.sjd.gordon.client.security.ShowUserSetupEvent;
 import org.sjd.gordon.client.security.ShowUserSetupEvent.ShowUserSetupHandler;
 import org.sjd.gordon.client.security.UsersSetupPresenter;
 import org.sjd.gordon.model.Exchange;
-import org.sjd.gordon.shared.viewer.StockDetail;
+import org.sjd.gordon.shared.navigation.StockName;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.inject.Inject;
@@ -27,7 +27,7 @@ public class TabbedPanelPresenter extends Presenter<TabbedPanelPresenter.TabbedP
 	public interface TabbedPanelProxy extends Proxy<TabbedPanelPresenter> { }
 
 	public interface TabbedPanelView extends View { 
-		public void addStock(StockPresenter stockPresenter, StockDetail stockDetails);
+		public void addStock(StockPresenter stockPresenter, StockName stockName);
 		public void showRegistryEditor(Exchange exchange, Provider<RegistryPresenter> registryPresenterProvider);
 		public void showUserSetupEditor(Provider<UsersSetupPresenter> usersSetupPresenter);
 	}
@@ -42,8 +42,8 @@ public class TabbedPanelPresenter extends Presenter<TabbedPanelPresenter.TabbedP
 			@Override
 			public void onShowStock(ShowStockEvent event) {
 				StockPresenter stockPresenter = injector.getStockPresenter().get();
-				stockPresenter.getView().setStock(event.getStockDetails());
-				getView().addStock(stockPresenter, event.getStockDetails());
+				stockPresenter.getView().setStock(event.getStock());
+				getView().addStock(stockPresenter, event.getStock());
 			}
 		});
 		eventBus.addHandler(ShowRegistryEvent.getType(), new ShowRegistryHandler() {

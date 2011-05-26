@@ -13,8 +13,9 @@ import org.sjd.gordon.shared.security.EditUserAction;
 import org.sjd.gordon.shared.security.GetAllUsersAction;
 import org.sjd.gordon.shared.security.GetCurrentUserAction;
 import org.sjd.gordon.shared.security.LogoutAction;
-import org.sjd.gordon.shared.viewer.GetStockDetailsAction;
+import org.sjd.gordon.shared.viewer.GetStockProfileAction;
 import org.sjd.gordon.shared.viewer.GetTradeHistoryAction;
+import org.sjd.gordon.shared.viewer.UpdateBusinessSummaryAction;
 
 import com.gwtplatform.dispatch.server.guice.HandlerModule;
 
@@ -25,7 +26,7 @@ public class DevelopmentModule extends HandlerModule {
 		bindHandler(GetStocksAction.class, GetStocksDevHandler.class);
 		bindHandler(GetExchangesAction.class, GetExchangesDevHandler.class);
 		bindHandler(GetTradeHistoryAction.class, GetTradeHistoryDevHandler.class);
-		bindHandler(GetStockDetailsAction.class, GetStockDetailsDevHandler.class);
+		bindHandler(GetStockProfileAction.class, GetStockProfileDevHandler.class);
 		bindHandler(LogoutAction.class, LogoutHandler.class);
 		
 		bindHandler(GetAllRegistryEntriesAction.class, GetAllStockDetailsDevHandler.class);
@@ -38,6 +39,8 @@ public class DevelopmentModule extends HandlerModule {
 		bindHandler(EditUserAction.class, EditUserDevHandler.class);
 		bindHandler(GetCurrentUserAction.class, CurrentUserDevHandler.class);
 		bindHandler(ChangeUserPasswordAction.class, ChangeUserPasswordDevHandler.class);
+		
+		bindHandler(UpdateBusinessSummaryAction.class, UpdateBusinessSummaryDevHandler.class);
 	}
 
 }

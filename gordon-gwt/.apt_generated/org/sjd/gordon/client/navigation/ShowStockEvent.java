@@ -18,18 +18,18 @@ public class ShowStockEvent extends GwtEvent<ShowStockEvent.ShowStockHandler> {
 
   private static final Type<ShowStockHandler> TYPE = new Type<ShowStockHandler>();
 
-  public static void fire(HasHandlers source, org.sjd.gordon.shared.viewer.StockDetail stockDetails) {
-    source.fireEvent(new ShowStockEvent(stockDetails));
+  public static void fire(HasHandlers source, org.sjd.gordon.shared.navigation.StockName stock) {
+    source.fireEvent(new ShowStockEvent(stock));
   }
 
   public static Type<ShowStockHandler> getType() {
     return TYPE;
   }
 
-  org.sjd.gordon.shared.viewer.StockDetail stockDetails;
+  org.sjd.gordon.shared.navigation.StockName stock;
 
-  public ShowStockEvent(org.sjd.gordon.shared.viewer.StockDetail stockDetails) {
-    this.stockDetails = stockDetails;
+  public ShowStockEvent(org.sjd.gordon.shared.navigation.StockName stock) {
+    this.stock = stock;
   }
 
   protected ShowStockEvent() {
@@ -41,8 +41,8 @@ public class ShowStockEvent extends GwtEvent<ShowStockEvent.ShowStockHandler> {
     return TYPE;
   }
 
-  public org.sjd.gordon.shared.viewer.StockDetail getStockDetails() {
-    return stockDetails;
+  public org.sjd.gordon.shared.navigation.StockName getStock() {
+    return stock;
   }
 
   @Override
@@ -59,10 +59,10 @@ public class ShowStockEvent extends GwtEvent<ShowStockEvent.ShowStockHandler> {
     if (getClass() != obj.getClass())
         return false;
     ShowStockEvent other = (ShowStockEvent) obj;
-    if (stockDetails == null) {
-      if (other.stockDetails != null)
+    if (stock == null) {
+      if (other.stock != null)
         return false;
-    } else if (!stockDetails.equals(other.stockDetails))
+    } else if (!stock.equals(other.stock))
       return false;
     return true;
   }
@@ -70,14 +70,14 @@ public class ShowStockEvent extends GwtEvent<ShowStockEvent.ShowStockHandler> {
   @Override
   public int hashCode() {
     int hashCode = 23;
-    hashCode = (hashCode * 37) + (stockDetails == null ? 1 : stockDetails.hashCode());
+    hashCode = (hashCode * 37) + (stock == null ? 1 : stock.hashCode());
     return hashCode;
   }
 
   @Override
   public String toString() {
     return "ShowStockEvent["
-                 + stockDetails
+                 + stock
     + "]";
   }
 }

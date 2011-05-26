@@ -3,7 +3,7 @@ package org.sjd.gordon.client.viewer;
 import org.sjd.gordon.client.registry.RegistryPresenter;
 import org.sjd.gordon.client.security.UsersSetupPresenter;
 import org.sjd.gordon.model.Exchange;
-import org.sjd.gordon.shared.viewer.StockDetail;
+import org.sjd.gordon.shared.navigation.StockName;
 
 import com.extjs.gxt.ui.client.widget.TabItem;
 import com.extjs.gxt.ui.client.widget.TabPanel;
@@ -42,14 +42,15 @@ public class TabbedPanelViewImpl extends ViewImpl implements TabbedPanelPresente
 		tabbedPanel.add(item);
 	}
 	
-	public void addStock(StockPresenter stockPresenter, StockDetail stockDetails) {
-		TabItem item = tabbedPanel.findItem(stockDetails.getCode(),false);
+	@Override
+	public void addStock(StockPresenter stockPresenter, StockName stock) {
+		TabItem item = tabbedPanel.findItem(stock.getCode(),false);
 		if (item != null) {
 			tabbedPanel.setSelection(item);
 		} else {
 			item = new TabItem();
-			item.setText(stockDetails.getCode());
-			item.setItemId(stockDetails.getCode());
+			item.setText(stock.getCode());
+			item.setItemId(stock.getCode());
 			item.addStyleName("pad-text");
 			item.setClosable(true);
 			item.add(stockPresenter.getView().asWidget());

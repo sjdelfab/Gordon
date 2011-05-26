@@ -1,5 +1,7 @@
 package org.sjd.gordon.ejb;
 
+import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.security.RolesAllowed;
@@ -9,6 +11,8 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
+import org.sjd.gordon.analysis.statistics.StockStatisticsUtil;
+import org.sjd.gordon.model.BusinessSummary;
 import org.sjd.gordon.model.StockDayTradeRecord;
 import org.sjd.gordon.model.StockEntity;
 
@@ -111,4 +115,41 @@ public class StockEntityEJB implements StockEntityService {
 			return result.get(0);
 		}
 	}
+	
+	@Override
+	public BusinessSummary getBusinessSummary(Long stockId) {
+		String getSummary = "SELECT bs FROM BusinessSummary bs WHERE bs.stockId=:stockId";
+		TypedQuery<BusinessSummary> query = em.createQuery(getSummary, BusinessSummary.class);
+		query.setParameter("stockId", stockId);
+		return query.getSingleResult();
+	}
+	
+	@Override
+	public BusinessSummary updateBusinessSummary(BusinessSummary summary) {
+		return em.merge(summary);
+	}
+	
+    public BigDecimal getMaxPrice(Long stockId, Date startDate, Date endDate) {
+    	return StockStatisticsUtil.getMaxPrice(em, stockId, startDate, endDate);
+    }
+    
+    public BigDecimal getMinPrice(Long stockId, Date startDate, Date endDate) {
+    	return StockStatisticsUtil.getMinPrice(em, stockId, startDate, endDate);
+    }
+    
+    public Double getAverageVolume(Long stockId, Date startDate, Date endDate) {
+    	return StockStatisticsUtil.getAverageVolume(em, stockId, startDate, endDate);
+    }
+    
+    public BigDecimal getPercentageChange(Long stockId, Date startDate, Date endDate) {
+    	return StockStatisticsUtil.getPercentageChange(em, stockId, startDate, endDate);
+    }
+    
+    public Double getAveragePrice(Long stockId, Date startDate, Date endDate) {
+    	return StockStatisticsUtil.getAveragePrice(em, stockId, startDate, endDate);
+    }
+    
+    public Long getSharesOutstanding(StockEntity stock) {
+    	return StockStatisticsUtil.calculateSharesOutstanding(em, stock);
+    }
 }

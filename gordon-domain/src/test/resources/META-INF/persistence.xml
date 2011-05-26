@@ -23,6 +23,7 @@
         <class>org.sjd.gordon.model.Group</class>
         <class>org.sjd.gordon.model.GicsSector</class>
         <class>org.sjd.gordon.model.GicsIndustryGroup</class>
+        <class>org.sjd.gordon.model.BusinessSummary</class>
         <properties>
             <property name="eclipselink.target-database" value="DERBY"/>
             <property name="eclipselink.ddl-generation" value="drop-and-create-tables"/>

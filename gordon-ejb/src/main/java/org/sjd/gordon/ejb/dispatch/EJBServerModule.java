@@ -11,9 +11,10 @@ import org.sjd.gordon.ejb.StockEntityEJB;
 import org.sjd.gordon.ejb.StockEntityService;
 import org.sjd.gordon.ejb.dispatch.data.GetAllStockDetailsEJBHandler;
 import org.sjd.gordon.ejb.dispatch.data.GetExchangesEJBHandler;
-import org.sjd.gordon.ejb.dispatch.data.GetStockDetailsEJBHandler;
+import org.sjd.gordon.ejb.dispatch.data.GetStockProfileEJBHandler;
 import org.sjd.gordon.ejb.dispatch.data.GetStocksEJBHandler;
 import org.sjd.gordon.ejb.dispatch.data.GetTradeHistoryEJBHandler;
+import org.sjd.gordon.ejb.dispatch.data.UpdateBusinessSummaryEJBHandler;
 import org.sjd.gordon.ejb.dispatch.security.ChangeUserPasswordEJBHandler;
 import org.sjd.gordon.ejb.dispatch.security.CurrentUserEJBHandler;
 import org.sjd.gordon.ejb.dispatch.security.DeleteUserEJBHandler;
@@ -39,8 +40,9 @@ import org.sjd.gordon.shared.security.EditUserAction;
 import org.sjd.gordon.shared.security.GetAllUsersAction;
 import org.sjd.gordon.shared.security.GetCurrentUserAction;
 import org.sjd.gordon.shared.security.LogoutAction;
-import org.sjd.gordon.shared.viewer.GetStockDetailsAction;
+import org.sjd.gordon.shared.viewer.GetStockProfileAction;
 import org.sjd.gordon.shared.viewer.GetTradeHistoryAction;
+import org.sjd.gordon.shared.viewer.UpdateBusinessSummaryAction;
 
 import com.google.inject.Singleton;
 import com.gwtplatform.dispatch.server.guice.HandlerModule;
@@ -54,10 +56,11 @@ public class EJBServerModule extends HandlerModule {
 		bind(StockEntityService.class).toProvider(fromJndi(StockEntityService.class, getEjbJndiName(StockEntityService.class,StockEntityEJB.class)));
 		bind(UserService.class).toProvider(fromJndi(UserService.class, getEjbJndiName(UserService.class, UserEJB.class)));
 		bind(GicsService.class).toProvider(fromJndi(GicsService.class, getEjbJndiName(GicsService.class, GicsEJB.class)));
+		
 		bindHandler(GetStocksAction.class, GetStocksEJBHandler.class);
 		bindHandler(GetExchangesAction.class, GetExchangesEJBHandler.class);
 		bindHandler(GetTradeHistoryAction.class, GetTradeHistoryEJBHandler.class);
-		bindHandler(GetStockDetailsAction.class, GetStockDetailsEJBHandler.class);
+		bindHandler(GetStockProfileAction.class, GetStockProfileEJBHandler.class);
 		bindHandler(LogoutAction.class, LogoutHandler.class);
 		bindHandler(GetAllRegistryEntriesAction.class, GetAllStockDetailsEJBHandler.class);
 		bindHandler(DeleteRegistryEntryAction.class, DeleteRegistryEntryEJBHandler.class);
@@ -68,7 +71,9 @@ public class EJBServerModule extends HandlerModule {
 		bindHandler(DeleteUserAction.class, DeleteUserEJBHandler.class);
 		bindHandler(EditUserAction.class, EditUserEJBHandler.class);
 		bindHandler(GetCurrentUserAction.class, CurrentUserEJBHandler.class);
-		bindHandler(ChangeUserPasswordAction.class, ChangeUserPasswordEJBHandler.class);		
+		bindHandler(ChangeUserPasswordAction.class, ChangeUserPasswordEJBHandler.class);
+		
+		bindHandler(UpdateBusinessSummaryAction.class, UpdateBusinessSummaryEJBHandler.class);
 	}
 
 	public static String PREFIX = "gordon-gwt-1.0";

@@ -24,12 +24,10 @@ public class DisplayGroup {
     private Integer version;
 	@Column(nullable = false)
 	private String name;
-	@OneToMany(fetch = FetchType.EAGER,
-			cascade = {CascadeType.ALL})
+	@OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
 	@JoinColumn(name = "group_id") 
 	private List<UnitaryPropertyDGM> unitaryMembers;
-	@OneToMany(fetch = FetchType.EAGER,
-			cascade = {CascadeType.ALL})
+	@OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
 	@JoinColumn(name = "group_id") 
 	private List<TabularDGM> datasetMembers;
 

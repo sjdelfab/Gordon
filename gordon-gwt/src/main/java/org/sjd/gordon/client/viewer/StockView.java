@@ -1,6 +1,6 @@
 package org.sjd.gordon.client.viewer;
 
-import org.sjd.gordon.shared.viewer.StockDetail;
+import org.sjd.gordon.shared.navigation.StockName;
 
 import com.extjs.gxt.ui.client.event.Events;
 import com.extjs.gxt.ui.client.event.Listener;
@@ -15,9 +15,9 @@ import com.gwtplatform.mvp.client.ViewImpl;
 public class StockView extends ViewImpl implements StockPresenter.StockPanelView {
 
 	private TabPanel tabbedPanel;
-	private StockProfilePresenter generalInformalPresenter;
+	private StockProfilePresenter stockProfilePresenter;
 	private TradeHistoryPresenter tradeHistoryPresenter;
-	private StockDetail stockDetails;
+	private StockName stock;
 	@Inject
 	@Named("width")
 	private int width;
@@ -26,8 +26,8 @@ public class StockView extends ViewImpl implements StockPresenter.StockPanelView
 	private int height;
 	
 	@Inject
-	public StockView(StockProfilePresenter generalInformalPresenter, final TradeHistoryPresenter tradeHistoryPresenter) {
-		this.generalInformalPresenter = generalInformalPresenter;
+	public StockView(StockProfilePresenter stockProfilePresenter, final TradeHistoryPresenter tradeHistoryPresenter, final StockAdminPresenter stockAdminPresenter) {
+		this.stockProfilePresenter = stockProfilePresenter;
 		this.tradeHistoryPresenter = tradeHistoryPresenter;
 
 		tabbedPanel = new TabPanel();
@@ -35,7 +35,7 @@ public class StockView extends ViewImpl implements StockPresenter.StockPanelView
 		tabbedPanel.setCloseContextMenu(false);
 
 		TabItem generalTabItem = new TabItem("Profile");
-		generalTabItem.add(generalInformalPresenter.getView().asWidget());
+		generalTabItem.add(stockProfilePresenter.getView().asWidget());
 		tabbedPanel.add(generalTabItem);
 
 		TabItem tradeHistoryTabItem = new TabItem("Trade History");
@@ -44,16 +44,28 @@ public class StockView extends ViewImpl implements StockPresenter.StockPanelView
 		tradeHistoryTabItem.addListener(Events.Select, new Listener<TabPanelEvent>() {
 			@Override
 			public void handleEvent(TabPanelEvent be) {
-				StockView.this.tradeHistoryPresenter.setStock(stockDetails);
+				StockView.this.tradeHistoryPresenter.setStock(stock);
 			}
 
 		});
+		
+		TabItem stockAdminTabItem = new TabItem("Administration");
+		stockAdminTabItem.add(stockAdminPresenter.getView().asWidget());
+		tabbedPanel.add(stockAdminTabItem);
+		stockAdminTabItem.addListener(Events.Select, new Listener<TabPanelEvent>() {
+			@Override
+			public void handleEvent(TabPanelEvent be) {
+				//StockView.this.tradeHistoryPresenter.setStock(stock);
+			}
+
+		});
+
 	}
 
 	@Override
-	public void setStock(StockDetail stockDetails) {
-		this.stockDetails = stockDetails;
-		generalInformalPresenter.setStock(stockDetails);
+	public void setStock(StockName stock) {
+		this.stock = stock;
+		stockProfilePresenter.setStock(stock);
 	}
 
 	@Override

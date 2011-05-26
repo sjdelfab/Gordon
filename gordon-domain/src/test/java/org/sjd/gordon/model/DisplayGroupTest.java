@@ -57,9 +57,6 @@ public class DisplayGroupTest extends AbstractJpaTest {
     	tab.addGroup(displayGroup);
     	tx.begin(); 
         em.persist(tab);
-        //em.persist(displayGroup);
-        //em.persist(tabularDgm);
-        //em.persist(unitaryDgm);
         tx.commit(); 
         assertNotNull("ID should not be null", tab.getId());
         

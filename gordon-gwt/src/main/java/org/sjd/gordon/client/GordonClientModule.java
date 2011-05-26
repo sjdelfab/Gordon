@@ -10,6 +10,8 @@ import org.sjd.gordon.client.registry.RegistryPresenter;
 import org.sjd.gordon.client.registry.RegistryViewImpl;
 import org.sjd.gordon.client.security.UserSetupPanelView;
 import org.sjd.gordon.client.security.UsersSetupPresenter;
+import org.sjd.gordon.client.viewer.StockAdminPresenter;
+import org.sjd.gordon.client.viewer.StockAdminViewImpl;
 import org.sjd.gordon.client.viewer.StockPresenter;
 import org.sjd.gordon.client.viewer.StockProfilePresenter;
 import org.sjd.gordon.client.viewer.StockProfileViewImpl;
@@ -61,6 +63,9 @@ public class GordonClientModule extends AbstractPresenterModule {
 		bindPresenterWidget(RegistryPresenter.class, RegistryPresenter.RegistryPanelView.class, RegistryViewImpl.class);
 		bindPresenter(UsersSetupPresenter.class, UsersSetupPresenter.UsersSetupView.class, UserSetupPanelView.class, 
 				UsersSetupPresenter.UsersSetupPanelProxy.class);
+		bindPresenterWidget(StockAdminPresenter.class, StockAdminPresenter.StockAdminView.class, 
+				StockAdminViewImpl.class);
+
 	}
 
 }

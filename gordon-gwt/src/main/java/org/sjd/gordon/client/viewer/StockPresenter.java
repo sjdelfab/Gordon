@@ -1,6 +1,6 @@
 package org.sjd.gordon.client.viewer;
 
-import org.sjd.gordon.shared.viewer.StockDetail;
+import org.sjd.gordon.shared.navigation.StockName;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.inject.Inject;
@@ -16,7 +16,7 @@ public class StockPresenter extends Presenter<StockPresenter.StockPanelView,Stoc
 	public interface StockPanelProxy extends Proxy<StockPresenter> { }
 
 	public interface StockPanelView extends View { 
-		public void setStock(StockDetail stockDetails);
+		public void setStock(StockName stock);
 	}
 	
 	@Inject
@@ -35,4 +35,5 @@ public class StockPresenter extends Presenter<StockPresenter.StockPanelView,Stoc
 		RevealRootContentEvent.fire(this, this);
 	}
 
+	
 }

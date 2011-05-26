@@ -8,7 +8,7 @@ public interface UserSetupUIHandler extends UiHandlers {
 
 	public void add(UserDetail details);
 	public void update(UserDetail details);
-	public void delete(final UserDetail selected);
+	public void delete(UserDetail selected);
 	public void changePassword(Integer userId, String password);
 	public void load();
 }

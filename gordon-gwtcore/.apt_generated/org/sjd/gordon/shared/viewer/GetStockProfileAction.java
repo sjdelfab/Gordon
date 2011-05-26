@@ -2,15 +2,15 @@ package org.sjd.gordon.shared.viewer;
 
 import com.gwtplatform.dispatch.shared.Action;
 
-public class GetStockDetailsAction implements Action<GetStockDetailsResult> { 
+public class GetStockProfileAction implements Action<GetStockProfileResult> { 
 
   java.lang.Long stockId;
 
-  public GetStockDetailsAction(java.lang.Long stockId) {
+  public GetStockProfileAction(java.lang.Long stockId) {
     this.stockId = stockId;
   }
 
-  protected GetStockDetailsAction() {
+  protected GetStockProfileAction() {
     // Possibly for serialization.
   }
 
@@ -36,7 +36,7 @@ public class GetStockDetailsAction implements Action<GetStockDetailsResult> {
         return false;
     if (getClass() != obj.getClass())
         return false;
-    GetStockDetailsAction other = (GetStockDetailsAction) obj;
+    GetStockProfileAction other = (GetStockProfileAction) obj;
     if (stockId == null) {
       if (other.stockId != null)
         return false;
@@ -54,7 +54,7 @@ public class GetStockDetailsAction implements Action<GetStockDetailsResult> {
 
   @Override
   public String toString() {
-    return "GetStockDetailsAction["
+    return "GetStockProfileAction["
                  + stockId
     + "]";
   }

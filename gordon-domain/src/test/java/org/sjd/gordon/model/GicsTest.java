@@ -40,7 +40,7 @@ public class GicsTest extends AbstractJpaTest {
         em.persist(stock); 
         tx.commit();
         
-        String getAllStocks = "select s from StockEntity s";
+        String getAllStocks = "select s from StockEntity s WHERE s.id = " + stock.getId();
         List<StockEntity> stocks = em.createQuery(getAllStocks,StockEntity.class).getResultList(); 
         assertEquals(1, stocks.size());
         assertNotNull(stocks.get(0).getGicsIndustryGroup());

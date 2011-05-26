@@ -42,7 +42,7 @@ public abstract class AbstractJpaTest {
         tx = em.getTransaction(); 
     } 
  
-    protected StockEntity createStock() {
+    static protected StockEntity createStock() {
     	Exchange exchange = new Exchange();
     	exchange.setActive(true);
     	exchange.setCode("ASX");
@@ -52,6 +52,7 @@ public abstract class AbstractJpaTest {
     	stock.setCode("BHP");
     	stock.setExchange(exchange);
     	stock.setName("BHP Ltd");
+    	stock.setFloatVolume(Integer.valueOf(424234243));
     	return stock;
     }
     

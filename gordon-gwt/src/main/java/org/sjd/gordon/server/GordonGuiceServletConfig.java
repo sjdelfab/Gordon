@@ -14,7 +14,7 @@ public class GordonGuiceServletConfig extends GuiceServletContextListener {
 		DEV, GUICE_JPA, EJB
 	};
 
-	private Mode mode = Mode.EJB;
+	private Mode mode = Mode.DEV;
 
 	@Override
 	protected Injector getInjector() {

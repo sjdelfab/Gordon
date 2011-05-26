@@ -2,13 +2,10 @@ package org.sjd.gordon.client.navigation;
 
 import java.util.ArrayList;
 
-import org.sjd.gordon.client.viewer.LoadStockDetailsCallback;
 import org.sjd.gordon.model.Exchange;
 import org.sjd.gordon.shared.navigation.GetExchangesAction;
 import org.sjd.gordon.shared.navigation.GetStocksAction;
 import org.sjd.gordon.shared.navigation.StockName;
-import org.sjd.gordon.shared.viewer.GetStockDetailsAction;
-import org.sjd.gordon.shared.viewer.StockDetail;
 
 import com.extjs.gxt.ui.client.data.BeanModel;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -60,7 +57,7 @@ public class NavigationPresenter extends Presenter<NavigationPresenter.Navigatio
 		load();
 		getView().getViewHandler().addClickHandler(new ClickHandler() {
 			@Override
-			public void onClick(ClickEvent arg0) {
+			public void onClick(ClickEvent event) {
 				StockName stock = (StockName) getView().getStock().getValue().getBean();
 				if (stock != null) {
 					showStock(stock);
@@ -94,13 +91,7 @@ public class NavigationPresenter extends Presenter<NavigationPresenter.Navigatio
 	}
 
 	private void showStock(StockName stockName) {
-		GetStockDetailsAction getExchanges = new GetStockDetailsAction(stockName.getId());
-		dispatcher.execute(getExchanges, new LoadStockDetailsCallback() {
-			@Override
-			public void loaded(StockDetail stockDetails) {
-				getEventBus().fireEvent(new ShowStockEvent(stockDetails));
-			}
-		});
+		getEventBus().fireEvent(new ShowStockEvent(stockName));
 	}
 
 	@Override
