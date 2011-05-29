@@ -1,18 +1,28 @@
 package org.sjd.gordon.server.devhandlers;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.sjd.gordon.model.Dividend;
+import org.sjd.gordon.model.StockSplit;
+import org.sjd.gordon.model.TreasuryHeldStock;
 import org.sjd.gordon.shared.security.UserDetail;
 import org.sjd.gordon.shared.viewer.StockDetail;
 
-class Data {
+public class Data {
 
-	static Map<Long,StockDetail> detailsMap = new HashMap<Long,StockDetail>();
-	static Map<Integer,UserDetail> users = new HashMap<Integer,UserDetail>();
+	public static Map<Long,StockDetail> detailsMap = new HashMap<Long,StockDetail>();
+	public static Map<Integer,UserDetail> users = new HashMap<Integer,UserDetail>();
+	public static Map<Long,ArrayList<StockSplit>> splitsMap = new HashMap<Long,ArrayList<StockSplit>>();
+	public static Map<Long,ArrayList<TreasuryHeldStock>> heldInTreasuryMap = new HashMap<Long,ArrayList<TreasuryHeldStock>>();
+	public static Map<Long,ArrayList<Dividend>> dividendMap = new HashMap<Long,ArrayList<Dividend>>();
+	public static long stockSplitCounter = 1l;
+	public static long treasuryHeldStockCounter = 1l;
+	public static long dividendCounter = 1l;
 	
 	static {
 		char endLetter = 'A';
@@ -65,13 +75,29 @@ class Data {
 		user.setRoles("USER");
 		user.setVersion(Integer.valueOf(1));
 		users.put(user.getId(), user);
+		
+		ArrayList<StockSplit> splits = new ArrayList<StockSplit>();
+		StockSplit split = new StockSplit();
+		split.setDate(new Date());
+		split.setFactor(new BigDecimal("1.5"));
+		split.setStockId(Long.valueOf(1));		
+		splits.add(split);
+		splitsMap.put(Long.valueOf(1),splits);
+		
+		ArrayList<TreasuryHeldStock> treasuryHeldStock = new ArrayList<TreasuryHeldStock>();
+		TreasuryHeldStock held = new TreasuryHeldStock();
+		held.setDate(new Date());
+		held.setVolume(1000);
+		held.setStockId(Long.valueOf(1));		
+		treasuryHeldStock.add(held);
+		heldInTreasuryMap.put(Long.valueOf(1),treasuryHeldStock);
 	}
 	
-	static Long getStockMaxId() {
+	public static Long getStockMaxId() {
 		return Collections.max(detailsMap.keySet());
 	}
 	
-	static Integer getUserMaxId() {
+	public static Integer getUserMaxId() {
 		return Collections.max(users.keySet());
 	}
 

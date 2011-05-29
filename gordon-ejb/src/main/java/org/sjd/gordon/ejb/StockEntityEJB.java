@@ -13,8 +13,11 @@ import javax.persistence.TypedQuery;
 
 import org.sjd.gordon.analysis.statistics.StockStatisticsUtil;
 import org.sjd.gordon.model.BusinessSummary;
+import org.sjd.gordon.model.Dividend;
 import org.sjd.gordon.model.StockDayTradeRecord;
 import org.sjd.gordon.model.StockEntity;
+import org.sjd.gordon.model.StockSplit;
+import org.sjd.gordon.model.TreasuryHeldStock;
 
 @Stateless
 public class StockEntityEJB implements StockEntityService {
@@ -121,7 +124,11 @@ public class StockEntityEJB implements StockEntityService {
 		String getSummary = "SELECT bs FROM BusinessSummary bs WHERE bs.stockId=:stockId";
 		TypedQuery<BusinessSummary> query = em.createQuery(getSummary, BusinessSummary.class);
 		query.setParameter("stockId", stockId);
-		return query.getSingleResult();
+		List<BusinessSummary> summaries = query.getResultList();
+		if (summaries.isEmpty()) {
+			return null;
+		}
+		return summaries.get(0);
 	}
 	
 	@Override
@@ -129,27 +136,126 @@ public class StockEntityEJB implements StockEntityService {
 		return em.merge(summary);
 	}
 	
+	@Override
+	public BusinessSummary addBusinessSummary(BusinessSummary newBusinessSummary) {
+		em.persist(newBusinessSummary);
+		return newBusinessSummary;
+	}
+	
+	@Override
     public BigDecimal getMaxPrice(Long stockId, Date startDate, Date endDate) {
     	return StockStatisticsUtil.getMaxPrice(em, stockId, startDate, endDate);
     }
     
+	@Override
     public BigDecimal getMinPrice(Long stockId, Date startDate, Date endDate) {
     	return StockStatisticsUtil.getMinPrice(em, stockId, startDate, endDate);
     }
     
+	@Override
     public Double getAverageVolume(Long stockId, Date startDate, Date endDate) {
     	return StockStatisticsUtil.getAverageVolume(em, stockId, startDate, endDate);
     }
     
+	@Override
     public BigDecimal getPercentageChange(Long stockId, Date startDate, Date endDate) {
     	return StockStatisticsUtil.getPercentageChange(em, stockId, startDate, endDate);
     }
     
+	@Override
     public Double getAveragePrice(Long stockId, Date startDate, Date endDate) {
     	return StockStatisticsUtil.getAveragePrice(em, stockId, startDate, endDate);
     }
     
+	@Override
     public Long getSharesOutstanding(StockEntity stock) {
     	return StockStatisticsUtil.calculateSharesOutstanding(em, stock);
     }
+
+	@Override
+	public List<StockSplit> getStockSplits(Long stockId) {
+		String getStockSplits = "SELECT s FROM StockSplit s WHERE s.stockId = :stockId";
+		TypedQuery<StockSplit> query = em.createQuery(getStockSplits, StockSplit.class);
+		query.setParameter("stockId", stockId);
+		return query.getResultList();
+	}
+
+	@Override
+	public List<TreasuryHeldStock> getTreasuryHeldStockHistory(Long stockId) {
+		String getTreasuryHeldStock = "SELECT t FROM TreasuryHeldStock t WHERE t.stockId = :stockId";
+		TypedQuery<TreasuryHeldStock> query = em.createQuery(getTreasuryHeldStock, TreasuryHeldStock.class);
+		query.setParameter("stockId", stockId);
+		return query.getResultList();
+	}
+
+	@Override
+	public List<Dividend> getDividendHistory(Long stockId) {
+		String getDividends = "SELECT d FROM Dividend d WHERE d.stockId = :stockId";
+		TypedQuery<Dividend> query = em.createQuery(getDividends, Dividend.class);
+		query.setParameter("stockId", stockId);
+		return query.getResultList();
+	}
+
+	@Override
+	public StockSplit findStockSplitById(Long id) {
+		return em.find(StockSplit.class,id);
+	}
+
+	@Override
+	public void delete(StockSplit stockSplit) {
+		em.remove(em.merge(stockSplit));
+	}
+
+	@Override
+	public TreasuryHeldStock findTreasuryHeldStockById(Long id) {
+		return em.find(TreasuryHeldStock.class,id);
+	}
+
+	@Override
+	public void delete(TreasuryHeldStock heldStock) {
+		em.remove(em.merge(heldStock));
+	}
+
+	@Override
+	public Dividend findDividendById(Long id) {
+		return em.find(Dividend.class,id);
+	}
+
+	@Override
+	public void delete(Dividend dividend) {
+		em.remove(em.merge(dividend));
+	}
+
+	@Override
+	public StockSplit createStockSplit(StockSplit newSplit) {
+		em.persist(newSplit); 
+        return newSplit; 
+	}
+
+	@Override
+	public StockSplit updateStockSplit(StockSplit stockSplit) {
+		return em.merge(stockSplit);
+	}
+
+	@Override
+	public TreasuryHeldStock createTreasuryHeldStock(TreasuryHeldStock stockHeld) {
+		em.persist(stockHeld); 
+        return stockHeld;
+	}
+
+	@Override
+	public TreasuryHeldStock updateTreasuryHeldStock(TreasuryHeldStock stockHeld) {
+		return em.merge(stockHeld);
+	}
+
+	@Override
+	public Dividend createDividend(Dividend newDividend) {
+		em.persist(newDividend); 
+        return newDividend;
+	}
+
+	@Override
+	public Dividend updateDividend(Dividend dividend) {
+		return em.merge(dividend);
+	}
 }

@@ -9,11 +9,21 @@ import org.sjd.gordon.ejb.ExchangeEJB;
 import org.sjd.gordon.ejb.ExchangeService;
 import org.sjd.gordon.ejb.StockEntityEJB;
 import org.sjd.gordon.ejb.StockEntityService;
+import org.sjd.gordon.ejb.dispatch.data.DeleteDividendEJBHandler;
+import org.sjd.gordon.ejb.dispatch.data.DeleteStockSplitEJBHandler;
+import org.sjd.gordon.ejb.dispatch.data.DeleteTreasuryHeldStockEJBHandler;
+import org.sjd.gordon.ejb.dispatch.data.EditDividendEJBHandler;
+import org.sjd.gordon.ejb.dispatch.data.EditStockSplitEJBHandler;
+import org.sjd.gordon.ejb.dispatch.data.EditTreasuryHeldStockEJBHandler;
 import org.sjd.gordon.ejb.dispatch.data.GetAllStockDetailsEJBHandler;
+import org.sjd.gordon.ejb.dispatch.data.GetDividendHistoryEJBHandler;
 import org.sjd.gordon.ejb.dispatch.data.GetExchangesEJBHandler;
+import org.sjd.gordon.ejb.dispatch.data.GetStockAdminDatasetEJBHandler;
 import org.sjd.gordon.ejb.dispatch.data.GetStockProfileEJBHandler;
+import org.sjd.gordon.ejb.dispatch.data.GetStockSplitsEJBHandler;
 import org.sjd.gordon.ejb.dispatch.data.GetStocksEJBHandler;
 import org.sjd.gordon.ejb.dispatch.data.GetTradeHistoryEJBHandler;
+import org.sjd.gordon.ejb.dispatch.data.GetTreasuryHeldStockHistoryEJBHandler;
 import org.sjd.gordon.ejb.dispatch.data.UpdateBusinessSummaryEJBHandler;
 import org.sjd.gordon.ejb.dispatch.security.ChangeUserPasswordEJBHandler;
 import org.sjd.gordon.ejb.dispatch.security.CurrentUserEJBHandler;
@@ -40,8 +50,18 @@ import org.sjd.gordon.shared.security.EditUserAction;
 import org.sjd.gordon.shared.security.GetAllUsersAction;
 import org.sjd.gordon.shared.security.GetCurrentUserAction;
 import org.sjd.gordon.shared.security.LogoutAction;
+import org.sjd.gordon.shared.viewer.DeleteDividendAction;
+import org.sjd.gordon.shared.viewer.DeleteStockSplitAction;
+import org.sjd.gordon.shared.viewer.DeleteTreasuryHeldStockAction;
+import org.sjd.gordon.shared.viewer.EditDividendAction;
+import org.sjd.gordon.shared.viewer.EditStockSplitAction;
+import org.sjd.gordon.shared.viewer.EditTreasuryHeldStockAction;
+import org.sjd.gordon.shared.viewer.GetDividendHistoryAction;
+import org.sjd.gordon.shared.viewer.GetStockAdminDatasetAction;
 import org.sjd.gordon.shared.viewer.GetStockProfileAction;
+import org.sjd.gordon.shared.viewer.GetStockSplitsAction;
 import org.sjd.gordon.shared.viewer.GetTradeHistoryAction;
+import org.sjd.gordon.shared.viewer.GetTreasuryHeldStockHistoryAction;
 import org.sjd.gordon.shared.viewer.UpdateBusinessSummaryAction;
 
 import com.google.inject.Singleton;
@@ -74,6 +94,18 @@ public class EJBServerModule extends HandlerModule {
 		bindHandler(ChangeUserPasswordAction.class, ChangeUserPasswordEJBHandler.class);
 		
 		bindHandler(UpdateBusinessSummaryAction.class, UpdateBusinessSummaryEJBHandler.class);
+		bindHandler(GetStockAdminDatasetAction.class, GetStockAdminDatasetEJBHandler.class);
+		bindHandler(DeleteStockSplitAction.class, DeleteStockSplitEJBHandler.class);
+		bindHandler(DeleteTreasuryHeldStockAction.class, DeleteTreasuryHeldStockEJBHandler.class);
+		bindHandler(EditStockSplitAction.class, EditStockSplitEJBHandler.class);
+		bindHandler(EditTreasuryHeldStockAction.class, EditTreasuryHeldStockEJBHandler.class);
+		bindHandler(GetStockSplitsAction.class, GetStockSplitsEJBHandler.class);
+		bindHandler(GetTreasuryHeldStockHistoryAction.class, GetTreasuryHeldStockHistoryEJBHandler.class);
+		
+		bindHandler(DeleteDividendAction.class, DeleteDividendEJBHandler.class);
+		bindHandler(EditDividendAction.class, EditDividendEJBHandler.class);
+		bindHandler(GetDividendHistoryAction.class, GetDividendHistoryEJBHandler.class);
+
 	}
 
 	public static String PREFIX = "gordon-gwt-1.0";

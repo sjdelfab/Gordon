@@ -23,7 +23,11 @@
         <class>org.sjd.gordon.model.User</class>
         <class>org.sjd.gordon.model.Group</class>
         <class>org.sjd.gordon.model.GicsSector</class>
-        <class>org.sjd.gordon.model.GicsIndustryGroup</class>        
+        <class>org.sjd.gordon.model.GicsIndustryGroup</class> 
+        <class>org.sjd.gordon.model.BusinessSummary</class>
+        <class>org.sjd.gordon.model.StockSplit</class>
+        <class>org.sjd.gordon.model.TreasuryHeldStock</class>
+        <class>org.sjd.gordon.model.Dividend</class>               
         <properties>
             <property name="eclipselink.target-database" value="org.eclipse.persistence.platform.database.H2Platform"/>
             <property name="eclipselink.logging.level" value="INFO"/>

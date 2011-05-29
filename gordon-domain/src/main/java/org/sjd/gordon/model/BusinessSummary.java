@@ -18,7 +18,7 @@ public class BusinessSummary implements Serializable {
 	private static final long serialVersionUID = 681789753779341183L;
 
 	@Id @GeneratedValue(generator="businessSummaryIdSeqGenerator")
-    private Integer id;
+    private Long id;
 	@Version 
     private Integer version;
 	@Column(nullable = false,name="stock_id")
@@ -35,7 +35,7 @@ public class BusinessSummary implements Serializable {
 		this.summary = businessSummary.getSummary();
 	}
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 	

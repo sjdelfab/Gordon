@@ -1,6 +1,7 @@
 package org.sjd.gordon.ejb.dispatch.data;
 
 import org.sjd.gordon.ejb.StockEntityService;
+import org.sjd.gordon.model.BusinessSummary;
 import org.sjd.gordon.shared.viewer.UpdateBusinessSummaryAction;
 import org.sjd.gordon.shared.viewer.UpdateBusinessSummaryResult;
 
@@ -16,7 +17,13 @@ public class UpdateBusinessSummaryEJBHandler implements ActionHandler<UpdateBusi
 	
 	@Override
 	public UpdateBusinessSummaryResult execute(UpdateBusinessSummaryAction action, ExecutionContext context) throws ActionException {
-		return new UpdateBusinessSummaryResult(stockEntityService.updateBusinessSummary(action.getNewBusinessSummary()));
+		BusinessSummary newBusinessSummary = action.getNewBusinessSummary();
+		if (newBusinessSummary.getId() == null) {
+			newBusinessSummary = stockEntityService.addBusinessSummary(newBusinessSummary);
+		} else {
+			newBusinessSummary = stockEntityService.updateBusinessSummary(newBusinessSummary);
+		}
+		return new UpdateBusinessSummaryResult(newBusinessSummary);
 	}
 
 	@Override

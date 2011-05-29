@@ -7,8 +7,11 @@ import java.util.List;
 import javax.ejb.Local;
 
 import org.sjd.gordon.model.BusinessSummary;
+import org.sjd.gordon.model.Dividend;
 import org.sjd.gordon.model.StockDayTradeRecord;
 import org.sjd.gordon.model.StockEntity;
+import org.sjd.gordon.model.StockSplit;
+import org.sjd.gordon.model.TreasuryHeldStock;
 
 @Local
 public interface StockEntityService {
@@ -27,10 +30,28 @@ public interface StockEntityService {
     public int getStockCount(Integer exchangeId);
     public BusinessSummary getBusinessSummary(Long stockId);
     public BusinessSummary updateBusinessSummary(BusinessSummary summary);
+    public BusinessSummary addBusinessSummary(BusinessSummary newBusinessSummary);
     public BigDecimal getMaxPrice(Long stockId, Date startDate, Date endDate);
     public BigDecimal getMinPrice(Long stockId, Date startDate, Date endDate);
     public Double getAverageVolume(Long stockId, Date startDate, Date endDate);
     public BigDecimal getPercentageChange(Long stockId, Date startDate, Date endDate);
     public Double getAveragePrice(Long stockId, Date startDate, Date endDate);
     public Long getSharesOutstanding(StockEntity stock);
+    
+    public List<StockSplit> getStockSplits(Long stockId);
+    public List<TreasuryHeldStock> getTreasuryHeldStockHistory(Long stockId);
+    public List<Dividend> getDividendHistory(Long stockId);
+    public StockSplit findStockSplitById(Long id);
+    public void delete(StockSplit stockSplit);
+    public TreasuryHeldStock findTreasuryHeldStockById(Long id);
+    public void delete(TreasuryHeldStock heldStock);
+    public Dividend findDividendById(Long id);
+    public void delete(Dividend dividend);
+	public StockSplit createStockSplit(StockSplit newSplit);
+	public StockSplit updateStockSplit(StockSplit stockSplit);
+	public TreasuryHeldStock createTreasuryHeldStock(TreasuryHeldStock stockHeld);
+	public TreasuryHeldStock updateTreasuryHeldStock(TreasuryHeldStock stockHeld);
+	public Dividend createDividend(Dividend newDividend);
+	public Dividend updateDividend(Dividend dividend);
+    
 }

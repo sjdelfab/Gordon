@@ -198,7 +198,9 @@ public class StockProfileViewImpl extends ViewWithUiHandlers<StockProfileUIHandl
 		
 		private void setSummary(BusinessSummary summary) {
 			this.summary = summary;
-			html = addText(summary.getSummary());
+			if (summary != null) {
+				html = addText(summary.getSummary());	
+			}
 		}
 		
 		private void updateBusinessSummary(BusinessSummary summary) {
@@ -215,14 +217,21 @@ public class StockProfileViewImpl extends ViewWithUiHandlers<StockProfileUIHandl
 		    editDialog.setBodyStyleName("pad-text");
 		    editDialog.setLayout(new FitLayout());
 		    final TextArea textArea = new TextArea();
-		    textArea.setValue(summary.getSummary());
+		    if (summary != null) {
+		        textArea.setValue(summary.getSummary());
+		    }
 		    editDialog.add(textArea);  
 		    editDialog.setScrollMode(Scroll.AUTOY);  
 		    editDialog.setHideOnButtonClick(false);
 		    editDialog.getButtonById(Dialog.OK).addSelectionListener(new SelectionListener<ButtonEvent>() {
 				@Override
 				public void componentSelected(ButtonEvent ce) {
-					BusinessSummary newSummary = new BusinessSummary(summary);
+					BusinessSummary newSummary = new BusinessSummary();
+					if (summary != null) {
+						newSummary = new BusinessSummary(summary);
+					} else {
+						newSummary.setStockId(stockProfile.getDetail().getId());
+					}
 					newSummary.setSummary(textArea.getValue());
 					getUiHandlers().updateBusinessSummary(newSummary);
 					editDialog.setVisible(false);

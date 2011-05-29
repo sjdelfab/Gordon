@@ -26,7 +26,7 @@ public class StockView extends ViewImpl implements StockPresenter.StockPanelView
 	private int height;
 	
 	@Inject
-	public StockView(StockProfilePresenter stockProfilePresenter, final TradeHistoryPresenter tradeHistoryPresenter, final StockAdminPresenter stockAdminPresenter) {
+	public StockView(StockProfilePresenter stockProfilePresenter, TradeHistoryPresenter tradeHistoryPresenter, final StockAdminPresenter stockAdminPresenter) {
 		this.stockProfilePresenter = stockProfilePresenter;
 		this.tradeHistoryPresenter = tradeHistoryPresenter;
 
@@ -55,7 +55,7 @@ public class StockView extends ViewImpl implements StockPresenter.StockPanelView
 		stockAdminTabItem.addListener(Events.Select, new Listener<TabPanelEvent>() {
 			@Override
 			public void handleEvent(TabPanelEvent be) {
-				//StockView.this.tradeHistoryPresenter.setStock(stock);
+				stockAdminPresenter.setStock(stock);
 			}
 
 		});

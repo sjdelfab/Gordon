@@ -103,6 +103,7 @@ public class StockStatisticsUtil {
 		String getStockHeldInTreasury = "SELECT t.volume FROM TreasuryHeldStock t WHERE t.stockId = :stockId AND t.date = " +
 				"(SELECT MAX(ths.date) FROM TreasuryHeldStock ths WHERE ths.stockId = :stockId)";
 		TypedQuery<Long> stockHeldInTreasuryQuery = em.createQuery(getStockHeldInTreasury, Long.class);
+		stockHeldInTreasuryQuery.setParameter("stockId", stock.getId());
 		List<Long> stockHeld = stockHeldInTreasuryQuery.getResultList();
 		if (!stockHeld.isEmpty()) {
 			shareVolume.subtract(new BigDecimal(stockHeld.get(0)));
