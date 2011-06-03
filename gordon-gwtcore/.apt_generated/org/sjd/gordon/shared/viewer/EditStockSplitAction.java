@@ -5,10 +5,12 @@ import com.gwtplatform.dispatch.shared.Action;
 public class EditStockSplitAction implements Action<EditStockSplitResult> { 
 
   org.sjd.gordon.model.StockSplit newStockSplit;
+  java.lang.Long stockId;
   org.sjd.gordon.shared.util.EditType editType;
 
-  public EditStockSplitAction(org.sjd.gordon.model.StockSplit newStockSplit, org.sjd.gordon.shared.util.EditType editType) {
+  public EditStockSplitAction(org.sjd.gordon.model.StockSplit newStockSplit, java.lang.Long stockId, org.sjd.gordon.shared.util.EditType editType) {
     this.newStockSplit = newStockSplit;
+    this.stockId = stockId;
     this.editType = editType;
   }
 
@@ -18,6 +20,10 @@ public class EditStockSplitAction implements Action<EditStockSplitResult> {
 
   public org.sjd.gordon.model.StockSplit getNewStockSplit() {
     return newStockSplit;
+  }
+
+  public java.lang.Long getStockId() {
+    return stockId;
   }
 
   public org.sjd.gordon.shared.util.EditType getEditType() {
@@ -48,6 +54,11 @@ public class EditStockSplitAction implements Action<EditStockSplitResult> {
         return false;
     } else if (!newStockSplit.equals(other.newStockSplit))
       return false;
+    if (stockId == null) {
+      if (other.stockId != null)
+        return false;
+    } else if (!stockId.equals(other.stockId))
+      return false;
     if (editType == null) {
       if (other.editType != null)
         return false;
@@ -60,6 +71,7 @@ public class EditStockSplitAction implements Action<EditStockSplitResult> {
   public int hashCode() {
     int hashCode = 23;
     hashCode = (hashCode * 37) + (newStockSplit == null ? 1 : newStockSplit.hashCode());
+    hashCode = (hashCode * 37) + (stockId == null ? 1 : stockId.hashCode());
     hashCode = (hashCode * 37) + (editType == null ? 1 : editType.hashCode());
     return hashCode;
   }
@@ -68,6 +80,8 @@ public class EditStockSplitAction implements Action<EditStockSplitResult> {
   public String toString() {
     return "EditStockSplitAction["
                  + newStockSplit
+                 + ","
+                 + stockId
                  + ","
                  + editType
     + "]";

@@ -1,5 +1,7 @@
 package org.sjd.gordon.server.devhandlers;
 
+import org.sjd.gordon.importing.profile.StockEquityImporterService;
+import org.sjd.gordon.importing.tradehistory.CSVTradeHistoryImportService;
 import org.sjd.gordon.server.LogoutHandler;
 import org.sjd.gordon.server.devhandlers.data.DeleteDividendDevHandler;
 import org.sjd.gordon.server.devhandlers.data.DeleteStockSplitDevHandler;
@@ -57,6 +59,9 @@ public class DevelopmentModule extends HandlerModule {
 
 	@Override
 	protected void configureHandlers() {
+		bind(StockEquityImporterService.class).toProvider(DevStockEquityImporterProvider.class);
+		bind(CSVTradeHistoryImportService.class).toProvider(DevCSVTradeHistoryImporterProvider.class);
+		
 		bindHandler(GetStocksAction.class, GetStocksDevHandler.class);
 		bindHandler(GetExchangesAction.class, GetExchangesDevHandler.class);
 		bindHandler(GetTradeHistoryAction.class, GetTradeHistoryDevHandler.class);

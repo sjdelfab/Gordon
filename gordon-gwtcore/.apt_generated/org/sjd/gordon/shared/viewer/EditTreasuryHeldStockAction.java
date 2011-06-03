@@ -5,10 +5,12 @@ import com.gwtplatform.dispatch.shared.Action;
 public class EditTreasuryHeldStockAction implements Action<EditTreasuryHeldStockResult> { 
 
   org.sjd.gordon.model.TreasuryHeldStock newTreasuryHeldStock;
+  java.lang.Long stockId;
   org.sjd.gordon.shared.util.EditType editType;
 
-  public EditTreasuryHeldStockAction(org.sjd.gordon.model.TreasuryHeldStock newTreasuryHeldStock, org.sjd.gordon.shared.util.EditType editType) {
+  public EditTreasuryHeldStockAction(org.sjd.gordon.model.TreasuryHeldStock newTreasuryHeldStock, java.lang.Long stockId, org.sjd.gordon.shared.util.EditType editType) {
     this.newTreasuryHeldStock = newTreasuryHeldStock;
+    this.stockId = stockId;
     this.editType = editType;
   }
 
@@ -18,6 +20,10 @@ public class EditTreasuryHeldStockAction implements Action<EditTreasuryHeldStock
 
   public org.sjd.gordon.model.TreasuryHeldStock getNewTreasuryHeldStock() {
     return newTreasuryHeldStock;
+  }
+
+  public java.lang.Long getStockId() {
+    return stockId;
   }
 
   public org.sjd.gordon.shared.util.EditType getEditType() {
@@ -48,6 +54,11 @@ public class EditTreasuryHeldStockAction implements Action<EditTreasuryHeldStock
         return false;
     } else if (!newTreasuryHeldStock.equals(other.newTreasuryHeldStock))
       return false;
+    if (stockId == null) {
+      if (other.stockId != null)
+        return false;
+    } else if (!stockId.equals(other.stockId))
+      return false;
     if (editType == null) {
       if (other.editType != null)
         return false;
@@ -60,6 +71,7 @@ public class EditTreasuryHeldStockAction implements Action<EditTreasuryHeldStock
   public int hashCode() {
     int hashCode = 23;
     hashCode = (hashCode * 37) + (newTreasuryHeldStock == null ? 1 : newTreasuryHeldStock.hashCode());
+    hashCode = (hashCode * 37) + (stockId == null ? 1 : stockId.hashCode());
     hashCode = (hashCode * 37) + (editType == null ? 1 : editType.hashCode());
     return hashCode;
   }
@@ -68,6 +80,8 @@ public class EditTreasuryHeldStockAction implements Action<EditTreasuryHeldStock
   public String toString() {
     return "EditTreasuryHeldStockAction["
                  + newTreasuryHeldStock
+                 + ","
+                 + stockId
                  + ","
                  + editType
     + "]";

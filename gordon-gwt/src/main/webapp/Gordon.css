@@ -65,6 +65,62 @@
 	font: normal 10px arial, tahoma, sans-serif;
 }
 
+#progress_loading {
+	position: absolute;
+	left: 45%;
+	top: 40%;
+	margin-left: -45px;
+	padding: 2px;
+	z-index: 20001;
+	height: auto;
+}
+
+#progress_loading a {
+	color: #225588;
+}
+
+#progress_loading .progress_loading-indicator {
+	background: white;
+	color: #444;
+	font: bold 13px tahoma, arial, helvetica;
+	padding: 10px;
+	margin: 0;
+	height: auto;
+}
+
+#progress_loading .progress_loading-indicator img {
+	margin-right: 8px;
+	float: left;
+	vertical-align: top;
+}
+
+#progress_importing {
+	position: absolute;
+	left: 85%;
+	top: 17%;
+	margin-left: -45px;
+	padding: 2px;
+	z-index: 20001;
+	height: auto;
+}
+
+#progress_importing a {
+	color: #225588;
+}
+
+#progress_importing .progress_importing-indicator {
+	color: #444;
+	font: bold 13px tahoma, arial, helvetica;
+	padding: 10px;
+	margin: 0;
+	height: auto;
+}
+
+#progress_importing .progress_importing-indicator img {
+	margin-right: 8px;
+	float: right;
+	vertical-align: top;
+}
 
 #title-header .title-bar {
 	font: bold 20px tahoma, arial, helvetica;

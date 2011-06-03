@@ -1,6 +1,6 @@
 package org.sjd.gordon.ejb.dispatch.data;
 
-import org.sjd.gordon.ejb.StockEntityService;
+import org.sjd.gordon.ejb.StockEntityServiceLocal;
 import org.sjd.gordon.ejb.dispatch.AbstractHandler;
 import org.sjd.gordon.model.TreasuryHeldStock;
 import org.sjd.gordon.shared.exceptions.EntityNotFoundException;
@@ -15,7 +15,7 @@ import com.gwtplatform.dispatch.shared.ActionException;
 public class DeleteTreasuryHeldStockEJBHandler extends AbstractHandler implements ActionHandler<DeleteTreasuryHeldStockAction,DeleteTreasuryHeldStockResult> {
 
 	@Inject
-	private StockEntityService stockService;
+	private StockEntityServiceLocal stockService;
 
 	@Override
 	public DeleteTreasuryHeldStockResult execute(DeleteTreasuryHeldStockAction action, ExecutionContext context) throws ActionException {

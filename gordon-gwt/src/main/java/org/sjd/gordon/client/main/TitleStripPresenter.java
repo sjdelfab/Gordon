@@ -3,6 +3,7 @@ package org.sjd.gordon.client.main;
 import java.util.ArrayList;
 
 import org.sjd.gordon.client.navigation.LoadExchangesCallback;
+import org.sjd.gordon.client.navigation.LoadStocksCallback;
 import org.sjd.gordon.client.registry.ShowRegistryEvent;
 import org.sjd.gordon.client.security.ChangeUserNameEvent;
 import org.sjd.gordon.client.security.ChangeUserNameEvent.ChangeUserNameHandler;
@@ -12,6 +13,8 @@ import org.sjd.gordon.client.security.LogoutCallback;
 import org.sjd.gordon.client.security.ShowUserSetupEvent;
 import org.sjd.gordon.model.Exchange;
 import org.sjd.gordon.shared.navigation.GetExchangesAction;
+import org.sjd.gordon.shared.navigation.GetStocksAction;
+import org.sjd.gordon.shared.navigation.StockName;
 import org.sjd.gordon.shared.security.ChangeUserPasswordAction;
 import org.sjd.gordon.shared.security.EditUser;
 import org.sjd.gordon.shared.security.EditUserAction;
@@ -23,20 +26,22 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.gwtplatform.dispatch.client.DispatchAsync;
+import com.gwtplatform.mvp.client.HasUiHandlers;
 import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.ProxyStandard;
 import com.gwtplatform.mvp.client.proxy.Proxy;
 import com.gwtplatform.mvp.client.proxy.RevealRootContentEvent;
 
-public class TitleStripPresenter extends Presenter<TitleStripPresenter.TitleStripView,TitleStripPresenter.TitleStripProxy> {
+public class TitleStripPresenter extends Presenter<TitleStripPresenter.TitleStripView,TitleStripPresenter.TitleStripProxy> implements TitleStripUIHandler {
 
 	@ProxyStandard
 	public interface TitleStripProxy extends Proxy<TitleStripPresenter> { }
 
-	public interface TitleStripView extends View { 
+	public interface TitleStripView extends View, HasUiHandlers<TitleStripUIHandler> { 
 		public HasClickHandlers getLogout();
 		public HasClickHandlers addExchange(Exchange exchange);
 		public HasClickHandlers getUserSetup();
@@ -58,6 +63,7 @@ public class TitleStripPresenter extends Presenter<TitleStripPresenter.TitleStri
 	@Inject
 	public TitleStripPresenter(EventBus eventBus, TitleStripView view, TitleStripProxy proxy, final DispatchAsync dispatcher) {
 		super(eventBus, view, proxy);
+		getView().setUiHandlers(this);
 		eventBus.addHandler(ChangeUserNameEvent.getType(), view.getChangeUserNameEventHandler());
 		this.dispatcher = dispatcher;
 		view.getLogout().addClickHandler(new ClickHandler() {
@@ -146,6 +152,17 @@ public class TitleStripPresenter extends Presenter<TitleStripPresenter.TitleStri
 			public void loaded(UserDetail user) {
 				TitleStripPresenter.this.currentUser = user;
 				getEventBus().fireEvent(new ChangeUserNameEvent(user.getFirstName() + " " + user.getLastName()));
+			}
+		});
+	}
+
+	@Override
+	public void getStocks(Exchange exchange, final AsyncCallback<ArrayList<StockName>> callback) {
+		GetStocksAction getStocks = new GetStocksAction(exchange.getId());
+		dispatcher.execute(getStocks, new LoadStocksCallback() {
+			@Override
+			public void loaded(ArrayList<StockName> stocks) {
+				callback.onSuccess(stocks);
 			}
 		});
 	}

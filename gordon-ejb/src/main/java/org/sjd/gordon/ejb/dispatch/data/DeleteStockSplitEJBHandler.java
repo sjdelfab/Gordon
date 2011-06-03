@@ -1,6 +1,6 @@
 package org.sjd.gordon.ejb.dispatch.data;
 
-import org.sjd.gordon.ejb.StockEntityService;
+import org.sjd.gordon.ejb.StockEntityServiceLocal;
 import org.sjd.gordon.ejb.dispatch.AbstractHandler;
 import org.sjd.gordon.model.StockSplit;
 import org.sjd.gordon.shared.exceptions.EntityNotFoundException;
@@ -15,7 +15,7 @@ import com.gwtplatform.dispatch.shared.ActionException;
 public class DeleteStockSplitEJBHandler extends AbstractHandler implements ActionHandler<DeleteStockSplitAction,DeleteStockSplitResult> {
 
 	@Inject
-	private StockEntityService stockService;
+	private StockEntityServiceLocal stockService;
 	
 	@Override
 	public DeleteStockSplitResult execute(DeleteStockSplitAction action, ExecutionContext context) throws ActionException {

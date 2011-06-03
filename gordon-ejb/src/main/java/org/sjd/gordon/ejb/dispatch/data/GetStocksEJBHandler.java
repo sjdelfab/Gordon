@@ -3,7 +3,7 @@ package org.sjd.gordon.ejb.dispatch.data;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.sjd.gordon.ejb.StockEntityService;
+import org.sjd.gordon.ejb.StockEntityServiceLocal;
 import org.sjd.gordon.model.StockEntity;
 import org.sjd.gordon.shared.navigation.GetStocksAction;
 import org.sjd.gordon.shared.navigation.GetStocksResult;
@@ -17,7 +17,7 @@ import com.gwtplatform.dispatch.shared.ActionException;
 public class GetStocksEJBHandler implements ActionHandler<GetStocksAction,GetStocksResult> {
 
 	@Inject
-	private StockEntityService stockEjb;
+	private StockEntityServiceLocal stockEjb;
 	
 	@Override
 	public GetStocksResult execute(GetStocksAction getStocks, ExecutionContext context) throws ActionException {

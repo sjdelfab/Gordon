@@ -3,7 +3,7 @@ package org.sjd.gordon.ejb.dispatch.data;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.sjd.gordon.ejb.StockEntityService;
+import org.sjd.gordon.ejb.StockEntityServiceLocal;
 import org.sjd.gordon.model.Dividend;
 import org.sjd.gordon.shared.viewer.GetDividendHistoryAction;
 import org.sjd.gordon.shared.viewer.GetDividendHistoryResult;
@@ -16,7 +16,7 @@ import com.gwtplatform.dispatch.shared.ActionException;
 public class GetDividendHistoryEJBHandler implements ActionHandler<GetDividendHistoryAction,GetDividendHistoryResult> {
 
 	@Inject
-	private StockEntityService stockService;
+	private StockEntityServiceLocal stockService;
 	
 	@Override
 	public GetDividendHistoryResult execute(GetDividendHistoryAction action, ExecutionContext context) throws ActionException {

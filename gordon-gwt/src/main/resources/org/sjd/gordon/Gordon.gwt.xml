@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module rename-to='Gordon'>
   <!-- Inherit the core Web Toolkit stuff.                        -->
-  <inherits name='com.google.gwt.user.User'/>
-  <inherits name='com.extjs.gxt.ui.GXT'/>
+  <inherits name="com.google.gwt.user.User"/>
+  <inherits name="com.extjs.gxt.ui.GXT"/>
   
   <inherits name="com.google.gwt.inject.Inject" />
-  <inherits name='com.gwtplatform.dispatch.Dispatch' />
-  <inherits name='com.gwtplatform.mvp.Mvp' /> 
-  <inherits name='com.google.gwt.visualization.Visualization'/>
+  <inherits name="com.gwtplatform.dispatch.Dispatch"/>
+  <inherits name="com.gwtplatform.mvp.Mvp"/> 
+  <inherits name="com.google.gwt.visualization.Visualization"/>
   
   <!-- Inherit the default GWT style sheet.  You can change       -->
   <!-- the theme of your GWT application by uncommenting          -->
@@ -20,7 +20,7 @@
   <inherits name="org.sjd.gordon.GordonModel" />
   <inherits name="org.sjd.gordon.GordonGwtCore" />
   <!-- Specify the app entry point class.                         -->
-  <entry-point class='org.sjd.gordon.client.Gordon'/>
+  <entry-point class="org.sjd.gordon.client.Gordon"/>
 
   <!-- Add gwt-log support, default level `OFF` - check for
        extended property 'log_level' to see if this is overridden -->
@@ -33,17 +33,16 @@
   <set-property name="log_DivLogger" value="DISABLED" />
 
   <!-- Specify the paths for translatable code                    -->
-  <source path='client'/>
-  <source path='client/security'/>
-  <source path='client/navigation'/>
-  <source path='client/gxt'/>
-  <source path='client/viewer'/>
-  <source path='client/main'/>
-  <source path='client/registry'/>
-  <source path='client/common'/>
-  <source path='shared'/>
+  <source path="client"/>
+  <source path="client/security"/>
+  <source path="client/navigation"/>
+  <source path="client/gxt"/>
+  <source path="client/viewer"/>
+  <source path="client/main"/>
+  <source path="client/registry"/>
+  <source path="client/common"/>
+  <source path="shared"/>
   
   <define-configuration-property name="gin.ginjector" is-multi-valued="false" />
-  <set-configuration-property name="gin.ginjector" 
-      value="org.sjd.gordon.client.GordonGinjector" />  
+  <set-configuration-property name="gin.ginjector"  value="org.sjd.gordon.client.GordonGinjector" />  
 </module>

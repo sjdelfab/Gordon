@@ -15,9 +15,21 @@ public class DeleteDividendDevHandler implements ActionHandler<DeleteDividendAct
 
 	@Override
 	public DeleteDividendResult execute(DeleteDividendAction action, ExecutionContext context) throws ActionException {
-		ArrayList<Dividend> dividends = Data.dividendMap.get(action.getDividend().getStockId());
-		if (dividends != null) {
-			dividends.remove(action.getDividend());
+		for(Long stockId: Data.dividendMap.keySet()) {
+			ArrayList<Dividend> dividends = Data.dividendMap.get(stockId);
+			if (dividends != null) {
+				int index = -1;
+				for(int i=0; i < dividends.size(); i++) {
+					Dividend dividend = dividends.get(i);
+					if (dividend.getId() == action.getDividend().getId()) {
+						index = -1;
+					}
+				}
+				if (index != -1) {
+				    dividends.remove(index);
+				    break;
+				}
+			}
 		}
 		return new DeleteDividendResult();
 	}

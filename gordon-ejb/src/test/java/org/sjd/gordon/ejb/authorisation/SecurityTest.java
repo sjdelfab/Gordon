@@ -8,14 +8,14 @@ import javax.ejb.Stateless;
 import org.junit.Test;
 import org.sjd.gordon.ejb.AbstractEJBTest;
 import org.sjd.gordon.ejb.AllEjbTests;
-import org.sjd.gordon.ejb.StockEntityService;
+import org.sjd.gordon.ejb.StockEntityServiceLocal;
 import org.sjd.gordon.model.StockEntity;
 
 public class SecurityTest extends AbstractEJBTest {
 	
 	@Test 
     public void test() throws Exception {
-		final StockEntityService stockEntityEjb = (StockEntityService) AllEjbTests.ctx.lookup("java:global/classes/StockEntityEJB!org.sjd.gordon.ejb.StockEntityService");
+		final StockEntityServiceLocal stockEntityEjb = (StockEntityServiceLocal) AllEjbTests.ctx.lookup("java:global/classes/StockEntityEJB!org.sjd.gordon.ejb.StockEntityService");
 		UserCallingBean userCallingBean = (UserCallingBean) AllEjbTests.ctx.lookup("java:global/classes/UserCallingBean");
 		userCallingBean.call(new Callable<Object>() {
 			@Override

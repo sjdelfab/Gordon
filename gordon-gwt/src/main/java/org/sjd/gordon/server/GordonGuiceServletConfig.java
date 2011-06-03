@@ -14,13 +14,13 @@ public class GordonGuiceServletConfig extends GuiceServletContextListener {
 		DEV, GUICE_JPA, EJB
 	};
 
-	private Mode mode = Mode.EJB;
+	private Mode mode = Mode.DEV;
 
 	@Override
 	protected Injector getInjector() {
 		Injector injector = null;
 		if (mode == Mode.DEV) {
-			injector = Guice.createInjector(new DevelopmentModule(), new DispatchServletModule());
+			injector = Guice.createInjector(new CommonModule(), new DevelopmentModule(), new DispatchServletModule());
 		} else if (mode == Mode.GUICE_JPA) {
 			String guiceJpaModuleClass = "org.sjd.gordon.server.GuiceJpaServerModule";
 			String guiceJpaPersistModuleClass = "com.google.inject.persist.jpa.JpaPersistModule";
@@ -29,7 +29,7 @@ public class GordonGuiceServletConfig extends GuiceServletContextListener {
 				HandlerModule handlerModule = (HandlerModule) clazz.newInstance();
 				clazz = Class.forName(guiceJpaPersistModuleClass);
 				Module jpaPeristModule = (Module)clazz.getDeclaredConstructors()[0].newInstance("gordon");
-				injector = Guice.createInjector(handlerModule, new DispatchServletModule(),jpaPeristModule);
+				injector = Guice.createInjector(new CommonModule(), handlerModule, new DispatchServletModule(),jpaPeristModule);
 			} catch (Throwable cause) {
 				throw new RuntimeException(cause);
 			}
@@ -38,7 +38,7 @@ public class GordonGuiceServletConfig extends GuiceServletContextListener {
 			try {
 				Class<?> clazz = Class.forName(ejbModuleClass);
 				HandlerModule handlerModule = (HandlerModule) clazz.newInstance();
-				injector = Guice.createInjector(handlerModule, new DispatchServletModule());
+				injector = Guice.createInjector(new CommonModule(),handlerModule, new DispatchServletModule());
 			} catch (Throwable cause) {
 				throw new RuntimeException(cause);
 			}

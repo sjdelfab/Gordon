@@ -12,7 +12,8 @@ import com.gwtplatform.dispatch.shared.UnsecuredActionImpl;
 public class EditDividend {
 
 	@In(1) Dividend newDividend;
-	@In(2) EditType editType;
+	@In(2) Long stockId;
+	@In(3) EditType editType;
 	@Out(1) Dividend updatedDividend;	
 
 }

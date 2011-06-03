@@ -1,6 +1,6 @@
 package org.sjd.gordon.ejb.dispatch.security;
 
-import org.sjd.gordon.ejb.security.UserService;
+import org.sjd.gordon.ejb.security.UserServiceLocal;
 import org.sjd.gordon.model.User;
 import org.sjd.gordon.shared.security.ChangeUserPasswordAction;
 import org.sjd.gordon.shared.security.ChangeUserPasswordResult;
@@ -13,10 +13,10 @@ import com.gwtplatform.dispatch.shared.ActionException;
 
 public class ChangeUserPasswordEJBHandler implements ActionHandler<ChangeUserPasswordAction,ChangeUserPasswordResult> {
 
-	private UserService userService;
+	private UserServiceLocal userService;
 	
 	@Inject
-	public ChangeUserPasswordEJBHandler(UserService userService) {
+	public ChangeUserPasswordEJBHandler(UserServiceLocal userService) {
 		this.userService = userService;
 	}
 	

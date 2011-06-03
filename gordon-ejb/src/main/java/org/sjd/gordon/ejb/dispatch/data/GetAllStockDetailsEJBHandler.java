@@ -3,8 +3,8 @@ package org.sjd.gordon.ejb.dispatch.data;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.sjd.gordon.ejb.StockEntityService;
-import org.sjd.gordon.ejb.setup.GicsService;
+import org.sjd.gordon.ejb.StockEntityServiceLocal;
+import org.sjd.gordon.ejb.setup.GicsServiceLocal;
 import org.sjd.gordon.model.GicsSector;
 import org.sjd.gordon.model.StockDayTradeRecord;
 import org.sjd.gordon.model.StockEntity;
@@ -20,9 +20,9 @@ import com.gwtplatform.dispatch.shared.ActionException;
 public class GetAllStockDetailsEJBHandler implements ActionHandler<GetAllRegistryEntriesAction, GetAllRegistryEntriesResult> {
 
 	@Inject
-	private StockEntityService stockService;
+	private StockEntityServiceLocal stockService;
 	@Inject
-	private GicsService gicsService;
+	private GicsServiceLocal gicsService;
 
 	@Override
 	public GetAllRegistryEntriesResult execute(GetAllRegistryEntriesAction getDetails, ExecutionContext context) throws ActionException {

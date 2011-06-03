@@ -12,6 +12,7 @@ import com.gwtplatform.dispatch.shared.UnsecuredActionImpl;
 public class EditTreasuryHeldStock {
 	
 	@In(1) TreasuryHeldStock newTreasuryHeldStock;
-	@In(2) EditType editType;
+	@In(2) Long stockId;
+	@In(3) EditType editType;
 	@Out(1) TreasuryHeldStock updatedTreasuryHeldStock;
 }

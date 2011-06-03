@@ -9,7 +9,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.sjd.gordon.ejb.dispatch.security.DeleteUserEJBHandler;
-import org.sjd.gordon.ejb.security.UserService;
+import org.sjd.gordon.ejb.security.UserServiceLocal;
 import org.sjd.gordon.model.User;
 import org.sjd.gordon.shared.exceptions.EntityNotFoundException;
 import org.sjd.gordon.shared.exceptions.UnauthorisedAccessException;
@@ -30,7 +30,7 @@ public class DeleteUserHandlerTest {
     
     @Test
     public void delete_non_existent_user() throws Exception {  
-    	final UserService service = context.mock(UserService.class);
+    	final UserServiceLocal service = context.mock(UserServiceLocal.class);
     	final ExecutionContext executionContext = context.mock(ExecutionContext.class);
     	context.checking(new Expectations() {
     		{ allowing(service).findUserById(with(any(Integer.class))); will(returnValue(null)); }
@@ -43,7 +43,7 @@ public class DeleteUserHandlerTest {
     
     @Test
     public void delete_not_authorised() throws Exception {  
-    	final UserService service = context.mock(UserService.class);
+    	final UserServiceLocal service = context.mock(UserServiceLocal.class);
     	final ExecutionContext executionContext = context.mock(ExecutionContext.class);
     	final AccessLocalException accessException = new AccessLocalException();
     	final User user = new User();

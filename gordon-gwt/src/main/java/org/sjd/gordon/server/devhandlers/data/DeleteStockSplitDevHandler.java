@@ -15,9 +15,21 @@ public class DeleteStockSplitDevHandler implements ActionHandler<DeleteStockSpli
 
 	@Override
 	public DeleteStockSplitResult execute(DeleteStockSplitAction action, ExecutionContext context) throws ActionException {
-		ArrayList<StockSplit> splits = Data.splitsMap.get(action.getStockSplit().getStockId());
-		if (splits != null) {
-			splits.remove(action.getStockSplit());
+		for(Long stockId: Data.splitsMap.keySet()) {
+			ArrayList<StockSplit> stockSplits = Data.splitsMap.get(stockId);
+			if (stockSplits != null) {
+				int index = -1;
+				for(int i=0; i < stockSplits.size(); i++) {
+					StockSplit stockSplit = stockSplits.get(i);
+					if (stockSplit.getId() == action.getStockSplit().getId()) {
+						index = -1;
+					}
+				}
+				if (index != -1) {
+				    stockSplits.remove(index);
+				    break;
+				}
+			}
 		}
 		return new DeleteStockSplitResult();
 	}

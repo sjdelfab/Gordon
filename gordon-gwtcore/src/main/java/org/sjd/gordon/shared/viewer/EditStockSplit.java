@@ -12,6 +12,7 @@ import com.gwtplatform.dispatch.shared.UnsecuredActionImpl;
 public class EditStockSplit {
 	
 	@In(1) StockSplit newStockSplit;
-	@In(2) EditType editType;
+	@In(2) Long stockId;
+	@In(3) EditType editType;
 	@Out(1) StockSplit updatedStockSplit;	
 }

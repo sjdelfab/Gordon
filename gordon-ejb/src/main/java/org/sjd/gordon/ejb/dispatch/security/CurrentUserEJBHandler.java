@@ -5,7 +5,7 @@ import java.security.Principal;
 import javax.servlet.http.HttpServletRequest;
 
 import org.sjd.gordon.ejb.dispatch.AbstractHandler;
-import org.sjd.gordon.ejb.security.UserService;
+import org.sjd.gordon.ejb.security.UserServiceLocal;
 import org.sjd.gordon.model.User;
 import org.sjd.gordon.shared.exceptions.UnauthorisedAccessException;
 import org.sjd.gordon.shared.security.GetCurrentUserAction;
@@ -20,10 +20,10 @@ import com.gwtplatform.dispatch.shared.ActionException;
 public class CurrentUserEJBHandler extends AbstractHandler implements ActionHandler<GetCurrentUserAction,GetCurrentUserResult> {
 
 	private Provider<HttpServletRequest> requestProvider;
-	private UserService userService;
+	private UserServiceLocal userService;
 
 	@Inject
-	public CurrentUserEJBHandler(Provider<HttpServletRequest> requestProvider, UserService userService) {
+	public CurrentUserEJBHandler(Provider<HttpServletRequest> requestProvider, UserServiceLocal userService) {
 		this.requestProvider = requestProvider;
 		this.userService = userService;
 	}

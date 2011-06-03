@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.sjdelfab.org/gordon/stock_equity_profile"
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
+	xmlns="http://www.sjdelfab.org/gordon/stock_equity_profile"
+	elementFormDefault="qualified" attributeFormDefault="unqualified"
+	jaxb:version="1.0" jaxb:extensionBindingPrefixes="xjc">
+
+	<xs:annotation>
+		<xs:appinfo>
+			<jaxb:globalBindings>
+				<xjc:serializable uid="1" />
+			</jaxb:globalBindings>
+		</xs:appinfo>
+	</xs:annotation>
+
+	<xs:element name="stock_equities">
+		<xs:complexType>
+			<xs:sequence>
+	           <xs:element name="stock_equity" type="stock_equity" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:complexType name="stock_equity">
+		<xs:sequence>
+			<xs:element name="symbol" type="xs:string" />
+			<xs:element name="name" type="xs:string" />
+			<xs:element name="exchange" type="xs:string" />
+			<xs:element name="float_volume" type="xs:int" />
+			<xs:element name="industry_group" type="xs:string" />
+			<xs:element name="business_summary" type="xs:string" />
+			<xs:element name="stock_splits" type="stock_splits" />
+			<xs:element name="treasury_held_stock_history" type="treasury_held_stock_history" />
+			<xs:element name="dividend_history" type="dividend_history" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="stock_splits">
+		<xs:sequence>
+			<xs:element name="split" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="date" type="xs:date" />
+						<xs:element name="factor" type="xs:decimal" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="treasury_held_stock_history">
+		<xs:sequence>
+			<xs:element name="treasury_held_stock" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="date" type="xs:date" />
+						<xs:element name="volume" type="xs:int" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="dividend_history">
+		<xs:sequence>
+			<xs:element name="dividend" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="announcement_date" type="xs:date" />
+						<xs:element name="date" type="xs:date" />
+						<xs:element name="amount" type="xs:decimal" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+</xs:schema>

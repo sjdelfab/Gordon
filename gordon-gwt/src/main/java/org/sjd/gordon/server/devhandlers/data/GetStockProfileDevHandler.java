@@ -21,7 +21,6 @@ public class GetStockProfileDevHandler implements ActionHandler<GetStockProfileA
 		StockProfile profile = new StockProfile();
 		profile.setDetail(Data.detailsMap.get(getDetails.getStockId()));
 		BusinessSummary summary = new BusinessSummary();
-		summary.setStockId(getDetails.getStockId());
 		summary.setSummary("Business summary blah blah");
 		profile.setBusinessSummary(summary);
 		StockStatistics stockStatistics = new StockStatistics();

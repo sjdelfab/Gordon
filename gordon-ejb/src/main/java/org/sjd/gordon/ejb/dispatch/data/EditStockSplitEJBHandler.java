@@ -1,6 +1,6 @@
 package org.sjd.gordon.ejb.dispatch.data;
 
-import org.sjd.gordon.ejb.StockEntityService;
+import org.sjd.gordon.ejb.StockEntityServiceLocal;
 import org.sjd.gordon.ejb.dispatch.AbstractHandler;
 import org.sjd.gordon.model.StockSplit;
 import org.sjd.gordon.shared.exceptions.EntityNotFoundException;
@@ -16,7 +16,7 @@ import com.gwtplatform.dispatch.shared.ActionException;
 public class EditStockSplitEJBHandler extends AbstractHandler implements ActionHandler<EditStockSplitAction,EditStockSplitResult> {
 
 	@Inject
-	private StockEntityService stockService;
+	private StockEntityServiceLocal stockService;
 	
 	@Override
 	public EditStockSplitResult execute(EditStockSplitAction action, ExecutionContext context) throws ActionException {
@@ -24,7 +24,7 @@ public class EditStockSplitEJBHandler extends AbstractHandler implements ActionH
 		StockSplit newSplit = action.getNewStockSplit();
 		try {
 			if (editType == EditType.ADD) {
-				newSplit = add(newSplit);
+				newSplit = add(action.getStockId(),newSplit);
 			} else {
 				newSplit = update(newSplit);
 			}
@@ -34,8 +34,8 @@ public class EditStockSplitEJBHandler extends AbstractHandler implements ActionH
 		return new EditStockSplitResult(newSplit);
 	}
 
-	private StockSplit add(StockSplit newSplit) throws Exception {
-		newSplit = stockService.createStockSplit(newSplit);
+	private StockSplit add(Long stockId, StockSplit newSplit) throws Exception {
+		newSplit = stockService.createStockSplit(stockId,newSplit);
 		return newSplit;
 	}
 

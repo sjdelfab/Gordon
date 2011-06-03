@@ -22,7 +22,7 @@ public class UnitaryPropertiesEJBTest extends AbstractEJBTest {
 		@BeforeClass 
 		public static void createExchangeAndStock() throws Exception {
 			truncateDatabase();
-			ExchangeService exchangeEJB = (ExchangeService) AllEjbTests.ctx.lookup("java:global/classes/ExchangeEJB!org.sjd.gordon.ejb.ExchangeService"); 
+			ExchangeServiceLocal exchangeEJB = (ExchangeServiceLocal) AllEjbTests.ctx.lookup("java:global/classes/ExchangeEJB!org.sjd.gordon.ejb.ExchangeService"); 
 	   	 
 	    	exchange = new Exchange();
 	    	exchange.setActive(true);
@@ -35,7 +35,7 @@ public class UnitaryPropertiesEJBTest extends AbstractEJBTest {
 	    	stock.setExchange(exchange);
 	    	stock.setName("BHP Ltd");
 	    	
-	    	StockEntityService stockEntityEjb = (StockEntityService) AllEjbTests.ctx.lookup("java:global/classes/StockEntityEJB!org.sjd.gordon.ejb.StockEntityService");
+	    	StockEntityServiceLocal stockEntityEjb = (StockEntityServiceLocal) AllEjbTests.ctx.lookup("java:global/classes/StockEntityEJB!org.sjd.gordon.ejb.StockEntityService");
 	    	stock = stockEntityEjb.createStock(stock);
 		}
 		

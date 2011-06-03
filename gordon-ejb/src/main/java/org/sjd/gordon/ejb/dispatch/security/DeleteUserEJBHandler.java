@@ -1,7 +1,7 @@
 package org.sjd.gordon.ejb.dispatch.security;
 
 import org.sjd.gordon.ejb.dispatch.AbstractHandler;
-import org.sjd.gordon.ejb.security.UserService;
+import org.sjd.gordon.ejb.security.UserServiceLocal;
 import org.sjd.gordon.model.User;
 import org.sjd.gordon.shared.exceptions.EntityNotFoundException;
 import org.sjd.gordon.shared.security.DeleteUserAction;
@@ -14,10 +14,10 @@ import com.gwtplatform.dispatch.shared.ActionException;
 
 public class DeleteUserEJBHandler extends AbstractHandler implements ActionHandler<DeleteUserAction,DeleteUserResult> {
 
-    private UserService userService;
+    private UserServiceLocal userService;
 	
 	@Inject
-	public DeleteUserEJBHandler(UserService userService) {
+	public DeleteUserEJBHandler(UserServiceLocal userService) {
 		this.userService = userService;
 	}
 	

@@ -71,17 +71,58 @@ public class StockTest extends AbstractJpaTest {
         assertNotNull("ID should not be null", stock.getId());
         
         BusinessSummary summary = new BusinessSummary();
-        summary.setStockId(stock.getId());
         summary.setSummary("Business summary blah blah");
+        stock.setBusinessSummary(summary);
         
-        tx.begin(); 
+        tx.begin();
+        em.persist(stock); 
         em.persist(summary);
         tx.commit(); 
         assertNotNull("ID should not be null", summary.getId());
         
         // Retrieve the summary from the database
-        String getSummary = "select bs from BusinessSummary bs where bs.stockId=" + stock.getId();
+        String getSummary = "select bs from BusinessSummary bs";
         List<BusinessSummary> summaries = em.createQuery(getSummary,BusinessSummary.class).getResultList(); 
         assertEquals(1, summaries.size()); 
+    }
+    
+    @Test 
+    public void should_create_a_stock_with_dividend() throws Exception { 
+    	StockEntity stock = createStock();
+    	Exchange exchange = stock.getExchange();
+    	
+    	tx.begin(); 
+        em.persist(exchange);
+        em.persist(stock); 
+        tx.commit(); 
+        assertNotNull("ID should not be null", stock.getId());
+        
+        Dividend newDividend = new Dividend();
+        newDividend.setAmount(new BigDecimal("0.65"));
+        newDividend.setAnnouncementDate(new Date());
+        newDividend.setDate(new Date());
+        stock.addDividend(newDividend);
+        
+        tx.begin();
+        em.merge(stock);
+        tx.commit(); 
+        assertNotNull("ID should not be null", stock.getDividendHistory().get(0).getId());
+        
+        // Retrieve the Dividend from the database
+        String getDividends = "select d from Dividend d";
+        List<Dividend> dividends = em.createQuery(getDividends,Dividend.class).getResultList(); 
+        assertEquals(1, dividends.size());
+        
+        // Now remove
+        Dividend d = stock.getDividendHistory().remove(0);
+        tx.begin();
+        em.remove(d);
+        tx.commit();
+        dividends = em.createQuery(getDividends,Dividend.class).getResultList(); 
+        assertEquals(0, dividends.size());
+        
+        String getAllStocks = "select s from StockEntity s WHERE s.id = " + stock.getId();
+        List<StockEntity> stocks = em.createQuery(getAllStocks,StockEntity.class).getResultList(); 
+        assertEquals(0, stocks.get(0).getDividendHistory().size()); 
     }
 }

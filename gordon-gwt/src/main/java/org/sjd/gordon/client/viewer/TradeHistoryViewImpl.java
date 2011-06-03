@@ -2,12 +2,12 @@ package org.sjd.gordon.client.viewer;
 
 import java.util.ArrayList;
 
+import org.sjd.gordon.client.common.ProgressMonitor;
 import org.sjd.gordon.model.StockDayTradeRecord;
 
 import com.extjs.gxt.ui.client.widget.LayoutContainer;
 import com.extjs.gxt.ui.client.widget.layout.CenterLayout;
 import com.google.gwt.dom.client.Element;
-import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.visualization.client.AbstractDataTable.ColumnType;
 import com.google.gwt.visualization.client.DataTable;
@@ -33,17 +33,7 @@ public class TradeHistoryViewImpl extends ViewImpl implements TradeHistoryPresen
 	public TradeHistoryViewImpl() {
 		container = new LayoutContainer();
 		container.setLayout(new CenterLayout());
-		// TODO Put in convenience utility method 
-		loadingMessage = DOM.createDiv();
-		loadingMessage.setId("progress_loading");
-		Element innerDiv = DOM.createDiv();
-		innerDiv.setClassName("progress_loading-indicator");
-		Element img = DOM.createImg();
-		img.setAttribute("src", "resources/images/default/shared/large-loading.gif");
-		img.setAttribute("width","32");
-		img.setAttribute("height","32");
-		innerDiv.appendChild(img);
-		loadingMessage.appendChild(innerDiv);
+		loadingMessage = ProgressMonitor.getMonitor();
 	}
 
 	@Override

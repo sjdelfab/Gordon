@@ -10,7 +10,7 @@ import java.util.List;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.sjd.gordon.ejb.setup.GicsService;
+import org.sjd.gordon.ejb.setup.GicsServiceLocal;
 import org.sjd.gordon.model.Exchange;
 import org.sjd.gordon.model.GicsIndustryGroup;
 import org.sjd.gordon.model.GicsSector;
@@ -25,7 +25,7 @@ public class StockEntityEJBTest extends AbstractEJBTest {
 	@BeforeClass 
 	public static void createExchange() throws Exception {
 		truncateDatabase();
-		ExchangeService exchangeEJB = (ExchangeService) AllEjbTests.ctx.lookup("java:global/classes/ExchangeEJB!org.sjd.gordon.ejb.ExchangeService"); 
+		ExchangeServiceLocal exchangeEJB = (ExchangeServiceLocal) AllEjbTests.ctx.lookup("java:global/classes/ExchangeEJB!org.sjd.gordon.ejb.ExchangeService"); 
    	 
     	exchange = new Exchange();
     	exchange.setActive(true);
@@ -33,7 +33,7 @@ public class StockEntityEJBTest extends AbstractEJBTest {
     	exchange.setName("Australian Exchange");
         exchange = exchangeEJB.createExchange(exchange);
         
-        GicsService gicsService = (GicsService) AllEjbTests.ctx.lookup("java:global/classes/GicsEJB!org.sjd.gordon.ejb.setup.GicsService");
+        GicsServiceLocal gicsService = (GicsServiceLocal) AllEjbTests.ctx.lookup("java:global/classes/GicsEJB!org.sjd.gordon.ejb.setup.GicsService");
         sector = new GicsSector();
     	sector.setActive(true);
     	sector.setCode(10);
@@ -54,7 +54,7 @@ public class StockEntityEJBTest extends AbstractEJBTest {
     	stock.setName("BHP Ltd");
     	stock.setGicsIndustryGroup(sector.getIndustryGroups().get(0));
     	
-    	StockEntityService stockEntityEjb = (StockEntityService) AllEjbTests.ctx.lookup("java:global/classes/StockEntityEJB!org.sjd.gordon.ejb.StockEntityService");
+    	StockEntityServiceLocal stockEntityEjb = (StockEntityServiceLocal) AllEjbTests.ctx.lookup("java:global/classes/StockEntityEJB!org.sjd.gordon.ejb.StockEntityService");
     	stock = stockEntityEjb.createStock(stock);
     	assertNotNull("ID should not be null", stock.getId());
     	
@@ -106,7 +106,7 @@ public class StockEntityEJBTest extends AbstractEJBTest {
     	stock.setExchange(exchange);
     	stock.setName("ABC Ltd");
     	
-    	StockEntityService stockEntityEjb = (StockEntityService) AllEjbTests.ctx.lookup("java:global/classes/StockEntityEJB!org.sjd.gordon.ejb.StockEntityService");
+    	StockEntityServiceLocal stockEntityEjb = (StockEntityServiceLocal) AllEjbTests.ctx.lookup("java:global/classes/StockEntityEJB!org.sjd.gordon.ejb.StockEntityService");
     	stock = stockEntityEjb.createStock(stock);
     	
     	SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");

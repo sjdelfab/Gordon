@@ -10,7 +10,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
-import org.sjd.gordon.model.SecurityEntity;
+import org.sjd.gordon.model.StockEntity;
 import org.sjd.gordon.model.TabularDatasetDefinition;
 import org.sjd.gordon.model.TabularDatasetElement;
 import org.sjd.gordon.model.TabularDatasetRow;
@@ -48,7 +48,7 @@ public class TabularDatasetEJB {
 		return row;
 	}
 	
-	public List<TabularDatasetRow> getData(SecurityEntity security, TabularDatasetDefinition definition) {
+	public List<TabularDatasetRow> getData(StockEntity security, TabularDatasetDefinition definition) {
 		// TODO: Replace with Native query because inner select sucks - only because the object 
 		// relationships aren't there (for performance reasons)
 		String getData = "SELECT e FROM TabularDatasetElement e " +

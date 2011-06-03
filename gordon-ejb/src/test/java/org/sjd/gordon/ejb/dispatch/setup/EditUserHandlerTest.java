@@ -12,7 +12,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.sjd.gordon.ejb.dispatch.security.EditUserEJBHandler;
-import org.sjd.gordon.ejb.security.UserService;
+import org.sjd.gordon.ejb.security.UserServiceLocal;
 import org.sjd.gordon.model.Group;
 import org.sjd.gordon.model.User;
 import org.sjd.gordon.shared.exceptions.NonUniqueResultException;
@@ -28,7 +28,7 @@ public class EditUserHandlerTest {
 
 	private Mockery context;
 	private UserDetail userDetail;
-	private UserService userService;
+	private UserServiceLocal userService;
 	private ExecutionContext executionContext;
 	private EditUserEJBHandler handler;
 	
@@ -44,7 +44,7 @@ public class EditUserHandlerTest {
         userDetail.setUID("ssmith");
         userDetail.setActive(Boolean.TRUE);
   
-    	userService = context.mock(UserService.class);
+    	userService = context.mock(UserServiceLocal.class);
     	executionContext = context.mock(ExecutionContext.class);
     	handler = new EditUserEJBHandler(userService);
     }

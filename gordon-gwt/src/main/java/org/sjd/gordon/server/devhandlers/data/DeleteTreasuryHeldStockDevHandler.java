@@ -15,9 +15,21 @@ public class DeleteTreasuryHeldStockDevHandler implements ActionHandler<DeleteTr
 
 	@Override
 	public DeleteTreasuryHeldStockResult execute(DeleteTreasuryHeldStockAction action, ExecutionContext context) throws ActionException {
-		ArrayList<TreasuryHeldStock> stockHeld = Data.heldInTreasuryMap.get(action.getTreasuryHeldStock().getStockId());
-		if (stockHeld != null) {
-			stockHeld.remove(action.getTreasuryHeldStock());
+		for(Long stockId: Data.heldInTreasuryMap.keySet()) {
+			ArrayList<TreasuryHeldStock> heldStockHistory = Data.heldInTreasuryMap.get(stockId);
+			if (heldStockHistory != null) {
+				int index = -1;
+				for(int i=0; i < heldStockHistory.size(); i++) {
+					TreasuryHeldStock heldStock = heldStockHistory.get(i);
+					if (heldStock.getId() == action.getTreasuryHeldStock().getId()) {
+						index = -1;
+					}
+				}
+				if (index != -1) {
+				    heldStockHistory.remove(index);
+				    break;
+				}
+			}
 		}
 		return new DeleteTreasuryHeldStockResult();
 	}

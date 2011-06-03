@@ -1,6 +1,6 @@
 package org.sjd.gordon.ejb.dispatch.data;
 
-import org.sjd.gordon.ejb.StockEntityService;
+import org.sjd.gordon.ejb.StockEntityServiceLocal;
 import org.sjd.gordon.ejb.dispatch.AbstractHandler;
 import org.sjd.gordon.model.TreasuryHeldStock;
 import org.sjd.gordon.shared.exceptions.EntityNotFoundException;
@@ -16,7 +16,7 @@ import com.gwtplatform.dispatch.shared.ActionException;
 public class EditTreasuryHeldStockEJBHandler extends AbstractHandler implements ActionHandler<EditTreasuryHeldStockAction,EditTreasuryHeldStockResult> {
 
 	@Inject
-	private StockEntityService stockService;
+	private StockEntityServiceLocal stockService;
 	
 	@Override
 	public EditTreasuryHeldStockResult execute(EditTreasuryHeldStockAction action, ExecutionContext context) throws ActionException {
@@ -24,7 +24,7 @@ public class EditTreasuryHeldStockEJBHandler extends AbstractHandler implements 
 		TreasuryHeldStock newTreasuryHeldStock = action.getNewTreasuryHeldStock();
 		try {
 			if (editType == EditType.ADD) {
-				newTreasuryHeldStock = add(newTreasuryHeldStock);
+				newTreasuryHeldStock = add(action.getStockId(),newTreasuryHeldStock);
 			} else {
 				newTreasuryHeldStock = update(newTreasuryHeldStock);
 			}
@@ -34,8 +34,8 @@ public class EditTreasuryHeldStockEJBHandler extends AbstractHandler implements 
 		return new EditTreasuryHeldStockResult(newTreasuryHeldStock);
 	}
 
-	private TreasuryHeldStock add(TreasuryHeldStock stockHeld) throws Exception {
-		stockHeld = stockService.createTreasuryHeldStock(stockHeld);
+	private TreasuryHeldStock add(Long stockId, TreasuryHeldStock stockHeld) throws Exception {
+		stockHeld = stockService.createTreasuryHeldStock(stockId,stockHeld);
 		return stockHeld;
 	}
 

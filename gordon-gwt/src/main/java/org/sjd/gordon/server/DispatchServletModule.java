@@ -9,6 +9,8 @@ public class DispatchServletModule extends ServletModule {
 	@Override
 	protected void configureServlets() {
 		super.configureServlets();
+		serve("/Gordon/StockEquityFileImporter").with(StockEquityFileImportHandler.class);
+		serve("/Gordon/TradeHistoryFileImporter").with(TradeHistoryFileImportHandler.class);
 		serve("/" + ActionImpl.DEFAULT_SERVICE_NAME + "*").with(DispatchServiceImpl.class);
 	}
 

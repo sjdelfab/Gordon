@@ -21,14 +21,14 @@ public class EditTreasuryHeldStockDevHandler implements ActionHandler<EditTreasu
 		if (editType == EditType.ADD) {
 			Long newId = Data.treasuryHeldStockCounter++;
 			newTreasuryHeldStock.setId(newId);
-			ArrayList<TreasuryHeldStock> heldStock = Data.heldInTreasuryMap.get(newTreasuryHeldStock.getStockId());
+			ArrayList<TreasuryHeldStock> heldStock = Data.heldInTreasuryMap.get(action.getStockId());
 			if (heldStock == null) {
 				heldStock = new ArrayList<TreasuryHeldStock>();
-				Data.heldInTreasuryMap.put(newTreasuryHeldStock.getStockId(),heldStock);
+				Data.heldInTreasuryMap.put(action.getStockId(),heldStock);
 			}
 			heldStock.add(newTreasuryHeldStock);
 		} else {
-			ArrayList<TreasuryHeldStock> heldStock = Data.heldInTreasuryMap.get(newTreasuryHeldStock.getStockId());
+			ArrayList<TreasuryHeldStock> heldStock = Data.heldInTreasuryMap.get(action.getStockId());
 			TreasuryHeldStock held = heldStock.get(heldStock.indexOf(newTreasuryHeldStock));
 			held.mergeTo(newTreasuryHeldStock);
 		}

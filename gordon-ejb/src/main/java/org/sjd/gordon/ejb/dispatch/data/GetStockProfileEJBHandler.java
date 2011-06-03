@@ -4,8 +4,9 @@ import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Date;
 
-import org.sjd.gordon.ejb.StockEntityService;
-import org.sjd.gordon.ejb.setup.GicsService;
+import org.sjd.gordon.ejb.StockEntityServiceLocal;
+import org.sjd.gordon.ejb.StockStatisticsServiceLocal;
+import org.sjd.gordon.ejb.setup.GicsServiceLocal;
 import org.sjd.gordon.model.BusinessSummary;
 import org.sjd.gordon.model.GicsSector;
 import org.sjd.gordon.model.StockDayTradeRecord;
@@ -25,9 +26,11 @@ import com.gwtplatform.dispatch.shared.ActionException;
 public class GetStockProfileEJBHandler implements ActionHandler<GetStockProfileAction, GetStockProfileResult> {
 
 	@Inject
-	private StockEntityService stockEntityService;
+	private StockEntityServiceLocal stockEntityService;
 	@Inject
-	private GicsService gicsService;
+	private GicsServiceLocal gicsService;
+	@Inject
+	private StockStatisticsServiceLocal stockStatisticsService;
 	
 	@Override
 	public GetStockProfileResult execute(GetStockProfileAction getProfile, ExecutionContext context) throws ActionException {
@@ -46,7 +49,7 @@ public class GetStockProfileEJBHandler implements ActionHandler<GetStockProfileA
 		stockDetails.setCurrentPrice(lastTradeDate.getClosePrice());
 		StockProfile profile = new StockProfile();
 		profile.setDetail(stockDetails);
-		BusinessSummary summary = stockEntityService.getBusinessSummary(getProfile.getStockId());
+		BusinessSummary summary = stockEntity.getBusinessSummary();
 		profile.setBusinessSummary(summary);
 		
 		StockStatistics stockStatistics = new StockStatistics();
@@ -54,17 +57,17 @@ public class GetStockProfileEJBHandler implements ActionHandler<GetStockProfileA
 		cal.add(Calendar.WEEK_OF_YEAR, -52);
 		Date fiftyTwoWeeksAgoDate = cal.getTime();
 		Date now = new Date();
-		stockStatistics.setAverageVolume(stockEntityService.getAverageVolume(getProfile.getStockId(), fiftyTwoWeeksAgoDate, now).intValue());
-		stockStatistics.setHigh(stockEntityService.getMaxPrice(getProfile.getStockId(), fiftyTwoWeeksAgoDate, now));
-		stockStatistics.setLow(stockEntityService.getMinPrice(getProfile.getStockId(), fiftyTwoWeeksAgoDate, now));
+		stockStatistics.setAverageVolume(stockStatisticsService.getAverageVolume(getProfile.getStockId(), fiftyTwoWeeksAgoDate, now).intValue());
+		stockStatistics.setHigh(stockStatisticsService.getMaxPrice(getProfile.getStockId(), fiftyTwoWeeksAgoDate, now));
+		stockStatistics.setLow(stockStatisticsService.getMinPrice(getProfile.getStockId(), fiftyTwoWeeksAgoDate, now));
 		cal = Calendar.getInstance();
 		cal.add(Calendar.DAY_OF_YEAR, -50);
 		Date fiftyDaysAgoDate = cal.getTime();
-		stockStatistics.setMovingAverage(new BigDecimal(stockEntityService.getAveragePrice(getProfile.getStockId(), fiftyDaysAgoDate, now)));
-		stockStatistics.setPercentageChange(stockEntityService.getPercentageChange(getProfile.getStockId(), fiftyTwoWeeksAgoDate, now));
+		stockStatistics.setMovingAverage(new BigDecimal(stockStatisticsService.getAveragePrice(getProfile.getStockId(), fiftyDaysAgoDate, now)));
+		stockStatistics.setPercentageChange(stockStatisticsService.getPercentageChange(getProfile.getStockId(), fiftyTwoWeeksAgoDate, now));
 		profile.setStockStatistics(stockStatistics);
 		
-		Long sharesOutstanding = stockEntityService.getSharesOutstanding(stockEntity);
+		Long sharesOutstanding = stockStatisticsService.calculateSharesOutstanding(stockEntity);
 		profile.setSharesOutstanding(sharesOutstanding.intValue());
 		
 		// TODO

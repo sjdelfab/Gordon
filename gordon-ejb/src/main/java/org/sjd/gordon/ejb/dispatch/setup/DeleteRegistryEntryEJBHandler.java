@@ -1,6 +1,6 @@
 package org.sjd.gordon.ejb.dispatch.setup;
 
-import org.sjd.gordon.ejb.StockEntityService;
+import org.sjd.gordon.ejb.StockEntityServiceLocal;
 import org.sjd.gordon.ejb.dispatch.AbstractHandler;
 import org.sjd.gordon.model.StockEntity;
 import org.sjd.gordon.shared.exceptions.EntityNotFoundException;
@@ -14,10 +14,10 @@ import com.gwtplatform.dispatch.shared.ActionException;
 
 public class DeleteRegistryEntryEJBHandler extends AbstractHandler implements ActionHandler<DeleteRegistryEntryAction,DeleteRegistryEntryResult> {
 
-	private StockEntityService stockEntityService;
+	private StockEntityServiceLocal stockEntityService;
 	
 	@Inject
-	public DeleteRegistryEntryEJBHandler(StockEntityService stockEjb) {
+	public DeleteRegistryEntryEJBHandler(StockEntityServiceLocal stockEjb) {
 		this.stockEntityService = stockEjb;
 	}
 

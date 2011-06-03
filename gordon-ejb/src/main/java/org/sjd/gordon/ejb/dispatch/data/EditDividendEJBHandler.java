@@ -1,6 +1,6 @@
 package org.sjd.gordon.ejb.dispatch.data;
 
-import org.sjd.gordon.ejb.StockEntityService;
+import org.sjd.gordon.ejb.StockEntityServiceLocal;
 import org.sjd.gordon.ejb.dispatch.AbstractHandler;
 import org.sjd.gordon.model.Dividend;
 import org.sjd.gordon.shared.exceptions.EntityNotFoundException;
@@ -16,7 +16,7 @@ import com.gwtplatform.dispatch.shared.ActionException;
 public class EditDividendEJBHandler extends AbstractHandler implements ActionHandler<EditDividendAction,EditDividendResult> {
 
 	@Inject
-	private StockEntityService stockService;
+	private StockEntityServiceLocal stockService;
 	
 	@Override
 	public EditDividendResult execute(EditDividendAction action, ExecutionContext context) throws ActionException {
@@ -24,7 +24,7 @@ public class EditDividendEJBHandler extends AbstractHandler implements ActionHan
 		Dividend newDividend = action.getNewDividend();
 		try {
 			if (editType == EditType.ADD) {
-				newDividend = add(newDividend);
+				newDividend = add(action.getStockId(),newDividend);
 			} else {
 				newDividend = update(newDividend);
 			}
@@ -34,8 +34,8 @@ public class EditDividendEJBHandler extends AbstractHandler implements ActionHan
 		return new EditDividendResult(newDividend);
 	}
 
-	private Dividend add(Dividend newDividend) throws Exception {
-		newDividend = stockService.createDividend(newDividend);
+	private Dividend add(Long stockId, Dividend newDividend) throws Exception {
+		newDividend = stockService.createDividend(stockId,newDividend);
 		return newDividend;
 	}
 

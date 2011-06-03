@@ -21,10 +21,8 @@ public class Dividend implements Serializable {
 
 	private static final long serialVersionUID = -3172193867088179468L;
 	
-	@Id @GeneratedValue(generator="stockSplitIdSeqGenerator")
+	@Id @GeneratedValue(generator="dividendIdSeqGenerator")
     private Long id;	
-	@Column(nullable = false,name="stock_id")
-	private Long stockId;
 	@Version 
     private Integer version;
 	@Column(nullable = false,name="date")
@@ -41,7 +39,6 @@ public class Dividend implements Serializable {
 	public Dividend(Dividend data) {
 		if (data != null) {
 		    id = data.id;
-		    stockId = data.stockId;
 		    version = data.version;
 		    date = data.date;
 		    announcementDate = data.announcementDate;
@@ -55,14 +52,6 @@ public class Dividend implements Serializable {
 	
 	public void setId(Long id) {
 		this.id = id;
-	}
-	
-	public Long getStockId() {
-		return stockId;
-	}
-	
-	public void setStockId(Long stockId) {
-		this.stockId = stockId;
 	}
 	
 	public Date getDate() {
@@ -112,11 +101,6 @@ public class Dividend implements Serializable {
 			if (other.id != null)
 				return false;
 		} else if (!id.equals(other.id))
-			return false;
-		if (stockId == null) {
-			if (other.stockId != null)
-				return false;
-		} else if (!stockId.equals(other.stockId))
 			return false;
 		return true;
 	}

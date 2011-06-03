@@ -21,8 +21,6 @@ public class BusinessSummary implements Serializable {
     private Long id;
 	@Version 
     private Integer version;
-	@Column(nullable = false,name="stock_id")
-	private Long stockId;
 	@Column(name="SUMMARY",nullable = false,length=1000)
 	private String summary;
 
@@ -30,21 +28,12 @@ public class BusinessSummary implements Serializable {
 	
 	public BusinessSummary(BusinessSummary businessSummary) {
 		id = businessSummary.getId();
-		stockId = businessSummary.getStockId();
 		version = businessSummary.version;
 		this.summary = businessSummary.getSummary();
 	}
 
 	public Long getId() {
 		return id;
-	}
-	
-	public void setStockId(Long stockId) {
-		this.stockId = stockId;
-	}
-	
-	public Long getStockId() {
-		return stockId;
 	}
 	
 	public void setSummary(String summary) {

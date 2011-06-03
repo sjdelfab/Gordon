@@ -85,8 +85,7 @@ public class StockAdminPresenter extends Presenter<StockAdminPresenter.StockAdmi
 
 	@Override
 	public void add(StockSplit newSplit) {
-		newSplit.setStockId(stockName.getId());
-		EditStockSplitAction action = new EditStockSplitAction(newSplit, EditType.ADD);
+		EditStockSplitAction action = new EditStockSplitAction(newSplit, stockName.getId(), EditType.ADD);
 		dispatcher.execute(action, new EditStockSplitCallback() {
 			@Override
 			public void commited(StockSplit stockSplit) {
@@ -97,7 +96,7 @@ public class StockAdminPresenter extends Presenter<StockAdminPresenter.StockAdmi
 
 	@Override
 	public void update(StockSplit newSplit) {
-		EditStockSplitAction action = new EditStockSplitAction(newSplit, EditType.UPDATE);
+		EditStockSplitAction action = new EditStockSplitAction(newSplit, stockName.getId(), EditType.UPDATE);
 		dispatcher.execute(action, new EditStockSplitCallback() {
 			@Override
 			public void commited(StockSplit stockSplit) {
@@ -127,9 +126,10 @@ public class StockAdminPresenter extends Presenter<StockAdminPresenter.StockAdmi
 		GetStockAdminDatasetAction action = new GetStockAdminDatasetAction(stockName.getId());
 		dispatcher.execute(action, new LoadStockAdminCallback() {
 			@Override
-			public void loaded(ArrayList<StockSplit> splits, ArrayList<TreasuryHeldStock> heldStock) {
+			public void loaded(ArrayList<StockSplit> splits, ArrayList<TreasuryHeldStock> heldStock, ArrayList<Dividend> dividends) {
 				getView().setSplits(splits);
 				getView().setTreasuryHeldStock(heldStock);
+				getView().setDividendHistory(dividends);
 			}
 		});
 	}
@@ -169,8 +169,7 @@ public class StockAdminPresenter extends Presenter<StockAdminPresenter.StockAdmi
 
 	@Override
 	public void add(TreasuryHeldStock heldStock) {
-		heldStock.setStockId(stockName.getId());
-		EditTreasuryHeldStockAction action = new EditTreasuryHeldStockAction(heldStock, EditType.ADD);
+		EditTreasuryHeldStockAction action = new EditTreasuryHeldStockAction(heldStock, stockName.getId(), EditType.ADD);
 		dispatcher.execute(action, new EditTreasuryHeldStockCallback() {
 			@Override
 			public void commited(TreasuryHeldStock heldStock) {
@@ -181,7 +180,7 @@ public class StockAdminPresenter extends Presenter<StockAdminPresenter.StockAdmi
 
 	@Override
 	public void update(TreasuryHeldStock heldStock) {
-		EditTreasuryHeldStockAction action = new EditTreasuryHeldStockAction(heldStock, EditType.UPDATE);
+		EditTreasuryHeldStockAction action = new EditTreasuryHeldStockAction(heldStock, stockName.getId(), EditType.UPDATE);
 		dispatcher.execute(action, new EditTreasuryHeldStockCallback() {
 			@Override
 			public void commited(TreasuryHeldStock heldStock) {
@@ -203,8 +202,7 @@ public class StockAdminPresenter extends Presenter<StockAdminPresenter.StockAdmi
 
 	@Override
 	public void add(Dividend newDividend) {
-		newDividend.setStockId(stockName.getId());
-		EditDividendAction action = new EditDividendAction(newDividend, EditType.ADD);
+		EditDividendAction action = new EditDividendAction(newDividend, stockName.getId(), EditType.ADD);
 		dispatcher.execute(action, new EditDividendCallback() {
 			@Override
 			public void commited(Dividend dividend) {
@@ -215,7 +213,7 @@ public class StockAdminPresenter extends Presenter<StockAdminPresenter.StockAdmi
 
 	@Override
 	public void update(Dividend updatedDividend) {
-		EditDividendAction action = new EditDividendAction(updatedDividend, EditType.UPDATE);
+		EditDividendAction action = new EditDividendAction(updatedDividend, stockName.getId(), EditType.UPDATE);
 		dispatcher.execute(action, new EditDividendCallback() {
 			@Override
 			public void commited(Dividend dividend) {
@@ -239,10 +237,10 @@ public class StockAdminPresenter extends Presenter<StockAdminPresenter.StockAdmi
 
 		@Override
 		public void onSuccess(GetStockAdminDatasetResult result) {
-			loaded(result.getStockSplits(),result.getTreasuryHeldStock());
+			loaded(result.getStockSplits(),result.getTreasuryHeldStock(),result.getDividends());
 		}
 
-		public abstract void loaded(ArrayList<StockSplit> splits, ArrayList<TreasuryHeldStock> heldStock);
+		public abstract void loaded(ArrayList<StockSplit> splits, ArrayList<TreasuryHeldStock> heldStock, ArrayList<Dividend> dividends);
 
 	}
 	

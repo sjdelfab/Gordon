@@ -21,14 +21,14 @@ public class EditStockSplitDevHandler implements ActionHandler<EditStockSplitAct
 		if (editType == EditType.ADD) {
 			Long newId = Data.stockSplitCounter++;
 			newSplit.setId(newId);
-			ArrayList<StockSplit> splits = Data.splitsMap.get(newSplit.getStockId());
+			ArrayList<StockSplit> splits = Data.splitsMap.get(action.getStockId());
 			if (splits == null) {
 				splits = new ArrayList<StockSplit>();
-				Data.splitsMap.put(newSplit.getStockId(),splits);
+				Data.splitsMap.put(action.getStockId(),splits);
 			}
 			splits.add(newSplit);
 		} else {
-			ArrayList<StockSplit> splits = Data.splitsMap.get(newSplit.getStockId());
+			ArrayList<StockSplit> splits = Data.splitsMap.get(action.getStockId());
 			StockSplit split = splits.get(splits.indexOf(newSplit));
 			split.mergeTo(newSplit);
 		}

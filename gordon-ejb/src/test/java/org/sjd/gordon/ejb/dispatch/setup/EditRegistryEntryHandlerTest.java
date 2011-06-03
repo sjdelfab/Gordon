@@ -13,9 +13,9 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import org.sjd.gordon.ejb.ExchangeService;
-import org.sjd.gordon.ejb.StockEntityService;
-import org.sjd.gordon.ejb.setup.GicsService;
+import org.sjd.gordon.ejb.ExchangeServiceLocal;
+import org.sjd.gordon.ejb.StockEntityServiceLocal;
+import org.sjd.gordon.ejb.setup.GicsServiceLocal;
 import org.sjd.gordon.model.Exchange;
 import org.sjd.gordon.model.GicsIndustryGroup;
 import org.sjd.gordon.model.StockEntity;
@@ -32,9 +32,9 @@ public class EditRegistryEntryHandlerTest {
 
 	private Mockery context;
 	private StockDetail newDetails;
-	private StockEntityService stockService;
-	private ExchangeService exchangeService;
-	private GicsService gicsService;
+	private StockEntityServiceLocal stockService;
+	private ExchangeServiceLocal exchangeService;
+	private GicsServiceLocal gicsService;
 	private ExecutionContext executionContext;
 	private EditRegistryEntryEJBHandler handler;
 	
@@ -47,10 +47,10 @@ public class EditRegistryEntryHandlerTest {
         newDetails = new StockDetail();
     	newDetails.setCode("ABC");
     	newDetails.setName("ABC Ltd");
-    	stockService = context.mock(StockEntityService.class);
-    	exchangeService = context.mock(ExchangeService.class);
+    	stockService = context.mock(StockEntityServiceLocal.class);
+    	exchangeService = context.mock(ExchangeServiceLocal.class);
     	executionContext = context.mock(ExecutionContext.class);
-    	gicsService = context.mock(GicsService.class);
+    	gicsService = context.mock(GicsServiceLocal.class);
     	handler = new EditRegistryEntryEJBHandler(stockService,exchangeService,gicsService);
     }
     

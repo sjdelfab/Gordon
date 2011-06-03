@@ -229,8 +229,6 @@ public class StockProfileViewImpl extends ViewWithUiHandlers<StockProfileUIHandl
 					BusinessSummary newSummary = new BusinessSummary();
 					if (summary != null) {
 						newSummary = new BusinessSummary(summary);
-					} else {
-						newSummary.setStockId(stockProfile.getDetail().getId());
 					}
 					newSummary.setSummary(textArea.getValue());
 					getUiHandlers().updateBusinessSummary(newSummary);

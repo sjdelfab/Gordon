@@ -2,7 +2,7 @@ package org.sjd.gordon.ejb.dispatch.data;
 
 import java.util.ArrayList;
 
-import org.sjd.gordon.ejb.StockEntityService;
+import org.sjd.gordon.ejb.StockEntityServiceLocal;
 import org.sjd.gordon.model.StockDayTradeRecord;
 import org.sjd.gordon.shared.viewer.GetTradeHistoryAction;
 import org.sjd.gordon.shared.viewer.GetTradeHistoryResult;
@@ -15,7 +15,7 @@ import com.gwtplatform.dispatch.shared.ActionException;
 public class GetTradeHistoryEJBHandler implements ActionHandler<GetTradeHistoryAction, GetTradeHistoryResult> {
 
 	@Inject
-	private StockEntityService stockEjb;
+	private StockEntityServiceLocal stockEjb;
 	
 	@Override
 	public GetTradeHistoryResult execute(GetTradeHistoryAction action, ExecutionContext context) throws ActionException {

@@ -11,6 +11,7 @@ import com.gwtplatform.dispatch.shared.UnsecuredActionImpl;
 public class UpdateBusinessSummary {
 
 	@In(1) BusinessSummary newBusinessSummary;
+	@In(2) Long stockId;
 	@Out(1) BusinessSummary updatedBusinessSummary;
 	
 }

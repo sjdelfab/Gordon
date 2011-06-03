@@ -1,6 +1,6 @@
 package org.sjd.gordon.ejb.dispatch.data;
 
-import org.sjd.gordon.ejb.StockEntityService;
+import org.sjd.gordon.ejb.StockEntityServiceLocal;
 import org.sjd.gordon.model.BusinessSummary;
 import org.sjd.gordon.shared.viewer.UpdateBusinessSummaryAction;
 import org.sjd.gordon.shared.viewer.UpdateBusinessSummaryResult;
@@ -13,7 +13,7 @@ import com.gwtplatform.dispatch.shared.ActionException;
 public class UpdateBusinessSummaryEJBHandler implements ActionHandler<UpdateBusinessSummaryAction,UpdateBusinessSummaryResult> {
 
 	@Inject
-	private StockEntityService stockEntityService;
+	private StockEntityServiceLocal stockEntityService;
 	
 	@Override
 	public UpdateBusinessSummaryResult execute(UpdateBusinessSummaryAction action, ExecutionContext context) throws ActionException {

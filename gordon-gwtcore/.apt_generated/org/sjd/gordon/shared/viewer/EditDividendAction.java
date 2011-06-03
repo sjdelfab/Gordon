@@ -5,10 +5,12 @@ import com.gwtplatform.dispatch.shared.Action;
 public class EditDividendAction implements Action<EditDividendResult> { 
 
   org.sjd.gordon.model.Dividend newDividend;
+  java.lang.Long stockId;
   org.sjd.gordon.shared.util.EditType editType;
 
-  public EditDividendAction(org.sjd.gordon.model.Dividend newDividend, org.sjd.gordon.shared.util.EditType editType) {
+  public EditDividendAction(org.sjd.gordon.model.Dividend newDividend, java.lang.Long stockId, org.sjd.gordon.shared.util.EditType editType) {
     this.newDividend = newDividend;
+    this.stockId = stockId;
     this.editType = editType;
   }
 
@@ -18,6 +20,10 @@ public class EditDividendAction implements Action<EditDividendResult> {
 
   public org.sjd.gordon.model.Dividend getNewDividend() {
     return newDividend;
+  }
+
+  public java.lang.Long getStockId() {
+    return stockId;
   }
 
   public org.sjd.gordon.shared.util.EditType getEditType() {
@@ -48,6 +54,11 @@ public class EditDividendAction implements Action<EditDividendResult> {
         return false;
     } else if (!newDividend.equals(other.newDividend))
       return false;
+    if (stockId == null) {
+      if (other.stockId != null)
+        return false;
+    } else if (!stockId.equals(other.stockId))
+      return false;
     if (editType == null) {
       if (other.editType != null)
         return false;
@@ -60,6 +71,7 @@ public class EditDividendAction implements Action<EditDividendResult> {
   public int hashCode() {
     int hashCode = 23;
     hashCode = (hashCode * 37) + (newDividend == null ? 1 : newDividend.hashCode());
+    hashCode = (hashCode * 37) + (stockId == null ? 1 : stockId.hashCode());
     hashCode = (hashCode * 37) + (editType == null ? 1 : editType.hashCode());
     return hashCode;
   }
@@ -68,6 +80,8 @@ public class EditDividendAction implements Action<EditDividendResult> {
   public String toString() {
     return "EditDividendAction["
                  + newDividend
+                 + ","
+                 + stockId
                  + ","
                  + editType
     + "]";

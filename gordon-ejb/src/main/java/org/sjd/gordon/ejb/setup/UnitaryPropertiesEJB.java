@@ -7,7 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
-import org.sjd.gordon.model.SecurityEntity;
+import org.sjd.gordon.model.StockEntity;
 import org.sjd.gordon.model.UnitaryPropertyDefinition;
 import org.sjd.gordon.model.UnitaryPropertyValue;
 
@@ -40,7 +40,7 @@ public class UnitaryPropertiesEJB {
 		return value;
 	}
 	
-	public List<UnitaryPropertyValue> getValues(SecurityEntity security) {
+	public List<UnitaryPropertyValue> getValues(StockEntity security) {
 		String getValues = "SELECT v FROM UnitaryPropertyValue v WHERE v.entityId = :entityId";
 		TypedQuery<UnitaryPropertyValue> query = em.createQuery(getValues, UnitaryPropertyValue.class);
 		query.setParameter("entityId", security.getId());

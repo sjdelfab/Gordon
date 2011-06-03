@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<stock_equities xmlns="http://www.sjdelfab.org/gordon/stock_equity_profile">
+	<stock_equity>
+		<symbol>WOW</symbol>
+		<name>Woolworths Ltd</name>
+		<exchange>ASX</exchange>
+		<floating_volume>123456</floating_volume>
+		<industry_group>Grocery Stores</industry_group>
+		<business_summary>Woolworths blah blah</business_summary>
+		<stock_splits>
+			<split>
+				<date>2011-01-01</date>
+				<factor>1.5</factor>
+			</split>
+		</stock_splits>
+		<treasury_held_stock_history>
+			<treasury_held_stock>
+				<date>2010-01-01</date>
+				<volume>100000</volume>
+			</treasury_held_stock>
+		</treasury_held_stock_history>
+		<dividend_history>
+			<dividend>
+				<announcement_date>2009-05-01</announcement_date>
+				<date>2009-06-01</date>
+				<amount>0.65</amount>
+			</dividend>
+		</dividend_history>
+	</stock_equity>
+</stock_equities>

@@ -5,10 +5,16 @@ import static com.google.inject.jndi.JndiIntegration.fromJndi;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 
+import org.sjd.gordon.ejb.CSVTradeHistoryImportServiceLocal;
+import org.sjd.gordon.ejb.CSVTradeHistoryImporterEJB;
 import org.sjd.gordon.ejb.ExchangeEJB;
-import org.sjd.gordon.ejb.ExchangeService;
+import org.sjd.gordon.ejb.ExchangeServiceLocal;
 import org.sjd.gordon.ejb.StockEntityEJB;
-import org.sjd.gordon.ejb.StockEntityService;
+import org.sjd.gordon.ejb.StockEntityServiceLocal;
+import org.sjd.gordon.ejb.StockEquityImporterEJB;
+import org.sjd.gordon.ejb.StockEquityImporterServiceLocal;
+import org.sjd.gordon.ejb.StockStatisticsEJB;
+import org.sjd.gordon.ejb.StockStatisticsServiceLocal;
 import org.sjd.gordon.ejb.dispatch.data.DeleteDividendEJBHandler;
 import org.sjd.gordon.ejb.dispatch.data.DeleteStockSplitEJBHandler;
 import org.sjd.gordon.ejb.dispatch.data.DeleteTreasuryHeldStockEJBHandler;
@@ -34,9 +40,11 @@ import org.sjd.gordon.ejb.dispatch.setup.DeleteRegistryEntryEJBHandler;
 import org.sjd.gordon.ejb.dispatch.setup.EditRegistryEntryEJBHandler;
 import org.sjd.gordon.ejb.dispatch.setup.GetGicsNamesEJBHandler;
 import org.sjd.gordon.ejb.security.UserEJB;
-import org.sjd.gordon.ejb.security.UserService;
+import org.sjd.gordon.ejb.security.UserServiceLocal;
 import org.sjd.gordon.ejb.setup.GicsEJB;
-import org.sjd.gordon.ejb.setup.GicsService;
+import org.sjd.gordon.ejb.setup.GicsServiceLocal;
+import org.sjd.gordon.importing.profile.StockEquityImporterService;
+import org.sjd.gordon.importing.tradehistory.CSVTradeHistoryImportService;
 import org.sjd.gordon.server.LogoutHandler;
 import org.sjd.gordon.shared.navigation.GetExchangesAction;
 import org.sjd.gordon.shared.navigation.GetStocksAction;
@@ -72,11 +80,19 @@ public class EJBServerModule extends HandlerModule {
 	@Override
 	protected void configureHandlers() {
 		bind(Context.class).to(InitialContext.class).in(Singleton.class);
-		bind(ExchangeService.class).toProvider(fromJndi(ExchangeService.class, getEjbJndiName(ExchangeService.class,ExchangeEJB.class)));
-		bind(StockEntityService.class).toProvider(fromJndi(StockEntityService.class, getEjbJndiName(StockEntityService.class,StockEntityEJB.class)));
-		bind(UserService.class).toProvider(fromJndi(UserService.class, getEjbJndiName(UserService.class, UserEJB.class)));
-		bind(GicsService.class).toProvider(fromJndi(GicsService.class, getEjbJndiName(GicsService.class, GicsEJB.class)));
+		bind(ExchangeServiceLocal.class).toProvider(fromJndi(ExchangeServiceLocal.class, getEjbJndiName(ExchangeServiceLocal.class,ExchangeEJB.class)));
+		bind(StockEntityServiceLocal.class).toProvider(fromJndi(StockEntityServiceLocal.class, getEjbJndiName(StockEntityServiceLocal.class,StockEntityEJB.class)));
+		bind(UserServiceLocal.class).toProvider(fromJndi(UserServiceLocal.class, getEjbJndiName(UserServiceLocal.class, UserEJB.class)));
+		bind(GicsServiceLocal.class).toProvider(fromJndi(GicsServiceLocal.class, getEjbJndiName(GicsServiceLocal.class, GicsEJB.class)));
 		
+		bind(StockStatisticsServiceLocal.class).toProvider(fromJndi(StockStatisticsServiceLocal.class, getEjbJndiName(StockStatisticsServiceLocal.class, StockStatisticsEJB.class)));
+		
+		bind(StockEquityImporterService.class).toProvider(fromJndi(StockEquityImporterServiceLocal.class,
+				getEjbJndiName(StockEquityImporterServiceLocal.class,StockEquityImporterEJB.class)));
+		bind(CSVTradeHistoryImportService.class).toProvider(fromJndi(CSVTradeHistoryImportServiceLocal.class, 
+				getEjbJndiName(CSVTradeHistoryImportServiceLocal.class,CSVTradeHistoryImporterEJB.class)));
+
+		// Handlers
 		bindHandler(GetStocksAction.class, GetStocksEJBHandler.class);
 		bindHandler(GetExchangesAction.class, GetExchangesEJBHandler.class);
 		bindHandler(GetTradeHistoryAction.class, GetTradeHistoryEJBHandler.class);
@@ -110,7 +126,7 @@ public class EJBServerModule extends HandlerModule {
 
 	public static String PREFIX = "gordon-gwt-1.0";
 	
-	private static String getEjbJndiName(Class<?> interfaceClass, Class<?> ejbClass) {
+	public static String getEjbJndiName(Class<?> interfaceClass, Class<?> ejbClass) {
 		return "java:global/" + PREFIX + "/" + ejbClass.getSimpleName() + "!" + interfaceClass.getName();
 	}
 	

@@ -24,7 +24,6 @@ public class GetStockProfileJpaHandler implements ActionHandler<GetStockProfileA
 		StockProfile profile = new StockProfile();
 		profile.setDetail(StockDetail.fromEntity(stockEntity));
 		BusinessSummary summary = new BusinessSummary();
-		summary.setStockId(getProfile.getStockId());
 		// TODO: Complete
 		summary.setSummary("Business summary blah blah");
 		profile.setBusinessSummary(summary);

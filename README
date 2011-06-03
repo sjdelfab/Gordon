@@ -34,7 +34,7 @@ The test takes a while to run (~40 secs)
 
 Need to create plugin for GXT
 
-mvn install:install-file -Dfile=gxt-2.2.3-gwt22.jar -DgroupId=com.extjs -DartifactId=gxt -Dversion=2.2.3 -DrepositoryLayout=default -Dpackaging=jar
+mvn install:install-file -Dfile=gxt-2.2.4-gwt22.jar -DgroupId=com.extjs -DartifactId=gxt -Dversion=2.2.4 -DrepositoryLayout=default -Dpackaging=jar
 mvn install:install-file -Dfile=gwt-visualization.jar -DgroupId=com.google.gwt.google-apis -DartifactId=gwt-visualization -Dversion=1.1.1 -DrepositoryLayout=default -Dpackaging=jar
 mvn install:install-file -Dfile=gwt-log-3.1.0.jar -DgroupId=com.google.code.gwt-log -DartifactId=gwt-log -Dversion=3.1.0 -DrepositoryLayout=default -Dpackaging=jar
 mvn install:install-file -Dfile=guice-servlet-2.0.jar -DgroupId=com.google.code.guice -DartifactId=guice-servlet -Dversion=2.0 -DrepositoryLayout=default -Dpackaging=jar

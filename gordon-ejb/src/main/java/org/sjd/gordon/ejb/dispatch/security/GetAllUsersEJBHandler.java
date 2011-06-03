@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.sjd.gordon.ejb.dispatch.AbstractHandler;
-import org.sjd.gordon.ejb.security.UserService;
+import org.sjd.gordon.ejb.security.UserServiceLocal;
 import org.sjd.gordon.model.Group;
 import org.sjd.gordon.model.User;
 import org.sjd.gordon.shared.security.GetAllUsersAction;
@@ -18,10 +18,10 @@ import com.gwtplatform.dispatch.shared.ActionException;
 
 public class GetAllUsersEJBHandler extends AbstractHandler implements ActionHandler<GetAllUsersAction, GetAllUsersResult> {
 	
-	private UserService userService;
+	private UserServiceLocal userService;
 	
 	@Inject
-	public GetAllUsersEJBHandler(UserService userService) {
+	public GetAllUsersEJBHandler(UserServiceLocal userService) {
 		this.userService = userService;
 	}
 	

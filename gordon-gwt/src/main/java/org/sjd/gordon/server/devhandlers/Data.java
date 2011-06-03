@@ -80,7 +80,6 @@ public class Data {
 		StockSplit split = new StockSplit();
 		split.setDate(new Date());
 		split.setFactor(new BigDecimal("1.5"));
-		split.setStockId(Long.valueOf(1));		
 		splits.add(split);
 		splitsMap.put(Long.valueOf(1),splits);
 		
@@ -88,9 +87,17 @@ public class Data {
 		TreasuryHeldStock held = new TreasuryHeldStock();
 		held.setDate(new Date());
 		held.setVolume(1000);
-		held.setStockId(Long.valueOf(1));		
 		treasuryHeldStock.add(held);
 		heldInTreasuryMap.put(Long.valueOf(1),treasuryHeldStock);
+		
+		ArrayList<Dividend> dividends = new ArrayList<Dividend>();
+		Dividend dividend = new Dividend();
+		dividend.setAmount(new BigDecimal("0.50"));
+		dividend.setAnnouncementDate(new Date());
+		dividend.setDate(new Date());
+		dividend.setId(dividendCounter++);
+		dividends.add(dividend);
+		dividendMap.put(Long.valueOf(1), dividends);
 	}
 	
 	public static Long getStockMaxId() {

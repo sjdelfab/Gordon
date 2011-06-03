@@ -3,10 +3,10 @@ package org.sjd.gordon.ejb.dispatch.setup;
 import java.math.BigDecimal;
 import java.util.Date;
 
-import org.sjd.gordon.ejb.ExchangeService;
-import org.sjd.gordon.ejb.StockEntityService;
+import org.sjd.gordon.ejb.ExchangeServiceLocal;
+import org.sjd.gordon.ejb.StockEntityServiceLocal;
 import org.sjd.gordon.ejb.dispatch.AbstractHandler;
-import org.sjd.gordon.ejb.setup.GicsService;
+import org.sjd.gordon.ejb.setup.GicsServiceLocal;
 import org.sjd.gordon.model.GicsIndustryGroup;
 import org.sjd.gordon.model.StockEntity;
 import org.sjd.gordon.shared.registry.EditRegistryEntry;
@@ -22,12 +22,12 @@ import com.gwtplatform.dispatch.shared.ActionException;
 
 public class EditRegistryEntryEJBHandler extends AbstractHandler implements ActionHandler<EditRegistryEntryAction,EditRegistryEntryResult> {
 
-	private StockEntityService stockService;
-	private ExchangeService exchangeService;
-	private GicsService gicsService;
+	private StockEntityServiceLocal stockService;
+	private ExchangeServiceLocal exchangeService;
+	private GicsServiceLocal gicsService;
 	
 	@Inject
-	public EditRegistryEntryEJBHandler(StockEntityService stockService, ExchangeService exchangeService, GicsService gicsService) {
+	public EditRegistryEntryEJBHandler(StockEntityServiceLocal stockService, ExchangeServiceLocal exchangeService, GicsServiceLocal gicsService) {
 		this.stockService = stockService;
 		this.exchangeService = exchangeService;
 		this.gicsService = gicsService;

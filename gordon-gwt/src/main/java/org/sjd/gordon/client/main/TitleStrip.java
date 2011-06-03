@@ -42,15 +42,17 @@ import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Widget;
-import com.gwtplatform.mvp.client.ViewImpl;
+import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 
-public class TitleStrip extends ViewImpl implements ChangeUserNameHandler, TitleStripPresenter.TitleStripView {
+public class TitleStrip extends ViewWithUiHandlers<TitleStripUIHandler> implements ChangeUserNameHandler, TitleStripPresenter.TitleStripView {
 
 	private Text displayName;
 	private LayoutContainer container;
 	private Button logoutButton;
 	private MenuItem registriesMenuItem;
 	private MenuItem userSetupMenuItem;
+	private MenuItem stockEquityImportMenuItem;
+	private MenuItem csvTradeHistoryImportMenuItem;
 	private Menu registriesSubMenu = new Menu();
 	private ClickableLabel settingsMenuItem = new ClickableLabel("Settings");
 	
@@ -88,6 +90,29 @@ public class TitleStrip extends ViewImpl implements ChangeUserNameHandler, Title
 		userSetupMenuItem = new MenuItem("Users");
 		userSetupMenuItem.setIconStyle("users");
 		setupMenu.add(userSetupMenuItem);
+		
+		MenuItem importMenuItem = new MenuItem("Import");
+		setupMenu.add(importMenuItem);
+		Menu importSubMenu = new Menu();
+		importMenuItem.setSubMenu(importSubMenu);
+		stockEquityImportMenuItem = new MenuItem("Stock Equities");
+		importSubMenu.add(stockEquityImportMenuItem);
+		stockEquityImportMenuItem.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				StockEquityImportDialog importDialog = new StockEquityImportDialog();
+				importDialog.show();
+			}
+		});
+		csvTradeHistoryImportMenuItem = new MenuItem("CSV Trade History");
+		csvTradeHistoryImportMenuItem.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				TradeHistoryImportDialog importDialog = new TradeHistoryImportDialog(getUiHandlers());
+				importDialog.show();
+			}
+		});
+		importSubMenu.add(csvTradeHistoryImportMenuItem);
 		
 //		MenuItem unitaryDefinitionMenuItem = new MenuItem("Unitary Definitions");
 //	    setupMenu.add(unitaryDefinitionMenuItem);

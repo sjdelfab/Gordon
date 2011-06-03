@@ -27,6 +27,7 @@ public class StockProfilePresenter extends Presenter<StockProfilePresenter.Stock
 	}
 	
 	private final DispatchAsync dispatcher;
+	private StockName stockName;
 	
 	@Inject
 	public StockProfilePresenter(EventBus eventBus, StockProfileView view, StockProfileProxy proxy, DispatchAsync dispatcher) {
@@ -42,6 +43,7 @@ public class StockProfilePresenter extends Presenter<StockProfilePresenter.Stock
 	protected void onUnbind() { }
 
 	public void setStock(StockName stockName) {
+		this.stockName = stockName;
 		GetStockProfileAction getProfile = new GetStockProfileAction(stockName.getId());
 		dispatcher.execute(getProfile, new LoadStockDetailsCallback() {
 			@Override
@@ -58,7 +60,7 @@ public class StockProfilePresenter extends Presenter<StockProfilePresenter.Stock
 
 	@Override
 	public void updateBusinessSummary(BusinessSummary summary) {
-		UpdateBusinessSummaryAction updateBusinessSummary = new UpdateBusinessSummaryAction(summary);
+		UpdateBusinessSummaryAction updateBusinessSummary = new UpdateBusinessSummaryAction(summary,stockName.getId());
 		dispatcher.execute(updateBusinessSummary, new UpdateBusinessSummaryCallback() {
 			@Override
 			public void updated(BusinessSummary summary) {

@@ -19,7 +19,4 @@
     <property name="java.util.logging.config.file" value="WEB-INF/logging.properties"/>
   </system-properties>
 
-  <resource-files>
-        <include path="/Users/sjdelfab/projects/Gordon/csv/*.csv" />
-    </resource-files>
 </appengine-web-app>

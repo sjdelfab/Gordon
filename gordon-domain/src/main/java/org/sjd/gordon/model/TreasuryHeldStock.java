@@ -22,8 +22,6 @@ public class TreasuryHeldStock implements Serializable {
 	
 	@Id @GeneratedValue(generator="treasuryHeldStockIdSeqGenerator")
     private Long id;	
-	@Column(nullable = false,name="stock_id")
-	private Long stockId;
 	@Version 
     private Integer version;
 	@Column(nullable = false,name="date")
@@ -39,19 +37,10 @@ public class TreasuryHeldStock implements Serializable {
 			id = data.id;
 			date = new Date(data.date.getTime());
 			volume = data.volume;
-			stockId = data.stockId;
 			version = data.version;
 		}
 	}
 
-	public Long getStockId() {
-		return stockId;
-	}
-	
-	public void setStockId(Long stockId) {
-		this.stockId = stockId;
-	}
-	
 	public Date getDate() {
 		return date;
 	}
@@ -98,11 +87,6 @@ public class TreasuryHeldStock implements Serializable {
 			if (other.id != null)
 				return false;
 		} else if (!id.equals(other.id))
-			return false;
-		if (stockId == null) {
-			if (other.stockId != null)
-				return false;
-		} else if (!stockId.equals(other.stockId))
 			return false;
 		return true;
 	}

@@ -21,14 +21,14 @@ public class EditDividendDevHandler implements ActionHandler<EditDividendAction,
 		if (editType == EditType.ADD) {
 			Long newId = Data.dividendCounter++;
 			newDividend.setId(newId);
-			ArrayList<Dividend> dividends = Data.dividendMap.get(newDividend.getStockId());
+			ArrayList<Dividend> dividends = Data.dividendMap.get(action.getStockId());
 			if (dividends == null) {
 				dividends = new ArrayList<Dividend>();
-				Data.dividendMap.put(newDividend.getStockId(),dividends);
+				Data.dividendMap.put(action.getStockId(),dividends);
 			}
 			dividends.add(newDividend);
 		} else {
-			ArrayList<Dividend> dividends = Data.dividendMap.get(newDividend.getStockId());
+			ArrayList<Dividend> dividends = Data.dividendMap.get(action.getStockId());
 			Dividend dividend = dividends.get(dividends.indexOf(newDividend));
 			dividend.mergeTo(newDividend);
 		}

@@ -2,7 +2,7 @@ package org.sjd.gordon.ejb.dispatch.data;
 
 import java.util.ArrayList;
 
-import org.sjd.gordon.ejb.ExchangeService;
+import org.sjd.gordon.ejb.ExchangeServiceLocal;
 import org.sjd.gordon.model.Exchange;
 import org.sjd.gordon.shared.navigation.GetExchangesAction;
 import org.sjd.gordon.shared.navigation.GetExchangesResult;
@@ -15,7 +15,7 @@ import com.gwtplatform.dispatch.shared.ActionException;
 public class GetExchangesEJBHandler implements ActionHandler<GetExchangesAction,GetExchangesResult> {
 
 	@Inject
-	private ExchangeService exchangeEjb;
+	private ExchangeServiceLocal exchangeEjb;
 	
 	@Override
 	public GetExchangesResult execute(GetExchangesAction getExchanges, ExecutionContext context) throws ActionException {

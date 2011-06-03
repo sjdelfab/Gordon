@@ -3,7 +3,7 @@ package org.sjd.gordon.ejb.dispatch.setup;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.sjd.gordon.ejb.setup.GicsService;
+import org.sjd.gordon.ejb.setup.GicsServiceLocal;
 import org.sjd.gordon.model.GicsSector;
 import org.sjd.gordon.shared.registry.GetGicsSectorsAction;
 import org.sjd.gordon.shared.registry.GetGicsSectorsResult;
@@ -17,7 +17,7 @@ import com.gwtplatform.dispatch.shared.ActionException;
 public class GetGicsNamesEJBHandler implements ActionHandler<GetGicsSectorsAction, GetGicsSectorsResult> {
 
 	@Inject
-	private GicsService gicsService;
+	private GicsServiceLocal gicsService;
 	
 	@Override
 	public GetGicsSectorsResult execute(GetGicsSectorsAction getDetails, ExecutionContext context) throws ActionException {
